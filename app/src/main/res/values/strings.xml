@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Shikimori</string>
+    <string name="auth_canceled">Аутентификация не выполнена</string>
+    <string name="sign_in">Войти</string>
+    <string name="avatar">Аватар пользователя</string>
+    <string name="age_1">%1$d год</string>
+    <string name="age_2">%1$d годa</string>
+    <string name="age_3">%1$d лет</string>
+    <string name="website">Сайт</string>
+
+</resources>
