@@ -7,5 +7,28 @@
     <string name="age_2">%1$d годa</string>
     <string name="age_3">%1$d лет</string>
     <string name="website">Сайт</string>
+    <string name="planned">Запланированно</string>
+    <string name="watching">Смотрю</string>
+    <string name="rewatching">Пересматриваю</string>
+    <string name="completed">Просмотренно</string>
+    <string name="on_hold">Отложено</string>
+    <string name="dropped">Брошено</string>
+
+    <string name="planned_with_count">Запланированно %1$d</string>
+    <string name="watching_with_count">Смотрю %1$d</string>
+    <string name="rewatching_with_count">Пересматриваю %1$d</string>
+    <string name="completed_with_count">Просмотренно %1$d</string>
+    <string name="on_hold_with_count">Отложено %1$d</string>
+    <string name="dropped_with_count">Брошено %1$d</string>
+    <string name="anime_poster">Anime poster</string>
+
+    <array name="statuses_with_count">
+        <item>@string/planned_with_count</item>
+        <item>@string/watching_with_count</item>
+        <item>@string/rewatching_with_count</item>
+        <item>@string/completed_with_count</item>
+        <item>@string/on_hold_with_count</item>
+        <item>@string/dropped_with_count</item>
+    </array>
 
 </resources>

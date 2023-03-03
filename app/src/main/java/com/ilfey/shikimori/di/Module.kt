@@ -20,7 +20,7 @@ val diModule
         }
 
         single {
-            Authenticator(storage = get())
+            Authenticator(storage = get(), authService = get())
         }
 
         single {
@@ -39,7 +39,6 @@ val diModule
                     AuthorizationFailedInterceptor(
                         authenticator = get(),
                         storage = get(),
-                        authorizationService = get(),
                     )
                 )
             }.build()

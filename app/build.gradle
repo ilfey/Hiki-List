@@ -18,11 +18,13 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
+        buildConfigField "String", "APP_URL", "\"${localProperty('shikimori.app_url')}\""
+        buildConfigField "String", "APP_NAME", "\"${localProperty('shikimori.app_name')}\""
         buildConfigField "String", "CLIENT_ID", "\"${localProperty('shikimori.client_id')}\""
         buildConfigField "String", "CLIENT_SECRET", "\"${localProperty('shikimori.client_secret')}\""
 
         manifestPlaceholders = [
-                appAuthRedirectScheme: "com.ilfey.shikimori"
+                appAuthRedirectScheme: applicationId
         ]
     }
 
@@ -77,6 +79,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.14.2'
     kapt 'com.github.bumptech.glide:compiler:4.14.2'
     implementation 'com.google.android.material:material:1.8.0'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 

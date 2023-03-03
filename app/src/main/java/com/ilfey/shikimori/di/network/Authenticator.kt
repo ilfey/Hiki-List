@@ -1,12 +1,14 @@
 package com.ilfey.shikimori.di.network
 
 import android.net.Uri
+import android.util.Log
 import com.ilfey.shikimori.BuildConfig
 import net.openid.appauth.*
 import kotlin.coroutines.suspendCoroutine
 
 class Authenticator(
     private val storage: Storage,
+    private val authService: AuthorizationService,
 ) {
     companion object {
         private const val AUTH_URL = "https://shikimori.one/oauth/authorize"
@@ -40,34 +42,29 @@ class Authenticator(
             BuildConfig.CLIENT_ID
         )
             .setGrantType(GrantTypeValues.REFRESH_TOKEN)
-            .setScopes(SCOPE)
             .setRefreshToken(refreshToken)
+            .setAdditionalParameters(mapOf("User-Agent" to BuildConfig.APP_NAME))
+            .setCodeVerifier(null)
             .build()
     }
 
     suspend fun performTokenRequestSuspend(
-        authService: AuthorizationService,
         tokenRequest: TokenRequest,
-    ) : Boolean {
-        return suspendCoroutine { continuation ->
+    ): Boolean {
+        return suspendCoroutine {
             authService.performTokenRequest(tokenRequest, clientAuthentication) { response, ex ->
                 when {
                     response != null -> {
-                        //получение токена произошло успешно
-
                         storage.accessToken = response.accessToken.orEmpty()
                         storage.refreshToken = response.refreshToken.orEmpty()
 //                        idToken
 
-                        continuation.resumeWith(Result.success(true))
+                        it.resumeWith(Result.success(true))
                     }
-                    //получение токенов произошло неуспешно, показываем ошибку
-                    ex != null -> continuation.resumeWith(Result.failure(ex))
+                    ex != null -> it.resumeWith(Result.failure(ex))
                     else -> error("unreachable")
                 }
             }
         }
     }
-
-
 }

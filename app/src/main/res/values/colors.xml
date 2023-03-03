@@ -10,4 +10,22 @@
 
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+
+    <color name="chart_planned">#FFB300</color>
+    <color name="chart_watching">#1E88E5</color>
+    <color name="chart_rewatching">#00ACC1</color>
+    <color name="chart_completed">#7CB342</color>
+    <color name="chart_on_hold">#FDD835</color>
+    <color name="chart_dropped">#E53935</color>
+    <color name="transparent">#0000</color>
+
+
+    <array name="chart_colors">
+        <item>@color/chart_planned</item> <!-- planned -->
+        <item>@color/chart_watching</item> <!-- watching -->
+        <item>@color/chart_rewatching</item> <!-- rewatching -->
+        <item>@color/chart_completed</item> <!-- completed -->
+        <item>@color/chart_on_hold</item> <!-- on_hold -->
+        <item>@color/chart_dropped</item> <!-- dropped -->
+    </array>
 </resources>

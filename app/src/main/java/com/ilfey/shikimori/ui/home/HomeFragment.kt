@@ -2,6 +2,7 @@ package com.ilfey.shikimori.ui.home
 
 import android.graphics.Color
 import android.net.Uri
+import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.TextPaint
@@ -11,17 +12,57 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
 import com.ilfey.shikimori.R
 import com.ilfey.shikimori.base.BaseFragment
 import com.ilfey.shikimori.databinding.FragmentHomeBinding
+import com.ilfey.shikimori.di.network.enums.ListTypes
+import com.ilfey.shikimori.di.network.models.UserRate
+import com.ilfey.shikimori.di.network.models.filterByStatus
+import com.ilfey.shikimori.ui.history.HistoryFragment
 import org.koin.android.ext.android.inject
 
-class HomeFragment : BaseFragment<FragmentHomeBinding>() {
+class HomeFragment : BaseFragment<FragmentHomeBinding>(), View.OnClickListener {
 
     private val viewModel by inject<HomeViewModel>()
 
     private val customTabsIntent = CustomTabsIntent.Builder().build()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        with(binding.chart) {
+            isSelected = false
+            isRotationEnabled = false
+//            isDrawHoleEnabled = false
+            description.isEnabled = false
+            isHighlightPerTapEnabled = false
+            setDrawEntryLabels(false)
+            setDrawCenterText(false)
+            transparentCircleRadius = 0f
+
+            setNoDataText("")
+
+            setExtraOffsets(55f, 0f, 0f, 0f)
+        }
+
+        with(binding.chart.legend) {
+            textSize = 16f
+            orientation = Legend.LegendOrientation.VERTICAL
+            verticalAlignment = Legend.LegendVerticalAlignment.TOP
+            horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
+            xOffset = 22f
+//            isEnabled = false
+        }
+
+        binding.historyBtn.setOnClickListener(this)
+        binding.favoritesBtn.setOnClickListener(this)
+    }
 
     override fun bindViewModel() {
         viewModel.user.observe(viewLifecycleOwner) {
@@ -58,6 +99,35 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 binding.website.visibility = View.GONE
             }
         }
+        viewModel.user_rates.observe(viewLifecycleOwner) {
+            setData(it)
+        }
+    }
+
+    private fun setData(rates: List<UserRate>) {
+        val statuses = arrayListOf(
+            rates.filterByStatus(ListTypes.PLANNED).count(),
+            rates.filterByStatus(ListTypes.WATCHING).count(),
+            rates.filterByStatus(ListTypes.REWATCHING).count(),
+            rates.filterByStatus(ListTypes.COMPLETED).count(),
+            rates.filterByStatus(ListTypes.ON_HOLD).count(),
+            rates.filterByStatus(ListTypes.DROPPED).count(),
+        )
+
+        val statuses_titles = resources.getStringArray(R.array.statuses_with_count)
+
+        val entries = statuses.mapIndexed { i, e ->
+            PieEntry(e.toFloat(), String.format(statuses_titles[i], e))
+        }
+
+        val dataSet = PieDataSet(entries, "")
+        dataSet.setDrawValues(false)
+//        dataSet.selectionShift = 10f
+        dataSet.colors = resources.getIntArray(R.array.chart_colors).toList()
+        val data = PieData(dataSet)
+
+        binding.chart.data = data
+        binding.chart.invalidate()
     }
 
     private fun getAge(age: Int): String {
@@ -70,8 +140,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         return getString(R.string.age_3, age)
     }
 
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.history_btn -> {
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToHistoryFragment())
+            }
+            R.id.favorites_btn -> {
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToFavoritesFragment())
+            }
+            else -> {}
+        }
+    }
+
     override fun onInflateView(
         inflater: LayoutInflater,
         container: ViewGroup?
     ) = FragmentHomeBinding.inflate(inflater)
+
 }

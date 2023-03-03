@@ -1,5 +1,6 @@
 package com.ilfey.shikimori.di.network
 
+import com.ilfey.shikimori.di.network.enums.*
 import com.ilfey.shikimori.di.network.models.*
 import retrofit2.Call
 import retrofit2.http.*
@@ -23,12 +24,12 @@ interface ShikimoriRepository {
     fun animes(
         @Query("page") page: Int? = null,
         @Query("limit") limit: Int? = null,
-        @Query("order") order: String? = null, // TODO: Move to enum
-        @Query("kind") kind: String? = null, // TODO: Move to enum
-        @Query("status") status: String? = null, // TODO: Move to enum
+        @Query("order") order: Order? = null, // Must be grouped
+        @Query("kind") kind: Kind? = null,
+        @Query("status") status: ListTypes? = null,
         @Query("season") season: String? = null,
         @Query("score") score: Int? = null,
-        @Query("duration") duration: String? = null, // TODO: Move to enum
+        @Query("duration") duration: Duration? = null,
         @Query("rating") rating: String? = null, // TODO: Move to enum
         @Query("genre") genre: String? = null,
         @Query("studio") studio: String? = null,
@@ -36,8 +37,8 @@ interface ShikimoriRepository {
         @Query("censored") censored: Boolean? = null,
         @Query("mylist") mylist: String? = null, // TODO: Move to enum
         @Query("ids") ids: String? = null, // TODO: Move to enum
-        @Query("exclude_ids") exclude_ids: String? = null, // TODO: Move to enum
-        @Query("search") search: String? = null, // TODO: Move to enum
+        @Query("exclude_ids") exclude_ids: String? = null,
+        @Query("search") search: String? = null,
     ): Call<List<Animes>>
 
     /**
@@ -56,6 +57,27 @@ interface ShikimoriRepository {
     @GET("/api/users/whoami")
     fun whoami(): Call<User>
 
+    /**
+     * Show user's favorites
+     * See: https://shikimori.one/api/doc/1.0/users/favourites
+     * */
+    @GET("/api/users/{id}/favourites")
+    fun favorites(
+        @Path("id") id: Long,
+    ): Call<Favourites>
+
+    /**
+     * Show user history
+     * See: https://shikimori.one/api/doc/1.0/users/history
+     * */
+    @GET("/api/users/{id}/history")
+    fun history(
+        @Path("id") id: Long,
+        @Query("page") page: Int? = null,
+        @Query("limit") limit: Int? = null,
+        @Query("target_id") target_id: Long? = null,
+        @Query("target_type") target_type: TargetType? = null,
+    ): Call<List<HistoryItem>>
 
     /**
      * Show an user rate
@@ -63,7 +85,7 @@ interface ShikimoriRepository {
      * */
     @GET("/api/v2/user_rates/{id}")
     fun user_rate(
-        @Path("id") id: Long
+        @Path("id") id: Long,
     ): Call<UserRate>
 
     /**
@@ -74,7 +96,7 @@ interface ShikimoriRepository {
     fun user_rates(
         @Query("user_id") user_id: Long,
         @Query("target_id") target_id: Long? = null,
-        @Query("target_type") target_type: String? = null, // enum
+        @Query("target_type") target_type: TargetType? = null, // enum
         @Query("status") status: String? = null, // TODO: Move to enum
         @Query("page") page: Int? = null,
         @Query("limit") limit: Int? = null,

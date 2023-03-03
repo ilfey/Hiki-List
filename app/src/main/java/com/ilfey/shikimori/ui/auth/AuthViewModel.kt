@@ -60,7 +60,6 @@ class AuthViewModel(
             runCatching {
                 Log.d("Oauth", "4. Change code to token. Url = ${tokenRequest.configuration.tokenEndpoint}, verifier = ${tokenRequest.codeVerifier}")
                 authRepository.performTokenRequestSuspend(
-                    authService = authService,
                     tokenRequest = tokenRequest
                 )
             }.onSuccess {

@@ -2,7 +2,6 @@ package com.ilfey.shikimori.di.network
 
 import android.util.Log
 import kotlinx.coroutines.runBlocking
-import net.openid.appauth.AuthorizationService
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
@@ -10,7 +9,6 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 
 class AuthorizationFailedInterceptor(
-    private val authorizationService: AuthorizationService,
     private val authenticator: Authenticator,
     private val storage: Storage,
 ) : Interceptor {
@@ -18,9 +16,11 @@ class AuthorizationFailedInterceptor(
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequestTimestamp = System.currentTimeMillis()
         val originalResponse = chain.proceed(chain.request())
-        return originalResponse
-            .takeIf { it.code != 401 }
-            ?: handleUnauthorizedResponse(chain, originalResponse, originalRequestTimestamp)
+        return when (originalResponse.code) {
+            401 -> handleUnauthorizedResponse(chain, originalResponse, originalRequestTimestamp)
+            else -> {originalResponse}
+        }
+//            ?: handleUnauthorizedResponse(chain, originalResponse, originalRequestTimestamp)
     }
 
     private fun handleUnauthorizedResponse(
@@ -75,11 +75,10 @@ class AuthorizationFailedInterceptor(
     private fun refreshToken(): Boolean {
         initLatch()
 
+        val refreshRequest = authenticator.getRefreshTokenRequest(storage.refreshToken.orEmpty())
         val tokenRefreshed = runBlocking {
             runCatching {
-                val refreshRequest =
-                    authenticator.getRefreshTokenRequest(storage.refreshToken.orEmpty())
-                authenticator.performTokenRequestSuspend(authorizationService, refreshRequest)
+                authenticator.performTokenRequestSuspend(refreshRequest)
             }.isSuccess
         }
 

@@ -23,6 +23,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
         }
         viewModel.isAuthorizedFlow.launchAndCollectIn(viewLifecycleOwner) {
             if (it) {
+                findNavController().navigate(AuthFragmentDirections.actionAuthFragmentToHomeFragment())
 //                updateIsLoading(it)
 //                viewModel.onAuthCodeReceived()
             }
@@ -57,15 +58,11 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
     }
 
     private fun handleAuthResponseIntent(intent: Intent) {
-        // пытаемся получить ошибку из ответа. null - если все ок
         val exception = AuthorizationException.fromIntent(intent)
-        // пытаемся получить запрос для обмена кода на токен, null - если произошла ошибка
         val tokenExchangeRequest = AuthorizationResponse.fromIntent(intent)
             ?.createTokenExchangeRequest()
         when {
-            // авторизация завершались ошибкой
             exception != null -> viewModel.onAuthCodeFailed(exception)
-            // авторизация прошла успешно, меняем код на токен
             tokenExchangeRequest != null ->
                 viewModel.onAuthCodeReceived(tokenExchangeRequest)
         }

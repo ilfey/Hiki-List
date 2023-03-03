@@ -1,11 +1,11 @@
 package com.ilfey.shikimori.ui.home
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ilfey.shikimori.di.network.ShikimoriRepository
 import com.ilfey.shikimori.di.network.Storage
 import com.ilfey.shikimori.di.network.models.User
+import com.ilfey.shikimori.di.network.models.UserRate
 import com.ilfey.shikimori.utils.RetrofitEnqueue.Companion.enqueue
 import com.ilfey.shikimori.utils.RetrofitEnqueue.Companion.Result
 
@@ -15,19 +15,39 @@ class HomeViewModel(
 ) : ViewModel() {
 
     val user = MutableLiveData<User>()
+    val user_rates = MutableLiveData<List<UserRate>>()
 
     init {
-        getUser()
+        getUser {
+            getUserRates(it.id)
+        }
+
     }
 
-    fun getUser() {
+    fun getUser(callback: ((User) -> Unit)? = null) {
         repository.whoami().enqueue {
+            when (it) {
+                is Result.Success -> {
+                    if (it.response.isSuccessful && it.response.body() != null) {
+                        storage.user_id = it.response.body()!!.id
+                        user.value = it.response.body()
+                        callback?.invoke(it.response.body()!!)
+                    }
+                }
+                is Result.Failure -> {}
+            }
+        }
+    }
+
+    fun getUserRates(user_id: Long) {
+        repository.user_rates(
+            user_id = user_id
+        ).enqueue {
             when (it) {
                 is Result.Success -> {
                     val res = it.response.body()
                     if (it.response.isSuccessful && res != null) {
-                        storage.user = res
-                        user.value = res!!
+                        user_rates.value = res!!
                     }
                 }
                 is Result.Failure -> {}

@@ -1,5 +1,6 @@
 package com.ilfey.shikimori.di.network
 
+import com.ilfey.shikimori.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
@@ -8,10 +9,6 @@ import okhttp3.Response
 class AuthorizationInterceptor(
     private val storage: Storage,
 ) : Interceptor {
-
-    companion object {
-        private const val USER_AGENT_SHIKIMORI = "ilfey"
-    }
 
     override fun intercept(chain: Interceptor.Chain): Response {
         return chain.request()
@@ -22,7 +19,7 @@ class AuthorizationInterceptor(
 
     private fun Request.addUserAgentHeader(): Request {
         return newBuilder().apply {
-            header("User-Agent", USER_AGENT_SHIKIMORI)
+            header("User-Agent", BuildConfig.APP_NAME)
         }.build()
     }
 
