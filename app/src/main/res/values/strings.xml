@@ -21,6 +21,8 @@
     <string name="on_hold_with_count">Отложено %1$d</string>
     <string name="dropped_with_count">Брошено %1$d</string>
     <string name="anime_poster">Anime poster</string>
+    <string name="starred">Избранное</string>
+    <string name="history">История</string>
 
     <array name="statuses_with_count">
         <item>@string/planned_with_count</item>

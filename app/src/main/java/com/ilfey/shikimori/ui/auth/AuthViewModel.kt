@@ -25,6 +25,8 @@ class AuthViewModel(
     private val authService: AuthorizationService,
 ) : ViewModel() {
 
+    private val customTabsIntent = CustomTabsIntent.Builder().build()
+
     private val openAuthPageEventChannel = Channel<Intent>(Channel.BUFFERED)
     private val toastEventChannel = Channel<Int>(Channel.BUFFERED)
     private val authSuccessEventChannel = Channel<Unit>(Channel.BUFFERED)
@@ -58,7 +60,10 @@ class AuthViewModel(
         viewModelScope.launch {
             loadingMutableStateFlow.value = true
             runCatching {
-                Log.d("Oauth", "4. Change code to token. Url = ${tokenRequest.configuration.tokenEndpoint}, verifier = ${tokenRequest.codeVerifier}")
+                Log.d(
+                    "Oauth",
+                    "4. Change code to token. Url = ${tokenRequest.configuration.tokenEndpoint}, verifier = ${tokenRequest.codeVerifier}"
+                )
                 authRepository.performTokenRequestSuspend(
                     tokenRequest = tokenRequest
                 )
@@ -74,11 +79,12 @@ class AuthViewModel(
     }
 
     fun openLoginPage() {
-        val customTabsIntent = CustomTabsIntent.Builder().build()
-
         val authRequest = authRepository.getAuthRequest()
 
-        Log.d("Oauth", "1. Generated verifier=${authRequest.codeVerifier},challenge=${authRequest.codeVerifierChallenge}")
+        Log.d(
+            "Oauth",
+            "1. Generated verifier=${authRequest.codeVerifier},challenge=${authRequest.codeVerifierChallenge}"
+        )
 
         val openAuthPageIntent = authService.getAuthorizationRequestIntent(
             authRequest,

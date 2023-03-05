@@ -9,7 +9,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class HistoryFragment : ListFragment() {
 
     override val viewModel by viewModel<HistoryViewModel>()
-    override val isRefreshEnabling = true
+    override val isRefreshEnabled = true
 
     private var listAdapter = ListAdapter()
 

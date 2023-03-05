@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="TextView" parent="Widget.MaterialComponents.TextView">
-        <item name="android:fontFamily">@font/inter</item>
+<!--        <item name="android:fontFamily">@font/inter</item>-->
+        <item name="android:fontFamily">@font/roboto</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">?android:textColor</item>
+    </style>
+
+    <style name="Button">
+
+    </style>
+
+    <style name="Button.Image">
+        <item name="android:background">@color/transparent</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">?colorPrimary</item>
+        <item name="android:drawableTint">?colorPrimary</item>
     </style>
 </resources>

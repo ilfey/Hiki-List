@@ -35,7 +35,7 @@ val diModule
                     )
                 }
                 addNetworkInterceptor(AuthorizationInterceptor(storage = get()))
-                addNetworkInterceptor(
+                addInterceptor(
                     AuthorizationFailedInterceptor(
                         authenticator = get(),
                         storage = get(),

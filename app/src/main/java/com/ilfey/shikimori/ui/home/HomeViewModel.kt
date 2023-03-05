@@ -18,10 +18,13 @@ class HomeViewModel(
     val user_rates = MutableLiveData<List<UserRate>>()
 
     init {
+        onRefresh()
+    }
+
+    fun onRefresh() {
         getUser {
             getUserRates(it.id)
         }
-
     }
 
     fun getUser(callback: ((User) -> Unit)? = null) {

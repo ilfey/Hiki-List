@@ -5,7 +5,8 @@
         <item name="android:textViewStyle">@style/TextView</item>
         <item name="android:navigationBarColor">?android:colorBackground</item>
         <item name="android:textColorPrimary">?android:colorBackground</item>
-        <!--        <item name="android:fontFamily">@font/inter</item>-->
+<!--        <item name="android:fontFamily">@font/inter</item>-->
+        <item name="android:fontFamily">@font/roboto</item>
         <item name="colorPrimary">@color/indigo_600</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorSecondary">@color/indigo_600</item>
@@ -14,7 +15,7 @@
     </style>
 
     <style name="AppTheme.Launch">
-        <!--        <item name="android:windowBackground">@drawable/splash_screen</item>-->
+        <item name="android:windowBackground">@drawable/splash_screen</item>
         <item name="android:colorBackground">#1F2937</item>
     </style>
 

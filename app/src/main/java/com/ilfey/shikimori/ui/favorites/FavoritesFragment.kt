@@ -7,7 +7,7 @@ import org.koin.android.ext.android.inject
 
 class FavoritesFragment : ListFragment() {
     override val viewModel by inject<FavoritesViewModel>()
-    override val isRefreshEnabling = true
+    override val isRefreshEnabled = true
 
     private var listAdapter = ListAdapter()
 

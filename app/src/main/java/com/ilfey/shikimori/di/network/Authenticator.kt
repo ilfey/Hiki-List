@@ -43,7 +43,7 @@ class Authenticator(
         )
             .setGrantType(GrantTypeValues.REFRESH_TOKEN)
             .setRefreshToken(refreshToken)
-            .setAdditionalParameters(mapOf("User-Agent" to BuildConfig.APP_NAME))
+//            .setAdditionalParameters(mapOf("User-Agent" to BuildConfig.APP_NAME))
             .setCodeVerifier(null)
             .build()
     }

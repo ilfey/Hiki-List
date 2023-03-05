@@ -24,8 +24,6 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
         viewModel.isAuthorizedFlow.launchAndCollectIn(viewLifecycleOwner) {
             if (it) {
                 findNavController().navigate(AuthFragmentDirections.actionAuthFragmentToHomeFragment())
-//                updateIsLoading(it)
-//                viewModel.onAuthCodeReceived()
             }
         }
 

@@ -18,7 +18,9 @@ class AuthorizationFailedInterceptor(
         val originalResponse = chain.proceed(chain.request())
         return when (originalResponse.code) {
             401 -> handleUnauthorizedResponse(chain, originalResponse, originalRequestTimestamp)
-            else -> {originalResponse}
+            else -> {
+                originalResponse
+            }
         }
 //            ?: handleUnauthorizedResponse(chain, originalResponse, originalRequestTimestamp)
     }
@@ -34,8 +36,7 @@ class AuthorizationFailedInterceptor(
                 chain,
                 latch,
                 requestTimestamp
-            )
-                ?: originalResponse
+            ) ?: originalResponse
             tokenUpdateTime > requestTimestamp -> updateTokenAndProceedChain(chain)
             else -> handleTokenNeedRefresh(chain) ?: originalResponse
         }

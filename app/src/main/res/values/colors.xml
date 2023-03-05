@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="logo_color">#fff</color>
+    <color name="ic_launcher_background">#1F2937</color>
+
     <color name="indigo_600">#3949AB</color>
 
     <color name="grey_50">#FAFAFA</color>
-
     <color name="blue_grey_50">#ECEFF1</color>
+
     <color name="blue_grey_500">#607D8B</color>
     <color name="blue_grey_700">#455A64</color>
 
@@ -17,7 +20,7 @@
     <color name="chart_completed">#7CB342</color>
     <color name="chart_on_hold">#FDD835</color>
     <color name="chart_dropped">#E53935</color>
-    <color name="transparent">#0000</color>
+    <color name="transparent">#00000000</color>
 
 
     <array name="chart_colors">

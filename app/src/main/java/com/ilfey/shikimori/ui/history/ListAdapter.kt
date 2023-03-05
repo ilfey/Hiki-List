@@ -50,6 +50,10 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
                     .with(binding.image.context)
                     .load(BuildConfig.APP_URL + item.target.image.original)
                     .into(binding.image)
+
+                binding.root.setOnClickListener{ v ->
+//                    TODO: start Anime fragment or activity
+                }
             }
         }
     }

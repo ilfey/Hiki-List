@@ -23,7 +23,7 @@ interface ShikimoriRepository {
     @GET("/api/animes")
     fun animes(
         @Query("page") page: Int? = null,
-        @Query("limit") limit: Int? = null,
+        @Query("limit") limit: Int = 50,
         @Query("order") order: Order? = null, // Must be grouped
         @Query("kind") kind: Kind? = null,
         @Query("status") status: ListTypes? = null,
@@ -51,22 +51,6 @@ interface ShikimoriRepository {
     ): Call<Anime>
 
     /**
-     * Show current user's brief info.
-     * See: https://shikimori.one/api/doc/1.0/users/whoami
-     * */
-    @GET("/api/users/whoami")
-    fun whoami(): Call<User>
-
-    /**
-     * Show user's favorites
-     * See: https://shikimori.one/api/doc/1.0/users/favourites
-     * */
-    @GET("/api/users/{id}/favourites")
-    fun favorites(
-        @Path("id") id: Long,
-    ): Call<Favourites>
-
-    /**
      * Show user history
      * See: https://shikimori.one/api/doc/1.0/users/history
      * */
@@ -74,7 +58,7 @@ interface ShikimoriRepository {
     fun history(
         @Path("id") id: Long,
         @Query("page") page: Int? = null,
-        @Query("limit") limit: Int? = null,
+        @Query("limit") limit: Int = 100,
         @Query("target_id") target_id: Long? = null,
         @Query("target_type") target_type: TargetType? = null,
     ): Call<List<HistoryItem>>
@@ -99,7 +83,7 @@ interface ShikimoriRepository {
         @Query("target_type") target_type: TargetType? = null, // enum
         @Query("status") status: String? = null, // TODO: Move to enum
         @Query("page") page: Int? = null,
-        @Query("limit") limit: Int? = null,
+        @Query("limit") limit: Int = 1000,
     ): Call<List<UserRate>>
 
     /**
@@ -128,4 +112,33 @@ interface ShikimoriRepository {
     fun replace_user_rate(
         // TODO: add body
     ): Call<UserRate>
+
+    /**
+     * Show current user's brief info.
+     * See: https://shikimori.one/api/doc/1.0/users/whoami
+     * */
+    @GET("/api/users/whoami")
+    fun whoami(): Call<User>
+
+    /**
+     * Show user's favorites
+     * See: https://shikimori.one/api/doc/1.0/users/favourites
+     * */
+    @GET("/api/users/{id}/favourites")
+    fun favorites(
+        @Path("id") id: Long,
+    ): Call<Favourites>
+
+    /**
+     * Show user's anime list
+     * See: https://shikimori.one/api/doc/1.0/users/anime_rates
+     * */
+    @GET("/api/users/{id}/anime_rates")
+    fun anime_rates(
+        @Path("id") id: Long,
+        @Query("page") page: Int? = null,
+        @Query("limit") limit: Int = 5000,
+        @Query("status") status: ListTypes? = null,
+        @Query("censored") censored: Boolean? = null,
+    ): Call<List<AnimeRate>>
 }

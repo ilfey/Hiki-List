@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.ilfey.shikimori.base.BaseFragment
 import com.ilfey.shikimori.databinding.FragmentListBinding
 import com.ilfey.shikimori.utils.getThemeColor
 
@@ -15,7 +14,7 @@ abstract class ListFragment : BaseFragment<FragmentListBinding>(),
     SwipeRefreshLayout.OnRefreshListener {
 
     abstract val viewModel: ListViewModel
-    abstract val isRefreshEnabling: Boolean
+    abstract val isRefreshEnabled: Boolean
 
     var layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
@@ -28,7 +27,7 @@ abstract class ListFragment : BaseFragment<FragmentListBinding>(),
             setProgressBackgroundColorSchemeColor(context.getThemeColor(com.google.android.material.R.attr.colorPrimary))
             setColorSchemeColors(context.getThemeColor(com.google.android.material.R.attr.colorOnPrimary))
             setOnRefreshListener(this@ListFragment)
-            isEnabled = this@ListFragment.isRefreshEnabling
+            isEnabled = this@ListFragment.isRefreshEnabled
         }
     }
 

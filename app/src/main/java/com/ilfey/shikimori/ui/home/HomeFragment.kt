@@ -11,8 +11,10 @@ import android.text.style.ClickableSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.CallSuper
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.navigation.fragment.findNavController
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
@@ -25,14 +27,16 @@ import com.ilfey.shikimori.di.network.enums.ListTypes
 import com.ilfey.shikimori.di.network.models.UserRate
 import com.ilfey.shikimori.di.network.models.filterByStatus
 import com.ilfey.shikimori.ui.history.HistoryFragment
+import com.ilfey.shikimori.utils.getThemeColor
 import org.koin.android.ext.android.inject
 
-class HomeFragment : BaseFragment<FragmentHomeBinding>(), View.OnClickListener {
+class HomeFragment : BaseFragment<FragmentHomeBinding>(), View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private val viewModel by inject<HomeViewModel>()
 
     private val customTabsIntent = CustomTabsIntent.Builder().build()
 
+    private val isRefreshEnabled = true
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -52,12 +56,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), View.OnClickListener {
         }
 
         with(binding.chart.legend) {
-            textSize = 16f
+            textSize = 14f
             orientation = Legend.LegendOrientation.VERTICAL
             verticalAlignment = Legend.LegendVerticalAlignment.TOP
             horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
             xOffset = 22f
 //            isEnabled = false
+        }
+
+        with(binding.refresh) {
+            setProgressBackgroundColorSchemeColor(context.getThemeColor(com.google.android.material.R.attr.colorPrimary))
+            setColorSchemeColors(context.getThemeColor(com.google.android.material.R.attr.colorOnPrimary))
+            setOnRefreshListener(this@HomeFragment)
+            isEnabled = this@HomeFragment.isRefreshEnabled
         }
 
         binding.historyBtn.setOnClickListener(this)
@@ -73,6 +84,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), View.OnClickListener {
                 .circleCrop()
                 .into(binding.avatar)
 
+            binding.username.text = it.nickname
             binding.age.text = getAge(it.full_years)
 
             if (it.website != null) {
@@ -152,9 +164,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), View.OnClickListener {
         }
     }
 
+    @CallSuper
+    override fun onRefresh() {
+        binding.refresh.isRefreshing = true
+        viewModel.onRefresh()
+        binding.refresh.isRefreshing = false
+    }
+
     override fun onInflateView(
         inflater: LayoutInflater,
         container: ViewGroup?
     ) = FragmentHomeBinding.inflate(inflater)
-
 }
