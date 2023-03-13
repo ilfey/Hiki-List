@@ -2,13 +2,13 @@ package com.ilfey.shikimori.di.network.enums
 
 import com.google.gson.annotations.SerializedName
 
-enum class AnimeStatus(val value: String) {
+enum class AnimeStatus {
     @SerializedName("anons")
-    ANONS("anons"),
+    ANONS,
 
     @SerializedName("ongoing")
-    ONGOING("ongoing"),
+    ONGOING,
 
-    @SerializedName("ongoing")
-    RELEASED("released"),
+    @SerializedName("released")
+    RELEASED,
 }

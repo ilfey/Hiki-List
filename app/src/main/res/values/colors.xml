@@ -5,9 +5,12 @@
 
     <color name="indigo_600">#3949AB</color>
 
-    <color name="grey_50">#FAFAFA</color>
-    <color name="blue_grey_50">#ECEFF1</color>
+    <color name="yellow_600">#FDD835</color>
 
+    <color name="grey_50">#FAFAFA</color>
+    <color name="grey_500">#9E9E9E</color>
+
+    <color name="blue_grey_50">#ECEFF1</color>
     <color name="blue_grey_500">#607D8B</color>
     <color name="blue_grey_700">#455A64</color>
 
@@ -30,5 +33,33 @@
         <item>@color/chart_completed</item> <!-- completed -->
         <item>@color/chart_on_hold</item> <!-- on_hold -->
         <item>@color/chart_dropped</item> <!-- dropped -->
+    </array>
+
+
+    <!-- эпик вин -->
+    <color name="epic_win">#7CB342</color>
+    <!-- великолепно -->
+    <color name="fabulous">#7CB342</color>
+    <!-- отлично -->
+    <color name="great">#7CB342</color>
+    <!-- хорошо -->
+    <color name="fine">#7CB342</color>
+    <!--    TODO -->
+    <!-- нормально -->
+    <color name="fine_2">#7CB342</color>
+    <!-- более-менее -->
+    <color name="more_or_less">#7CB342</color>
+    <!-- плохо -->
+    <color name="badly">#7CB342</color>
+    <!-- очень плохо -->
+    <color name="very_bad">#7CB342</color>
+    <!-- ужасно -->
+    <color name="terrible">#7CB342</color>
+    <!-- Хуже некуда -->
+    <color name="worse_than_ever">#7CB342</color>
+
+
+    <array name="chart_rates_colors">
+        <item></item>
     </array>
 </resources>

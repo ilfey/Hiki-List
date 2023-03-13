@@ -2,9 +2,9 @@ package com.ilfey.shikimori.di.network.enums
 
 import com.google.gson.annotations.SerializedName
 
-enum class TargetType(val value: String) {
+enum class TargetType {
     @SerializedName("Anime")
-    ANIME("Anime"),
+    ANIME,
     @SerializedName("Manga")
-    MANGA("Manga"),
+    MANGA,
 }

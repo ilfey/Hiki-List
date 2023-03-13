@@ -48,9 +48,8 @@ class HomeViewModel(
         ).enqueue {
             when (it) {
                 is Result.Success -> {
-                    val res = it.response.body()
-                    if (it.response.isSuccessful && res != null) {
-                        user_rates.value = res!!
+                    if (it.response.isSuccessful && it.response.body() != null) {
+                        user_rates.value = it.response.body()
                     }
                 }
                 is Result.Failure -> {}

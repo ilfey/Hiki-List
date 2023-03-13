@@ -3,6 +3,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -80,6 +81,7 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.14.2'
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'com.google.android.material:material:1.8.0'
 
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 

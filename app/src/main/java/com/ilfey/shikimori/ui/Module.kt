@@ -1,5 +1,6 @@
 package com.ilfey.shikimori.ui
 
+import com.ilfey.shikimori.ui.anime.AnimeViewModel
 import com.ilfey.shikimori.ui.auth.AuthViewModel
 import com.ilfey.shikimori.ui.favorites.FavoritesViewModel
 import com.ilfey.shikimori.ui.history.HistoryViewModel
@@ -10,6 +11,10 @@ import org.koin.dsl.module
 
 val uiModule
     get() = module {
+
+        viewModel {
+            AnimeViewModel(repository = get())
+        }
 
         viewModel {
             AuthViewModel(authRepository = get(), authService = get(), storage = get())

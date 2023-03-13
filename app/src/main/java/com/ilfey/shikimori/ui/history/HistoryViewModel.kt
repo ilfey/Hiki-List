@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.ilfey.shikimori.base.ListViewModel
 import com.ilfey.shikimori.di.network.ShikimoriRepository
 import com.ilfey.shikimori.di.network.Storage
-import com.ilfey.shikimori.di.network.enums.HistoryItem
+import com.ilfey.shikimori.di.network.models.HistoryItem
 import com.ilfey.shikimori.utils.RetrofitEnqueue.Companion.Result
 import com.ilfey.shikimori.utils.RetrofitEnqueue.Companion.enqueue
 

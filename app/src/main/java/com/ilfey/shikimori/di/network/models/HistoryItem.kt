@@ -1,4 +1,7 @@
-package com.ilfey.shikimori.di.network.enums
+package com.ilfey.shikimori.di.network.models
+
+import com.ilfey.shikimori.di.network.enums.AnimeStatus
+import com.ilfey.shikimori.di.network.enums.Kind
 
 data class HistoryItem(
     val id: Long,
@@ -17,8 +20,11 @@ data class HistoryItem(
         val status: AnimeStatus,
         val episodes: Int,
         val episodes_aired: Int,
-        val aired_on: String?, // Todo: Check this
-        val released_on: String?, // Todo: Check this
+        /**
+         * "yy-mm-dd"
+         * */
+        val aired_on: String?,
+        val released_on: String?,
     ) {
         data class Image(
             val original: String,

@@ -2,6 +2,7 @@ package com.ilfey.shikimori.ui.favorites
 
 import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ilfey.shikimori.base.ListFragment
 import org.koin.android.ext.android.inject
 
@@ -13,8 +14,11 @@ class FavoritesFragment : ListFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        with(binding.recycler) {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = listAdapter
+        }
 
-        binding.recycler.adapter = listAdapter
     }
 
     override fun bindViewModel() {

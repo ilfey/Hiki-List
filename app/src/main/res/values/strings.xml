@@ -7,22 +7,56 @@
     <string name="age_2">%1$d годa</string>
     <string name="age_3">%1$d лет</string>
     <string name="website">Сайт</string>
-    <string name="planned">Запланированно</string>
+    <string name="planned">Запланировано</string>
     <string name="watching">Смотрю</string>
     <string name="rewatching">Пересматриваю</string>
     <string name="completed">Просмотренно</string>
     <string name="on_hold">Отложено</string>
     <string name="dropped">Брошено</string>
 
-    <string name="planned_with_count">Запланированно %1$d</string>
+    <string name="planned_with_count">Запланировано %1$d</string>
     <string name="watching_with_count">Смотрю %1$d</string>
     <string name="rewatching_with_count">Пересматриваю %1$d</string>
     <string name="completed_with_count">Просмотренно %1$d</string>
     <string name="on_hold_with_count">Отложено %1$d</string>
     <string name="dropped_with_count">Брошено %1$d</string>
-    <string name="anime_poster">Anime poster</string>
+    <string name="anime_poster">Обложка аниме</string>
     <string name="starred">Избранное</string>
     <string name="history">История</string>
+    <string name="show_description">Показать описание</string>
+    <string name="hide_description">Скрыть описание</string>
+    <string name="on_people_lists">В списках у людей</string>
+    <string name="people_ratings">Оценки людей</string>
+    <string name="rating">Рейтинг</string>
+    <string name="your_rating">Ваша оценка</string>
+    <string name="common_rating">Общая оценка</string>
+    <string name="functionality_not_implemented_yet">Данный функционал еще не реализован</string>
+    <string name="rating_g">G</string>
+    <string name="rating_none">Рейтинг отсутствует</string>
+    <string name="rating_pg">PG</string>
+    <string name="rating_pg_13">PG-13</string>
+    <string name="rating_r">R</string>
+    <string name="rating_r_plus">R+</string>
+    <string name="rating_rx">Rx</string>
+
+    <string name="screenshot">Скриншот</string>
+
+    <string name="count_format">%1$d из %2$d</string>
+    <string name="screenshots">Скриншоты</string>
+    <string name="videos">Видео</string>
+    <string name="video">Видео</string>
+    <string name="add_to_list">Добавить в список</string>
+    <string name="add_to_starred">Добавить в избранное</string>
+    <string name="list">Список</string>
+
+    <array name="statuses">
+        <item>@string/planned</item>
+        <item>@string/watching</item>
+        <item>@string/rewatching</item>
+        <item>@string/completed</item>
+        <item>@string/on_hold</item>
+        <item>@string/dropped</item>
+    </array>
 
     <array name="statuses_with_count">
         <item>@string/planned_with_count</item>
@@ -32,5 +66,15 @@
         <item>@string/on_hold_with_count</item>
         <item>@string/dropped_with_count</item>
     </array>
+
+    <string name="action_settings">Settings</string>
+    <string name="no_description">Описание отсутствует</string>
+    <string name="anons">Анонс</string>
+    <string name="ongoing">Онгоинг</string>
+    <string name="released">Вышло</string>
+    <string name="anons_for">Анонсировано на %1$s</string>
+    <string name="ongoing_from">"Онгоинг с %1$s"</string>
+    <string name="released_on">"Вышло %1$s"</string>
+    <string name="to_list">В список</string>
 
 </resources>

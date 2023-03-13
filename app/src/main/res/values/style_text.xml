@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextAppearance.Shikimori.Headline5" parent="TextAppearance.MaterialComponents.Headline5">
+        <!-- ts 24 -->
+        <item name="fontFamily">@font/roboto</item>
+        <item name="android:textColor">?android:textColor</item>
+    </style>
+
+    <style name="TextAppearance.Shikimori.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
+        <!-- ts 20 -->
+        <item name="fontFamily">@font/roboto</item>
+        <item name="android:textColor">?android:textColor</item>
+    </style>
+
+    <style name="TextAppearance.Shikimori.Body1" parent="TextAppearance.MaterialComponents.Body1">
+        <!-- ts 16 -->
+        <item name="fontFamily">@font/roboto</item>
+        <item name="android:textColor">?android:textColor</item>
+    </style>
+
+    <style name="TextAppearance.Shikimori.Body2" parent="TextAppearance.MaterialComponents.Body2">
+        <!-- ts 14 -->
+        <item name="fontFamily">@font/roboto</item>
+        <item name="android:textColor">?android:textColor</item>
+    </style>
+
+    <style name="TextAppearance.Shikimori.Caption" parent="TextAppearance.MaterialComponents.Caption">
+        <!-- ts 12 -->
+        <item name="fontFamily">@font/roboto</item>
+        <item name="android:textColor">@color/grey_500</item>
+    </style>
+
+</resources>

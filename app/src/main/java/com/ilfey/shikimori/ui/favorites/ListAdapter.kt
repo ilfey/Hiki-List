@@ -1,15 +1,13 @@
 package com.ilfey.shikimori.ui.favorites
 
 import android.annotation.SuppressLint
-import android.text.Html
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ilfey.shikimori.BuildConfig
 import com.ilfey.shikimori.databinding.ItemFavoritesBinding
-import com.ilfey.shikimori.di.network.enums.Favourites
+import com.ilfey.shikimori.di.network.models.Favourites
 
 class ListAdapter : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
@@ -21,11 +19,9 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            ItemFavoritesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        )
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
+        ItemFavoritesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    )
 
     override fun getItemCount() = list.size
 

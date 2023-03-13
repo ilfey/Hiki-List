@@ -34,12 +34,57 @@
         android:id="@+id/history_fragment"
         android:name="com.ilfey.shikimori.ui.history.HistoryFragment"
         android:label="History"
-        tools:layout="@layout/fragment_list" />
+        tools:layout="@layout/fragment_list">
+        <action
+            android:id="@+id/action_history_fragment_to_anime_fragment"
+            app:destination="@id/anime_fragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/favorites_fragment"
         android:name="com.ilfey.shikimori.ui.favorites.FavoritesFragment"
         android:label="FavoritesFragment"
         tools:layout="@layout/fragment_list" />
+    <fragment
+        android:id="@+id/anime_fragment"
+        android:name="com.ilfey.shikimori.ui.anime.AnimeFragment"
+        android:label="fragment_anime"
+        tools:layout="@layout/fragment_anime">
+
+        <argument
+            android:name="id"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_anime_fragment_to_screenshots_fragment"
+            app:destination="@id/screenshots_fragment" />
+        <action
+            android:id="@+id/action_anime_fragment_to_anime_statistic_bottom_sheet"
+            app:destination="@id/anime_statistic_bottom_sheet"
+            app:popUpTo="@id/anime_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/screenshots_fragment"
+        android:name="com.ilfey.shikimori.ui.screenshots.ScreenshotsFragment"
+        android:label="ScreenshotsFragment"
+        tools:layout="@layout/fragment_screenshots">
+        <argument
+            android:name="screenshots"
+            app:argType="string[]" />
+        <argument
+            android:name="pos"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
+    <dialog
+        android:id="@+id/anime_statistic_bottom_sheet"
+        android:name="com.ilfey.shikimori.ui.anime.AnimeStatisticBottomSheet"
+        android:label="AnimeStatisticBottomSheet" >
+        <argument
+            android:name="rates"
+            app:argType="com.ilfey.shikimori.di.network.models.Anime$RatesScoresStats[]" />
+        <argument
+            android:name="lists"
+            app:argType="com.ilfey.shikimori.di.network.models.Anime$RatesStatusesStats[]" />
+    </dialog>
 
 </navigation>

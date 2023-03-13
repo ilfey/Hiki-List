@@ -2,6 +2,7 @@ package com.ilfey.shikimori.ui.history
 
 import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ilfey.shikimori.base.ListFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -16,7 +17,10 @@ class HistoryFragment : ListFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.recycler.adapter = listAdapter
+        with(binding.recycler) {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = listAdapter
+        }
     }
 
     override fun bindViewModel() {

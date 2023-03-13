@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.ilfey.shikimori.databinding.FragmentListBinding
 import com.ilfey.shikimori.utils.getThemeColor
@@ -16,12 +15,8 @@ abstract class ListFragment : BaseFragment<FragmentListBinding>(),
     abstract val viewModel: ListViewModel
     abstract val isRefreshEnabled: Boolean
 
-    var layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.recycler.layoutManager = layoutManager
 
         with(binding.refresh) {
             setProgressBackgroundColorSchemeColor(context.getThemeColor(com.google.android.material.R.attr.colorPrimary))

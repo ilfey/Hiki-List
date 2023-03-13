@@ -26,7 +26,6 @@ import com.ilfey.shikimori.databinding.FragmentHomeBinding
 import com.ilfey.shikimori.di.network.enums.ListTypes
 import com.ilfey.shikimori.di.network.models.UserRate
 import com.ilfey.shikimori.di.network.models.filterByStatus
-import com.ilfey.shikimori.ui.history.HistoryFragment
 import com.ilfey.shikimori.utils.getThemeColor
 import org.koin.android.ext.android.inject
 
@@ -115,7 +114,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), View.OnClickListener, 
             setData(it)
         }
     }
-
     private fun setData(rates: List<UserRate>) {
         val statuses = arrayListOf(
             rates.filterByStatus(ListTypes.PLANNED).count(),

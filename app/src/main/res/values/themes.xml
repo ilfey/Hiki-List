@@ -1,26 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar">
         <!--        <item name="android:windowBackground">@drawable/background</item>-->
-        <item name="android:textViewStyle">@style/TextView</item>
+        <item name="android:textViewStyle">@style/TextAppearance.Shikimori.Body1</item>
         <item name="android:navigationBarColor">?android:colorBackground</item>
         <item name="android:textColorPrimary">?android:colorBackground</item>
-<!--        <item name="android:fontFamily">@font/inter</item>-->
+        <!--        <item name="android:fontFamily">@font/inter</item>-->
         <item name="android:fontFamily">@font/roboto</item>
         <item name="colorPrimary">@color/indigo_600</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorSecondary">@color/indigo_600</item>
         <item name="colorOnSecondary">@color/white</item>
-        <item name="android:statusBarColor">?android:colorBackground</item>
+        <item name="android:statusBarColor">?attr/colorOnBackground</item>
+        <item name="textAppearanceHeadline5">@style/TextAppearance.Shikimori.Headline5</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.Shikimori.Headline6</item>
+        <item name="textAppearanceBody1">@style/TextAppearance.Shikimori.Body1</item>
+        <item name="textAppearanceBody2">@style/TextAppearance.Shikimori.Body2</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.Shikimori.Caption</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.Shikimori.OutlineButton</item>
+        <item name="buttonStyle">@style/Widget.Shikimori.Button</item>
+        <item name="actionBarSize">56dp</item>
     </style>
+
+    <!--    <style name="base.v24" parent="Theme.MaterialComponents.NoActionBar">-->
+
+    <!--    </style>-->
+
+    <!--    <style name="base.theme" parent="base.v24"/>-->
+
+    <!--    <style name="AppTheme.zxc" parent="base.theme"/>-->
 
     <style name="AppTheme.Launch">
         <item name="android:windowBackground">@drawable/splash_screen</item>
         <item name="android:colorBackground">#1F2937</item>
+        <item name="android:statusBarColor">?android:colorBackground</item>
     </style>
 
     <style name="AppTheme.Dark">
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar">false</item>
 
         <item name="android:colorBackground">@color/blue_grey_700</item>
         <item name="colorOnBackground">@color/blue_grey_500</item>
@@ -29,7 +47,7 @@
     </style>
 
     <style name="AppTheme.Light">
-        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightStatusBar">true</item>
 
         <item name="android:colorBackground">@color/blue_grey_50</item>
         <item name="colorOnBackground">@color/grey_50</item>

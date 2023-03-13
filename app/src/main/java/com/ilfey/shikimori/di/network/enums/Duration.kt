@@ -2,17 +2,17 @@ package com.ilfey.shikimori.di.network.enums
 
 import com.google.gson.annotations.SerializedName
 
-enum class Duration(val value: String) {
+enum class Duration {
     /**
      * Less than 10 minutes
      * */
-    @SerializedName("S") S("S"),
+    @SerializedName("S") S,
     /**
      * Less than 30 minutes
      * */
-    @SerializedName("D") D("D"),
+    @SerializedName("D") D,
     /**
      * More than 30 minutes
      * */
-    @SerializedName("F") F("F"),
+    @SerializedName("F") F,
 }

@@ -1,4 +1,4 @@
-package com.ilfey.shikimori.di.network.enums
+package com.ilfey.shikimori.di.network.models
 
 data class Favourites(
     val animes: List<Entry>,
