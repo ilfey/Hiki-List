@@ -60,4 +60,4 @@ data class AnimeRate(
     }
 }
 
-fun List<AnimeRate>.filterByAnimeListStatus(list: ListTypes) = this.filter { it.status == list }
+fun List<AnimeRate>.filterByAnimeListStatus(list: ListTypes) = filter { it.status == list }

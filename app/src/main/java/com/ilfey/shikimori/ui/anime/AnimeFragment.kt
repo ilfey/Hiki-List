@@ -1,28 +1,37 @@
 package com.ilfey.shikimori.ui.anime
 
 import android.animation.ObjectAnimator
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.*
 import android.widget.RatingBar
 import android.widget.RatingBar.OnRatingBarChangeListener
-import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.google.android.material.chip.Chip
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ilfey.shikimori.BuildConfig
 import com.ilfey.shikimori.R
 import com.ilfey.shikimori.base.BaseFragment
 import com.ilfey.shikimori.databinding.FragmentAnimeBinding
+import com.ilfey.shikimori.di.network.bodies.PatchUserRate
+import com.ilfey.shikimori.di.network.enums.AnimeStatus
+import com.ilfey.shikimori.di.network.enums.Kind.*
+import com.ilfey.shikimori.di.network.enums.ListTypes.*
+import com.ilfey.shikimori.di.network.enums.Rating.*
+import com.ilfey.shikimori.di.network.models.Anime
+import com.ilfey.shikimori.di.network.models.Role
+import com.ilfey.shikimori.di.network.models.characters
+import com.ilfey.shikimori.di.network.models.mainCharacters
 import com.ilfey.shikimori.utils.addBackButton
 import com.ilfey.shikimori.utils.dp
-import com.ilfey.shikimori.utils.getThemeColor
+import com.ilfey.shikimori.utils.gone
 import com.ilfey.shikimori.utils.toast
 import com.ilfey.shikimori.utils.widgets.HorizontalSpaceItemDecorator
 import org.koin.android.ext.android.inject
-import com.google.android.material.R as MaterialR
+import java.text.SimpleDateFormat
 
 
 class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener,
@@ -31,11 +40,14 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
     private val viewModel by inject<AnimeViewModel>()
     private val args by navArgs<AnimeFragmentArgs>()
 
-    private var isCollapsed = false
+    private var currentList = -1
+    private var descriptionIsCollapsed = false
     private var collapsedMaxLines = 4
+    private var posterUrl: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.getRoles(args.id)
         viewModel.getAnime(args.id)
     }
 
@@ -48,13 +60,62 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
             setOnMenuItemClickListener(this@AnimeFragment)
         }
 
-        binding.showDescriptionBtn.setOnClickListener(this)
+        binding.expandDescriptionBtn.setOnClickListener(this)
         binding.description.setOnClickListener(this)
+    }
+
+    private fun createSelectListDialog(): AlertDialog {
+        val builder = MaterialAlertDialogBuilder(requireContext())
+
+        val items = resources.getStringArray(R.array.statuses)
+        with(builder) {
+            setTitle(R.string.select_list)
+
+            setSingleChoiceItems(items, currentList) { dialog, index ->
+                viewModel.setStatus(
+                    args.id,
+                    PatchUserRate.UserRate(
+                        status = when (index) {
+                            0 -> { // PLANNED
+                                PLANNED
+                            }
+                            1 -> { // WATCHING
+                                WATCHING
+                            }
+                            2 -> { // REWATCHING
+                                REWATCHING
+                            }
+                            3 -> { // COMPLETED
+                                COMPLETED
+                            }
+                            4 -> { // ON_HOLD
+                                ON_HOLD
+                            }
+                            5 -> { // DROPPED
+                                DROPPED
+                            }
+                            else -> {
+                                PLANNED
+                            }
+                        }
+                    )
+                )
+
+//                context.toast()
+                currentList = index
+                dialog.dismiss()
+            }
+            setNegativeButton(R.string.cancel, null)
+        }
+
+        val dialog = builder.create()
+
+        return dialog
     }
 
     override fun onMenuItemClick(item: MenuItem) = when (item.itemId) {
         R.id.item_list -> {
-            context?.toast()
+            createSelectListDialog().show()
             true
         }
         R.id.item_statistic -> {
@@ -66,88 +127,202 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
             )
             true
         }
+        R.id.item_info -> {
+//            context?.toast()
+            findNavController().navigate(
+                AnimeFragmentDirections.actionAnimeFragmentToAnimeInfoBottomSheet(
+                    viewModel.anime.value!!
+                )
+            )
+            true
+        }
         else -> false
     }
 
     override fun bindViewModel() {
-        viewModel.anime.observe(viewLifecycleOwner) {
-            Glide
-                .with(this)
-                .load(BuildConfig.APP_URL + it.image.original)
-                .into(binding.poster)
+        viewModel.anime.observe(viewLifecycleOwner, this::onAnimeUpdate)
+        viewModel.roles.observe(viewLifecycleOwner, this::onRolesUpdate)
+    }
 
-            with(binding) {
-                name.text = it.name
-                title.text = it.russian
-                it.score.toFloat().let { score ->
-                    if (score != 0f) {
-                        scoreRatingBar.rating = score / 2
-                    } else {
-                        scoreRatingBar.visibility = View.GONE
-                    }
-                }
+    private fun onAnimeUpdate(anime: Anime) {
+        val dateFormat = SimpleDateFormat(
+            "dd MMMM yyyy",
+            requireContext().resources.configuration.locales.get(0),
+        )
+        posterUrl = BuildConfig.APP_URL + anime.image.original
 
-                if (it.description == null) {
-                    showDescriptionBtn.visibility = View.GONE
-                    description.text = getString(R.string.no_description)
-                } else {
-                    description.text = it.description
-                }
-//                userRating.text = it.user_rate?.score.toString()
-//                userRatingBar.rating = it.user_rate?.score?.toFloat()?.div(2) ?: 0f
-//                mpaaRating.text = when (it.rating) {
-//                    G -> getString(R.string.rating_g)
-//                    NONE -> getString(R.string.rating_none)
-//                    PG -> getString(R.string.rating_pg)
-//                    PG_13 -> getString(R.string.rating_pg_13)
-//                    R -> getString(R.string.rating_r)
-//                    R_PLUS -> getString(R.string.rating_r_plus)
-//                    RX -> getString(R.string.rating_rx)
-//                    null -> getString(R.string.rating_none)
-//                }
+        Glide
+            .with(this)
+            .load(posterUrl)
+            .into(binding.poster)
 
-                if (it.screenshots.isEmpty()) {
-                    screenshotsGroup.visibility = View.GONE
-                } else {
-                    if (screenshots.adapter == null) {
-                        screenshots.adapter = ScreenshotsAdapter(
-                            this@AnimeFragment,
-                            it.screenshots,
-                        )
-                        screenshots.addItemDecoration(
-                            HorizontalSpaceItemDecorator(
-                                videos.context.dp(12),
-                            ),
-                        )
-                    } else {
-                        (screenshots.adapter as ScreenshotsAdapter).setList(it.screenshots)
-                    }
-                }
-
-                if (it.videos.isEmpty()) {
-                    videosGroup.visibility = View.GONE
-                } else {
-                    if (videos.adapter == null) {
-                        videos.adapter = VideosAdapter(it.videos)
-                        videos.addItemDecoration(HorizontalSpaceItemDecorator(videos.context.dp(12)))
-                    } else {
-                        (videos.adapter as VideosAdapter).setList(it.videos)
-                    }
+        with(binding) {
+            title.text = anime.russian
+            name.text = anime.name
+            type.text = when (anime.kind) {
+                TV -> getString(R.string.type_tv)
+                MOVIE -> getString(R.string.type_movie)
+                OVA -> getString(R.string.type_ova)
+                ONA -> getString(R.string.type_ona)
+                SPECIAL -> getString(R.string.type_special)
+                MUSIC -> getString(R.string.type_music)
+                TV_13 -> getString(R.string.type_tv)
+                TV_24 -> getString(R.string.type_tv)
+                TV_48 -> getString(R.string.type_tv)
+                else -> {
+                    type.gone()
+                    ""
                 }
             }
-
-            if (it.studios.isNotEmpty()) {
-                it.studios.map { studio ->
-                    binding.genresContainer.addView(createChip(studio.name))
-                }
-            }
-
-            if (it.genres.isNotEmpty()) {
-                it.genres.map { genre ->
-                    binding.genresContainer.addView(createChip(genre.russian))
+            if (anime.episodes != 0) {
+                episodes.text = if (anime.episodes == anime.episodes_aired) {
+                    getString(R.string.episodes, anime.episodes)
+                } else {
+                    getString(R.string.episodes_of, anime.episodes_aired, anime.episodes)
                 }
             } else {
-                binding.genresContainer.visibility = View.GONE
+                episodes.gone()
+            }
+
+            mpaaRating.text = when (anime.rating) {
+                G -> getString(R.string.rating_g)
+                NONE -> {
+                    mpaaRating.gone()
+                    ""
+                }
+                PG -> getString(R.string.rating_pg)
+                PG_13 -> getString(R.string.rating_pg_13)
+                R -> getString(R.string.rating_r)
+                R_PLUS -> getString(R.string.rating_r_plus)
+                RX -> getString(R.string.rating_rx)
+                null -> {
+                    mpaaRating.gone()
+                    ""
+                }
+            }
+
+            status.text = when (anime.status) {
+                AnimeStatus.ANONS -> {
+                    if (anime.aired_on != null) {
+                        getString(R.string.anons_for, dateFormat.format(anime.aired_on))
+                    } else {
+                        getString(R.string.anons)
+                    }
+                }
+                AnimeStatus.ONGOING -> {
+                    if (anime.aired_on != null && anime.released_on != null) {
+                        getString(
+                            R.string.ongoing_from_to,
+                            dateFormat.format(anime.aired_on),
+                            dateFormat.format(anime.released_on)
+                        )
+                    } else if (anime.aired_on != null) {
+                        getString(R.string.ongoing_from, dateFormat.format(anime.aired_on))
+                    } else {
+                        getString(R.string.ongoing)
+                    }
+                }
+                AnimeStatus.RELEASED -> {
+                    if (anime.released_on != null) {
+                        getString(R.string.released_on, dateFormat.format(anime.released_on))
+                    } else {
+                        getString(R.string.released)
+                    }
+                }
+            }
+
+            anime.score.toFloat().let {
+                if (it != 0f) {
+                    scoreRatingBar.rating = it / 2
+                } else {
+                    scoreRatingBar.gone()
+                }
+            }
+
+            if (anime.description == null) {
+                expandDescriptionBtn.gone()
+                description.text = getString(R.string.no_description)
+            } else {
+                description.text = anime.description
+            }
+//                userRating.text = it.user_rate?.score.toString()
+//                userRatingBar.rating = it.user_rate?.score?.toFloat()?.div(2) ?: 0f
+
+
+            if (anime.screenshots.isEmpty()) {
+                screenshotsGroup.gone()
+            } else {
+                if (screenshots.adapter == null) {
+                    screenshots.adapter = ScreenshotsAdapter(
+                        this@AnimeFragment,
+                        anime.screenshots,
+                    )
+                    screenshots.addItemDecoration(
+                        HorizontalSpaceItemDecorator(
+                            videos.context.dp(12),
+                        ),
+                    )
+                } else {
+                    (screenshots.adapter as ScreenshotsAdapter).setList(anime.screenshots)
+                }
+            }
+
+            if (anime.videos.isEmpty()) {
+                videosGroup.gone()
+            } else {
+                if (videos.adapter == null) {
+                    videos.adapter = VideosAdapter(anime.videos)
+                    videos.addItemDecoration(HorizontalSpaceItemDecorator(videos.context.dp(12)))
+                } else {
+                    (videos.adapter as VideosAdapter).setList(anime.videos)
+                }
+            }
+        }
+
+        if (anime.studios.isNotEmpty()) {
+            anime.studios.map {
+                binding.genresContainer.addView(createChip(it.name))
+            }
+        }
+
+        if (anime.genres.isNotEmpty()) {
+            anime.genres.map {
+                binding.genresContainer.addView(createChip(it.russian))
+            }
+        } else {
+            binding.genresContainer.gone()
+        }
+
+        if (anime.user_rate != null) {
+            currentList = when (anime.user_rate.status) {
+                PLANNED -> 0
+                WATCHING -> 1
+                REWATCHING -> 2
+                COMPLETED -> 3
+                ON_HOLD -> 4
+                DROPPED -> 5
+            }
+        }
+    }
+
+    private fun onRolesUpdate(roles: List<Role>) {
+        val listCharacters = roles.characters()
+        val mainCharacters = listCharacters.mainCharacters()
+
+        with(binding) {
+            if (mainCharacters.isNotEmpty()) {
+                if (characters.adapter == null) {
+                    characters.adapter = CharacterAdapter(mainCharacters)
+                    characters.addItemDecoration(
+                        HorizontalSpaceItemDecorator(
+                            characters.context.dp(12),
+                        ),
+                    )
+                } else {
+                    (characters.adapter as CharacterAdapter).setList(mainCharacters)
+                }
+            } else {
+                charactersGroup.gone()
             }
         }
     }
@@ -165,34 +340,22 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
         val chip = Chip(requireContext())
 
         chip.text = text
-//        chip.textAlignment = TextView.TEXT_ALIGNMENT_CENTER
-//        chip.textSize = 12f
         chip.isEnabled = false
-        chip.chipBackgroundColor = ColorStateList.valueOf(
-            requireContext().getThemeColor(MaterialR.attr.colorOnBackground)
-        )
-        chip.setTextAppearance(R.style.TextAppearance_Shikimori_Body1)
+
         return chip
     }
 
-    override fun onClick(v: View) {
-        when (v.id) {
-            binding.showDescriptionBtn.id -> {
-                binding.showDescriptionBtn.text =
-                    getString(if (isCollapsed) R.string.show_description else R.string.hide_description)
-                cycleTextViewExpansion(binding.description)
-                isCollapsed = !isCollapsed
+    private fun expandDescription() {
+        val tv = binding.description
+        val btn = binding.expandDescriptionBtn
+
+        btn.text = getString(
+            when (descriptionIsCollapsed) {
+                true -> R.string.show_description
+                false -> R.string.hide_description
             }
-            else -> {}
-        }
-    }
+        )
 
-    override fun onRatingChanged(v: RatingBar, rating: Float, fromUser: Boolean) {
-//        binding.userRating.text = (rating * 2).toInt().toString()
-//        TODO post rating
-    }
-
-    private fun cycleTextViewExpansion(tv: TextView) {
         val anim = ObjectAnimator.ofInt(
             tv,
             "maxLines",
@@ -201,10 +364,25 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
 
         anim.duration = ((tv.lineCount - collapsedMaxLines) * 10).toLong()
         anim.start()
+
+        descriptionIsCollapsed = !descriptionIsCollapsed
+    }
+
+    override fun onClick(v: View) {
+        when (v.id) {
+//            binding.poster.id -> openScreenshot(arrayOf(posterUrl))
+
+            binding.expandDescriptionBtn.id -> expandDescription()
+        }
+    }
+
+    override fun onRatingChanged(v: RatingBar, rating: Float, fromUser: Boolean) {
+//        binding.userRating.text = (rating * 2).toInt().toString()
+//        TODO post rating
     }
 
     override fun onInflateView(
         inflater: LayoutInflater,
-        container: ViewGroup?
+        container: ViewGroup?,
     ) = FragmentAnimeBinding.inflate(inflater, container, false)
 }

@@ -1,5 +1,6 @@
 package com.ilfey.shikimori.di
 
+import com.google.gson.GsonBuilder
 import com.ilfey.shikimori.BuildConfig
 import com.ilfey.shikimori.di.network.*
 import net.openid.appauth.AuthorizationService
@@ -8,6 +9,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
 
 val diModule
     get() = module {
@@ -28,27 +30,33 @@ val diModule
         }
 
         single {
-           OkHttpClient.Builder().apply {
+            OkHttpClient.Builder().apply {
                 if (BuildConfig.DEBUG) {
                     addNetworkInterceptor(
                         HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
                     )
                 }
-                addNetworkInterceptor(AuthorizationInterceptor(storage = get()))
                 addInterceptor(
                     AuthorizationFailedInterceptor(
                         authenticator = get(),
                         storage = get(),
                     )
                 )
+                addInterceptor(AuthorizationInterceptor(storage = get()))
             }.build()
         }
 
         single {
+            val gson = GsonBuilder()
+                .setDateFormat("yyyy-MM-dd")
+                .create()
+
             Retrofit.Builder()
                 .client(get())
                 .baseUrl("https://shikimori.one/")
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(
+                    GsonConverterFactory.create(gson)
+                )
                 .build()
                 .create(ShikimoriRepository::class.java)
         }

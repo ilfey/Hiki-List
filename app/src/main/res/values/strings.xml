@@ -31,13 +31,14 @@
     <string name="your_rating">Ваша оценка</string>
     <string name="common_rating">Общая оценка</string>
     <string name="functionality_not_implemented_yet">Данный функционал еще не реализован</string>
-    <string name="rating_g">G</string>
+
+    <string name="rating_g">Рейтинг: G</string>
     <string name="rating_none">Рейтинг отсутствует</string>
-    <string name="rating_pg">PG</string>
-    <string name="rating_pg_13">PG-13</string>
-    <string name="rating_r">R</string>
-    <string name="rating_r_plus">R+</string>
-    <string name="rating_rx">Rx</string>
+    <string name="rating_pg">Рейтинг: PG</string>
+    <string name="rating_pg_13">Рейтинг: PG-13</string>
+    <string name="rating_r">Рейтинг: R</string>
+    <string name="rating_r_plus">Рейтинг: R+</string>
+    <string name="rating_rx">Рейтинг: Rx</string>
 
     <string name="screenshot">Скриншот</string>
 
@@ -76,5 +77,27 @@
     <string name="ongoing_from">"Онгоинг с %1$s"</string>
     <string name="released_on">"Вышло %1$s"</string>
     <string name="to_list">В список</string>
+    <string name="select_list">Выбирите список</string>
+    <string name="cancel">Отмена</string>
+    <string name="statistic">Статистика</string>
+    <string name="info">Информация</string>
+    <string name="other_titles">Альтернативные названия</string>
+    <string name="alt_titles">Другие названия: %1$s</string>
+    <string name="another_websites">Другие сайты</string>
+    <string name="type_tv">Тип: TV Сериал</string>
+    <string name="type_movie">Тип: Фильм</string>
+    <string name="type_ova">Тип: OVA</string>
+    <string name="type_ona">Тип: ONA</string>
+    <string name="type_special">Тип: Спешл</string>
+    <string name="type_music">Тип: Музыка</string>
+    <string name="episodes_of">"Эпизоды: %1$d/%2$d"</string>
+    <string name="episodes">Эпизоды: %1$d</string>
+    <string name="ongoing_from_to">Онгоинг с %1$s по %2$s</string>
+    <string name="fandubbers">Озвучка</string>
+    <string name="fansubbers">Субтитры</string>
+    <string name="in_english">По-английски: %1$s</string>
+    <string name="in_japanese">По-японски: %1$s</string>
+    <string name="studios">Студия: %1$s</string>
+    <string name="main_characters">Главные герои</string>
 
 </resources>

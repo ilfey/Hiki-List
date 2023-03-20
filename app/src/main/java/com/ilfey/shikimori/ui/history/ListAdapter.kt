@@ -16,6 +16,7 @@ import com.ilfey.shikimori.di.network.enums.AnimeStatus
 import com.ilfey.shikimori.di.network.enums.AnimeStatus.*
 import com.ilfey.shikimori.di.network.enums.Kind
 import com.ilfey.shikimori.di.network.models.HistoryItem
+import com.ilfey.shikimori.utils.gone
 import com.ilfey.shikimori.utils.toast
 import java.text.SimpleDateFormat
 import java.util.*
@@ -23,8 +24,6 @@ import java.util.*
 class ListAdapter : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
     private var list: List<HistoryItem> = listOf()
-    private val parseFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-
     @SuppressLint("NotifyDataSetChanged")
     fun setList(l: List<HistoryItem>) {
         list = l
@@ -58,11 +57,11 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
             binding.description.text = Html.fromHtml(item.description, Html.FROM_HTML_MODE_LEGACY)
 
             if (item.target == null) {
-                binding.title.visibility = View.GONE
-                binding.image.visibility = View.GONE
-                binding.name.visibility = View.GONE
-                binding.score.visibility = View.GONE
-                binding.status.visibility = View.GONE
+                binding.title.gone()
+                binding.image.gone()
+                binding.name.gone()
+                binding.score.gone()
+                binding.status.gone()
             } else {
                 binding.title.text = item.target.russian
                 binding.name.text = item.target.name
@@ -71,7 +70,7 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
                     if (score != 0f) {
                         binding.score.rating = score / 2
                     } else {
-                        binding.score.visibility = View.GONE
+                        binding.score.gone()
                     }
                 }
 
@@ -108,43 +107,25 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
             }
         }
 
-        private fun parseStatus(status: AnimeStatus, aired_on: String?, released_on: String?) =
+        private fun parseStatus(status: AnimeStatus, aired_on: Date?, released_on: Date?) =
             when (status) {
                 ANONS -> {
-                    val date = aired_on?.let {
-                        parseFormat.parse(
-                            it
-                        )
-                    }
-
-                    if (date != null) {
-                        context.getString(R.string.anons_for, dateFormat.format(date))
+                    if (aired_on != null) {
+                        context.getString(R.string.anons_for, dateFormat.format(aired_on))
                     } else {
                         context.getString(R.string.anons)
                     }
                 }
                 ONGOING -> {
-                    val date = aired_on?.let {
-                        parseFormat.parse(
-                            it
-                        )
-                    }
-
-                    if (date != null) {
-                        context.getString(R.string.ongoing_from, dateFormat.format(date))
+                    if (aired_on != null) {
+                        context.getString(R.string.ongoing_from, dateFormat.format(aired_on))
                     } else {
                         context.getString(R.string.ongoing)
                     }
                 }
                 RELEASED -> {
-                    val date = released_on?.let {
-                        parseFormat.parse(
-                            it
-                        )
-                    }
-
-                    if (date != null) {
-                        context.getString(R.string.released_on, dateFormat.format(date))
+                    if (released_on != null) {
+                        context.getString(R.string.released_on, dateFormat.format(released_on))
                     } else {
                         context.getString(R.string.released)
                     }

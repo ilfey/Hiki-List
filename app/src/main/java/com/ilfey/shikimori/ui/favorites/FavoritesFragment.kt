@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ilfey.shikimori.base.ListFragment
+import com.ilfey.shikimori.utils.gone
 import org.koin.android.ext.android.inject
 
 class FavoritesFragment : ListFragment() {
@@ -36,7 +37,7 @@ class FavoritesFragment : ListFragment() {
 //            list.addAll(it.producers)
 
             listAdapter.setList(it.animes)
-            binding.progress.visibility = View.GONE
+            binding.progress.gone()
         }
     }
 }

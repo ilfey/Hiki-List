@@ -61,6 +61,10 @@
             android:id="@+id/action_anime_fragment_to_anime_statistic_bottom_sheet"
             app:destination="@id/anime_statistic_bottom_sheet"
             app:popUpTo="@id/anime_fragment" />
+        <action
+            android:id="@+id/action_anime_fragment_to_anime_info_bottom_sheet"
+            app:destination="@id/anime_info_bottom_sheet"
+            app:popUpTo="@id/anime_fragment" />
     </fragment>
     <fragment
         android:id="@+id/screenshots_fragment"
@@ -76,6 +80,7 @@
             app:argType="integer" />
     </fragment>
     <dialog
+        tools:layout="@layout/sheet_anime_statistic"
         android:id="@+id/anime_statistic_bottom_sheet"
         android:name="com.ilfey.shikimori.ui.anime.AnimeStatisticBottomSheet"
         android:label="AnimeStatisticBottomSheet" >
@@ -85,6 +90,15 @@
         <argument
             android:name="lists"
             app:argType="com.ilfey.shikimori.di.network.models.Anime$RatesStatusesStats[]" />
+    </dialog>
+    <dialog
+        android:id="@+id/anime_info_bottom_sheet"
+        tools:layout="@layout/sheet_anime_info"
+        android:name="com.ilfey.shikimori.ui.anime.AnimeInfoBottomSheet"
+        android:label="AnimeInfoBottomSheet" >
+        <argument
+            android:name="anime"
+            app:argType="com.ilfey.shikimori.di.network.models.Anime" />
     </dialog>
 
 </navigation>

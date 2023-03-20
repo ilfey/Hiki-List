@@ -25,12 +25,12 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     ): View? {
         val binding = onInflateView(inflater, container)
         viewBinding = binding
+        bindViewModel()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bindViewModel()
     }
 
     override fun onDestroyView() {

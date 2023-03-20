@@ -21,7 +21,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/ShapeAppearance.Shikimori.Circle" />
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Shikimori.Circle"
+            tools:src="@tools:sample/avatars"/>
 
         <TextView
             android:id="@+id/username"
@@ -32,7 +33,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/avatar"
-            tools:text="Username" />
+            tools:text="@tools:sample/first_names" />
 
         <TextView
             android:id="@+id/age"
@@ -59,11 +60,11 @@
 
         <Button
             android:id="@+id/favorites_btn"
-            style="@style/Widget.Shikimori.ImageButton"
+            style="@style/Widget.Shikimori.IconButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:drawableTop="@drawable/ic_star"
+            android:drawableTop="@drawable/ic_star_outline"
             android:text="@string/starred"
             app:layout_constraintEnd_toStartOf="@+id/history_btn"
             app:layout_constraintHorizontal_bias="0.5"
@@ -72,7 +73,7 @@
 
         <Button
             android:id="@+id/history_btn"
-            style="@style/Widget.Shikimori.ImageButton"
+            style="@style/Widget.Shikimori.IconButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"

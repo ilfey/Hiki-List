@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.doOnPreDraw
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.ilfey.shikimori.R
@@ -18,13 +19,6 @@ class ScreenshotsFragment : BaseFragment<FragmentScreenshotsBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with(binding.pager) {
-            adapter = ViewPagerAdapter(args.screenshots)
-            currentItem = args.pos
-            offscreenPageLimit = 5
-            registerOnPageChangeCallback(pageChangeCallback)
-        }
-
         binding.toolbar.run {
             addBackButton { activity?.onBackPressedDispatcher?.onBackPressed() }
             title = String.format(
@@ -32,6 +26,12 @@ class ScreenshotsFragment : BaseFragment<FragmentScreenshotsBinding>() {
                 args.pos + 1,
                 args.screenshots.size,
             )
+        }
+        with(binding.pager) {
+            adapter = ViewPagerAdapter(args.screenshots)
+            setCurrentItem(args.pos, false)
+            offscreenPageLimit = 5
+            registerOnPageChangeCallback(pageChangeCallback)
         }
     }
 
@@ -47,6 +47,6 @@ class ScreenshotsFragment : BaseFragment<FragmentScreenshotsBinding>() {
 
     override fun onInflateView(
         inflater: LayoutInflater,
-        container: ViewGroup?
+        container: ViewGroup?,
     ) = FragmentScreenshotsBinding.inflate(inflater, container, false)
 }

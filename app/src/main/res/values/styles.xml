@@ -2,21 +2,25 @@
 <resources>
 
     <!-- Buttons -->
+    <style name="Widget.Shikimori.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="android:background">?colorSurface</item>
+        <item name="android:textColor">?colorOnSurface</item>
+    </style>
+    <!-- Buttons -->
 
-    <style name="Widget.Shikimori.ImageButton" parent="Widget.MaterialComponents.Button.TextButton">
+    <style name="Widget.Shikimori.IconButton" parent="Widget.Material3.Button.IconButton">
         <item name="android:textAllCaps">false</item>
-        <!--        <item name="android:background">@color/transparent</item>-->
         <item name="android:textSize">10sp</item>
         <item name="android:textColor">?colorPrimary</item>
         <item name="android:drawableTint">?colorPrimary</item>
     </style>
 
-    <style name="Widget.Shikimori.Button" parent="Widget.MaterialComponents.Button">
+    <style name="Widget.Shikimori.Button" parent="Widget.Material3.Button">
         <item name="android:textAllCaps">false</item>
         <item name="android:colorBackground">?colorPrimary</item>
     </style>
 
-    <style name="Widget.Shikimori.OutlineButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+    <style name="Widget.Shikimori.OutlineButton" parent="Widget.Material3.Button.OutlinedButton">
         <item name="android:textAllCaps">false</item>
         <item name="strokeWidth">1dp</item>
         <item name="strokeColor">?colorPrimary</item>
@@ -29,7 +33,7 @@
     </style>
 
     <style name="ShapeAppearance.Shikimori.Cover.Small" parent="">
-        <item name="cornerSize">6dp</item>
+        <item name="cornerSize">@dimen/small_corner</item>
     </style>
 
     <style name="ShapeAppearance.Shikimori.Circle" parent="">
@@ -39,11 +43,26 @@
 
     <!-- Chip -->
 
-    <style name="Widget.Shikimori.Chip" parent="Widget.MaterialComponents.Chip.Entry">
-        <item name="chipSurfaceColor">?colorPrimary</item>
-        <item name="android:textColor">?android:textColor</item>
-<!--        <item name="strokeColor">?attr/colorOutline</item>-->
-<!--        <item name="rippleColor">?attr/colorControlHighlight</item>-->
+    <style name="Widget.Shikimori.Chip" parent="Widget.Material3.Chip.Suggestion">
+        <item name="chipSurfaceColor">?colorSurface</item>
+        <item name="android:textColor">?colorOnSurface</item>
+        <!--        <item name="strokeColor">?attr/colorOutline</item>-->
+        <!--        <item name="rippleColor">?attr/colorControlHighlight</item>-->
+    </style>
+
+    <!-- AlertDialog -->
+
+    <style name="ThemeOverlay.Shikimori.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <!-- <item name="android:layout">@layout/m3_alert_dialog</item>-->
+<!--        <item name="materialAlertDialogTitleTextStyle">@style/TextAppearance.Shikimori.HeadlineLarge</item>-->
+        <item name="android:textColor">?colorOnSurface</item>
+        <item name="android:background">?colorSurface</item>
+        <item name="dialogCornerRadius">@dimen/alert_dialog_corner_size</item>
+    </style>
+
+    <!-- RecyclerView -->
+    <style name="Widget.Shikimori.RecyclerView" parent="">
+        <item name="android:scrollbarStyle">outsideOverlay</item>
     </style>
 
 </resources>

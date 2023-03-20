@@ -12,8 +12,15 @@ class AuthorizationInterceptor(
 
     override fun intercept(chain: Interceptor.Chain): Response {
         return chain.request()
-            .addUserAgentHeader()
-            .addTokenHeader()
+            .newBuilder().apply {
+                header("User-Agent", BuildConfig.APP_NAME)
+                if (storage.accessToken != null) {
+                    header("Authorization", "Bearer ${storage.accessToken}")
+                }
+            }.build()
+
+//            .addUserAgentHeader()
+//            .addTokenHeader()
             .let { chain.proceed(it) }
     }
 

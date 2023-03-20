@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--<item
+        android:id="@+id/item_star"
+        android:icon="@drawable/ic_star_outline"
+        android:title="@string/list"
+        app:showAsAction="ifRoom"/>-->
 
     <item
         android:id="@+id/item_list"
         android:icon="@drawable/ic_list"
         android:title="@string/list"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/item_statistic"
         android:icon="@drawable/ic_chart"
-        android:title="@string/list"
-        app:showAsAction="ifRoom"/>
+        android:title="@string/statistic"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/item_info"
+        android:icon="@drawable/ic_info"
+        android:title="@string/info"
+        app:showAsAction="ifRoom" />
 
 </menu>

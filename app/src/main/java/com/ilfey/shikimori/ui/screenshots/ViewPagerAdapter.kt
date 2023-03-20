@@ -7,7 +7,7 @@ import com.bumptech.glide.Glide
 import com.ilfey.shikimori.BuildConfig
 
 class ViewPagerAdapter(
-    private val list: Array<String>
+    private val list: Array<String>,
 ) : RecyclerView.Adapter<ViewPagerAdapter.ViewHolder>() {
 
     override fun getItemCount() = list.size
@@ -29,13 +29,12 @@ class ViewPagerAdapter(
     }
 
     inner class ViewHolder(
-        private val img: ImageView
+        private val img: ImageView,
     ) : RecyclerView.ViewHolder(img) {
-
         fun bind(item: String) {
             Glide
                 .with(img.context)
-                .load(BuildConfig.APP_URL + item)
+                .load(item)
                 .into(img)
         }
     }

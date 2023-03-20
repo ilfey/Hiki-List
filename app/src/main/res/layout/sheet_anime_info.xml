@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:overScrollMode="never"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/container_padding">
+
+        <TextView
+            android:id="@+id/type"
+            style="?textAppearanceBodyLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Тип: TV Сериал" />
+
+        <TextView
+            android:id="@+id/studio"
+            style="?textAppearanceBodyMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            tools:text="Студия: Passione" />
+
+        <TextView
+            style="?textAppearanceBodyLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/other_titles" />
+
+        <TextView
+            android:id="@+id/in_japanese"
+            style="?textAppearanceBodyMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            tools:text="По японски: 私の百合はお仕事です！" />
+
+        <TextView
+            android:id="@+id/in_english"
+            style="?textAppearanceBodyMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            tools:text="По английски: Yuri is My Job!" />
+
+        <TextView
+            android:id="@+id/alt_titles"
+            style="?textAppearanceBodyMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            tools:text="Другие названия: Schwestern in Liebe!,W atayuri" />
+
+        <TextView
+            android:id="@+id/textView_fandubbers"
+            style="?textAppearanceBodyLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/fandubbers" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fandubbers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:overScrollMode="never"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="5" />
+
+        <TextView
+            android:id="@+id/textView_fansubbers"
+            style="?textAppearanceBodyLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/fansubbers" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fansubbers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:overScrollMode="never"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="5" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

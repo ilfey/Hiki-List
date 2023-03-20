@@ -2,6 +2,7 @@ package com.ilfey.shikimori.di.network.models
 
 import com.ilfey.shikimori.di.network.enums.AnimeStatus
 import com.ilfey.shikimori.di.network.enums.Kind
+import java.util.Date
 
 data class HistoryItem(
     val id: Long,
@@ -20,11 +21,8 @@ data class HistoryItem(
         val status: AnimeStatus,
         val episodes: Int,
         val episodes_aired: Int,
-        /**
-         * "yy-mm-dd"
-         * */
-        val aired_on: String?,
-        val released_on: String?,
+        val aired_on: Date?,
+        val released_on: Date?,
     ) {
         data class Image(
             val original: String,

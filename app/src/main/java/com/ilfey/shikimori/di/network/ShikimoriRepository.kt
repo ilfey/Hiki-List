@@ -1,5 +1,6 @@
 package com.ilfey.shikimori.di.network
 
+import com.ilfey.shikimori.di.network.bodies.PatchUserRate
 import com.ilfey.shikimori.di.network.enums.*
 import com.ilfey.shikimori.di.network.models.*
 import retrofit2.Call
@@ -51,6 +52,15 @@ interface ShikimoriRepository {
     ): Call<Anime>
 
     /**
+     * Show a roles of anime
+     * See: https://shikimori.one/api/doc/1.0/animes/show
+     * */
+    @GET("/api/animes/{id}/roles")
+    fun animeRoles(
+        @Path("id") id: Long,
+    ): Call<List<Role>>
+
+    /**
      * Show user history
      * See: https://shikimori.one/api/doc/1.0/users/history
      * */
@@ -92,7 +102,8 @@ interface ShikimoriRepository {
      * */
     @POST("/api/v2/user_rates")
     fun create_user_rate(
-        // TODO: add body
+        @Path("id") id: Long,
+        @Body body: PatchUserRate,
     ): Call<UserRate>
 
     /**
@@ -101,14 +112,15 @@ interface ShikimoriRepository {
      * */
     @PATCH("/api/v2/user_rates/{id}")
     fun update_user_rate(
-        // TODO: add body
+        @Path("id") id: Long,
+        @Body body: PatchUserRate,
     ): Call<UserRate>
 
     /**
      * Update an user rate
      * See: https://shikimori.one/api/doc/2.0/user_rates/update
      * */
-    @PATCH("/api/v2/user_rates/{id}")
+    @PUT("/api/v2/user_rates/{id}")
     fun replace_user_rate(
         // TODO: add body
     ): Call<UserRate>

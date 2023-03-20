@@ -1,11 +1,14 @@
 package com.ilfey.shikimori.di.network.models
 
 import android.os.Parcelable
+import com.ilfey.shikimori.di.network.enums.AnimeStatus
 import com.ilfey.shikimori.di.network.enums.Kind
 import com.ilfey.shikimori.di.network.enums.ListTypes
 import com.ilfey.shikimori.di.network.enums.Rating
 import kotlinx.parcelize.Parcelize
+import java.util.Date
 
+@Parcelize
 data class Anime(
     val id: Long,
     val name: String,
@@ -14,16 +17,16 @@ data class Anime(
     val url: String,
     val kind: Kind,
     val score: String,
-    val status: String,
+    val status: AnimeStatus,
     val episodes: Int,
     val episodes_aired: Int,
-    val aired_on: String?,
-    val released_on: String?,
+    val aired_on: Date?,
+    val released_on: Date?,
     val rating: Rating?,
-    val english: List<String>,
-    val japanese: List<String>,
-    val synonyms: List<*>,
-    val license_name_ru: String?, // TODO: Check
+    val english: List<String?>,
+    val japanese: List<String?>,
+    val synonyms: List<String?>,
+    val license_name_ru: String?,
     val duration: Int,
     val description: String?,
 //    val description_html: String?, // TODO: Check
@@ -40,46 +43,52 @@ data class Anime(
     val updated_at: String,
     val next_episode_at: String?,
     val fansubbers: List<String>,
-    val fundubbers: List<String>,
+    val fandubbers: List<String>,
     val licensors: List<String>,
     val genres: List<Genre>,
     val studios: List<Studio>,
     val videos: List<Video>,
     val screenshots: List<Screenshot>,
     val user_rate: UserRate?,
-) {
+) : Parcelable {
+    @Parcelize
     data class Image(
         val original: String,
         val preview: String,
         val x96: String,
         val x48: String,
-    )
+    ) : Parcelable
+
     @Parcelize
     data class RatesScoresStats(
         val name: Int,
         val value: Int,
     ) : Parcelable
+
     @Parcelize
     data class RatesStatusesStats(
         val name: ListTypes,
         val value: Int,
-    ): Parcelable
+    ) : Parcelable
 
+    @Parcelize
     data class Genre(
         val id: Long,
         val name: String,
         val russian: String,
         val kind: String, // Anime
-    )
+    ) : Parcelable
 
+    @Parcelize
     data class Studio(
         val id: Long,
         val name: String,
         val filtered_name: String,
         val real: Boolean,
         val image: String,
-    )
+    ) : Parcelable
 
+    @Parcelize
     data class Video(
         val id: Long,
         val url: String,
@@ -88,22 +97,27 @@ data class Anime(
         val name: String,
         val kind: String, // Op
         val hosting: String,
-    )
+    ) : Parcelable
 
+    @Parcelize
     data class Screenshot(
         val original: String,
         val preview: String,
-    )
+    ) : Parcelable
 
+    @Parcelize
     data class UserRate(
         val id: Long,
         val score: Int,
+        val status: ListTypes,
         val text: String?,
         val episodes: Int,
-        val volumes: Int,
+        val chapters: Int?,
+        val volumes: Int?,
         val text_html: String,
         val rewatches: Int,
         val created_at: String,
         val updated_at: String,
-    )
+//        мб разрабам бэка стоит добавить поле is_starred? не?
+    ) : Parcelable
 }

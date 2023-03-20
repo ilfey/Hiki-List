@@ -10,12 +10,11 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.ilfey.shikimori.R
 import com.ilfey.shikimori.base.BaseBottomSheetDialogFragment
-import com.ilfey.shikimori.databinding.SheetAnimeChartsBinding
-import com.ilfey.shikimori.di.network.enums.ListTypes
+import com.ilfey.shikimori.databinding.SheetAnimeStatisticBinding
 import com.ilfey.shikimori.di.network.enums.ListTypes.*
 import com.ilfey.shikimori.di.network.models.Anime
 
-class AnimeStatisticBottomSheet : BaseBottomSheetDialogFragment<SheetAnimeChartsBinding>() {
+class AnimeStatisticBottomSheet : BaseBottomSheetDialogFragment<SheetAnimeStatisticBinding>() {
 
     private val args by navArgs<AnimeStatisticBottomSheetArgs>()
 
@@ -155,5 +154,5 @@ class AnimeStatisticBottomSheet : BaseBottomSheetDialogFragment<SheetAnimeCharts
     override fun onInflateView(
         inflater: LayoutInflater,
         container: ViewGroup?
-    ) = SheetAnimeChartsBinding.inflate(inflater, container, false)
+    ) = SheetAnimeStatisticBinding.inflate(inflater, container, false)
 }

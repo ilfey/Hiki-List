@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="logo_color">#fff</color>
     <color name="ic_launcher_background">#1F2937</color>
 
@@ -58,8 +59,8 @@
     <!-- Хуже некуда -->
     <color name="worse_than_ever">#7CB342</color>
 
-
     <array name="chart_rates_colors">
         <item></item>
     </array>
+
 </resources>

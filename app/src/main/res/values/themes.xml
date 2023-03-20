@@ -1,56 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar">
-        <!--        <item name="android:windowBackground">@drawable/background</item>-->
-        <item name="android:textViewStyle">@style/TextAppearance.Shikimori.Body1</item>
-        <item name="android:navigationBarColor">?android:colorBackground</item>
-        <item name="android:textColorPrimary">?android:colorBackground</item>
-        <!--        <item name="android:fontFamily">@font/inter</item>-->
-        <item name="android:fontFamily">@font/roboto</item>
-        <item name="colorPrimary">@color/indigo_600</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorSecondary">@color/indigo_600</item>
-        <item name="colorOnSecondary">@color/white</item>
-        <item name="android:statusBarColor">?attr/colorOnBackground</item>
-        <item name="textAppearanceHeadline5">@style/TextAppearance.Shikimori.Headline5</item>
-        <item name="textAppearanceHeadline6">@style/TextAppearance.Shikimori.Headline6</item>
-        <item name="textAppearanceBody1">@style/TextAppearance.Shikimori.Body1</item>
-        <item name="textAppearanceBody2">@style/TextAppearance.Shikimori.Body2</item>
-        <item name="textAppearanceCaption">@style/TextAppearance.Shikimori.Caption</item>
+    <style name="AppTheme" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <item name="colorPrimary">@color/md_theme_light_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_light_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_light_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_light_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/md_theme_light_secondary</item>
+        <item name="colorOnSecondary">@color/md_theme_light_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/md_theme_light_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/md_theme_light_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/md_theme_light_tertiary</item>
+        <item name="colorOnTertiary">@color/md_theme_light_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/md_theme_light_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/md_theme_light_onTertiaryContainer</item>
+        <item name="colorError">@color/md_theme_light_error</item>
+        <item name="colorErrorContainer">@color/md_theme_light_errorContainer</item>
+        <item name="colorOnError">@color/md_theme_light_onError</item>
+        <item name="colorOnErrorContainer">@color/md_theme_light_onErrorContainer</item>
+        <item name="android:colorBackground">@color/md_theme_light_background</item>
+        <item name="colorOnBackground">@color/md_theme_light_onBackground</item>
+        <item name="colorSurface">@color/md_theme_light_surface</item>
+        <item name="colorOnSurface">@color/md_theme_light_onSurface</item>
+        <item name="colorSurfaceVariant">@color/md_theme_light_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/md_theme_light_onSurfaceVariant</item>
+        <item name="colorOutline">@color/md_theme_light_outline</item>
+        <item name="colorOnSurfaceInverse">@color/md_theme_light_inverseOnSurface</item>
+        <item name="colorSurfaceInverse">@color/md_theme_light_inverseSurface</item>
+        <item name="colorPrimaryInverse">@color/md_theme_light_inversePrimary</item>
+
+        <item name="fontFamily">@font/roboto</item>
+
+        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.Shikimori.HeadlineLarge</item>
+        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.Shikimori.HeadlineMedium</item>
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.Shikimori.HeadlineSmall</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.Shikimori.BodyLarge</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.Shikimori.BodyMedium</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.Shikimori.BodySmall</item>
+
         <item name="materialButtonOutlinedStyle">@style/Widget.Shikimori.OutlineButton</item>
-        <item name="buttonStyle">@style/Widget.Shikimori.Button</item>
-        <item name="actionBarSize">56dp</item>
+        <item name="materialIconButtonStyle">@style/Widget.Shikimori.IconButton</item>
+        <item name="recyclerViewStyle">@style/Widget.Shikimori.RecyclerView</item>
+        <item name="materialButtonStyle">@style/Widget.Shikimori.Button</item>
+        <item name="toolbarStyle">@style/Widget.Shikimori.Toolbar</item>
+        <item name="chipStyle">@style/Widget.Shikimori.Chip</item>
+
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.Shikimori.MaterialAlertDialog</item>
+
     </style>
 
-    <!--    <style name="base.v24" parent="Theme.MaterialComponents.NoActionBar">-->
+    <!--    <style name="Base.v24" parent="Theme.MaterialComponents.NoActionBar">-->
 
     <!--    </style>-->
 
-    <!--    <style name="base.theme" parent="base.v24"/>-->
+    <!--    <style name="Base.Theme" parent="Base.v24"/>-->
 
-    <!--    <style name="AppTheme.zxc" parent="base.theme"/>-->
+    <!--    <style name="AppTheme.Shikimori" parent="Base.Theme"/>-->
 
     <style name="AppTheme.Launch">
         <item name="android:windowBackground">@drawable/splash_screen</item>
         <item name="android:colorBackground">#1F2937</item>
         <item name="android:statusBarColor">?android:colorBackground</item>
+        <item name="android:navigationBarColor">?android:colorBackground</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 
     <style name="AppTheme.Dark">
-        <item name="android:windowLightStatusBar">false</item>
+<!--        <item name="android:windowLightStatusBar">false</item>-->
 
-        <item name="android:colorBackground">@color/blue_grey_700</item>
-        <item name="colorOnBackground">@color/blue_grey_500</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textColorPrimary">@color/white</item>
+<!--        <item name="android:colorBackground">@color/blue_grey_700</item>-->
+<!--        <item name="colorOnBackground">@color/blue_grey_500</item>-->
+<!--        <item name="android:textColor">@color/white</item>-->
+<!--        <item name="android:textColorPrimary">@color/white</item>-->
     </style>
 
     <style name="AppTheme.Light">
+        <item name="android:statusBarColor">?colorSurface</item>
+        <item name="android:navigationBarColor">?colorSurface</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
         <item name="android:windowLightStatusBar">true</item>
 
-        <item name="android:colorBackground">@color/blue_grey_50</item>
-        <item name="colorOnBackground">@color/grey_50</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textColorPrimary">@color/black</item>
     </style>

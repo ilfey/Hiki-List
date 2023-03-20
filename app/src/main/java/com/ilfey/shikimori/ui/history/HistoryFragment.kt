@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ilfey.shikimori.base.ListFragment
+import com.ilfey.shikimori.utils.gone
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -28,7 +29,7 @@ class HistoryFragment : ListFragment() {
 
         viewModel.history.observe(viewLifecycleOwner) {
             listAdapter.setList(it)
-            binding.progress.visibility = View.GONE
+            binding.progress.gone()
         }
     }
 }

@@ -27,6 +27,7 @@ import com.ilfey.shikimori.di.network.enums.ListTypes
 import com.ilfey.shikimori.di.network.models.UserRate
 import com.ilfey.shikimori.di.network.models.filterByStatus
 import com.ilfey.shikimori.utils.getThemeColor
+import com.ilfey.shikimori.utils.gone
 import org.koin.android.ext.android.inject
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
@@ -84,9 +85,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), View.OnClickListener, 
                 .into(binding.avatar)
 
             binding.username.text = it.nickname
-            binding.age.text = getAge(it.full_years)
 
-            if (it.website != null) {
+            if (it.full_years != 0) {
+                binding.age.text = getAge(it.full_years)
+            } else {
+                binding.age.gone()
+            }
+
+            if (it.website?.isNotEmpty() == true) {
                 val text = getString(R.string.website)
                 val spannableString = SpannableStringBuilder(text)
 
@@ -107,7 +113,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), View.OnClickListener, 
                 binding.website.text = spannableString
                 binding.website.movementMethod = LinkMovementMethod.getInstance()
             } else {
-                binding.website.visibility = View.GONE
+                binding.website.gone()
             }
         }
         viewModel.user_rates.observe(viewLifecycleOwner) {
@@ -141,6 +147,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), View.OnClickListener, 
     }
 
     private fun getAge(age: Int): String {
+        if (age in 12..13) {
+            getString(R.string.age_3, age)
+        } else
         if (age % 10 == 1) {
             return getString(R.string.age_1, age)
         } else if (age % 10 in 2..4) {
