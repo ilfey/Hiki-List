@@ -26,6 +26,10 @@
         <item name="strokeColor">?colorPrimary</item>
     </style>
 
+    <style name="Widget.Shikimori.TextButton" parent="Widget.Material3.Button.TextButton">
+
+    </style>
+
     <!-- ShapeAppearance -->
 
     <style name="ShapeAppearance.Shikimori.Cover" parent="">

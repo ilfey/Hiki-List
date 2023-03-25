@@ -1,10 +1,10 @@
-package com.ilfey.shikimori.ui.anime
+package com.ilfey.shikimori.ui.anime.statistic
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.navArgs
+import androidx.fragment.app.FragmentManager
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
@@ -13,23 +13,38 @@ import com.ilfey.shikimori.base.BaseBottomSheetDialogFragment
 import com.ilfey.shikimori.databinding.SheetAnimeStatisticBinding
 import com.ilfey.shikimori.di.network.enums.ListTypes.*
 import com.ilfey.shikimori.di.network.models.Anime
+import com.ilfey.shikimori.di.network.models.parcelables.ParcelableScores
+import com.ilfey.shikimori.di.network.models.parcelables.ParcelableStatuses
+import com.ilfey.shikimori.utils.getParcelableCompat
+import com.ilfey.shikimori.utils.gone
+import com.ilfey.shikimori.utils.withArgs
 
-class AnimeStatisticBottomSheet : BaseBottomSheetDialogFragment<SheetAnimeStatisticBinding>() {
-
-    private val args by navArgs<AnimeStatisticBottomSheetArgs>()
+class StatisticBottomSheet : BaseBottomSheetDialogFragment<SheetAnimeStatisticBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initListsChart()
-        initRatesChart()
+        initStatusesChart()
+        initScoresChart()
 
-        setDataToListsChart(args.lists)
-        setDataToRatesChart(args.rates)
+        val scores = arguments?.getParcelableCompat<ParcelableScores>(ARG_SCORES)?.scores
+        val statuses = arguments?.getParcelableCompat<ParcelableStatuses>(ARG_STATUSES)?.statuses
+
+        if (scores != null) {
+            setDataToScoresChart(scores)
+        } else {
+            binding.chartScores.gone()
+        }
+
+        if (statuses != null) {
+            setDataToStatusesChart(statuses)
+        } else {
+            binding.chartStatuses.gone()
+        }
     }
 
-    private fun initListsChart() {
-        with(binding.chartLists) {
+    private fun initStatusesChart() {
+        with(binding.chartStatuses) {
             description.isEnabled = false
 
             xAxis.isEnabled = false
@@ -48,11 +63,13 @@ class AnimeStatisticBottomSheet : BaseBottomSheetDialogFragment<SheetAnimeStatis
 //            setFitBars(true)
         }
 
-        with(binding.chartLists.legend) {
+        with(binding.chartStatuses.legend) {
             textSize = 14f
             orientation = com.github.mikephil.charting.components.Legend.LegendOrientation.VERTICAL
-            verticalAlignment = com.github.mikephil.charting.components.Legend.LegendVerticalAlignment.TOP
-            horizontalAlignment = com.github.mikephil.charting.components.Legend.LegendHorizontalAlignment.RIGHT
+            verticalAlignment =
+                com.github.mikephil.charting.components.Legend.LegendVerticalAlignment.TOP
+            horizontalAlignment =
+                com.github.mikephil.charting.components.Legend.LegendHorizontalAlignment.RIGHT
             xOffset = 22f
 //            isEnabled = false
         }
@@ -78,8 +95,8 @@ class AnimeStatisticBottomSheet : BaseBottomSheetDialogFragment<SheetAnimeStatis
         }*/
     }
 
-    private fun initRatesChart() {
-        with(binding.chartRates) {
+    private fun initScoresChart() {
+        with(binding.chartScores) {
             description.isEnabled = false
             legend.isEnabled = false
 
@@ -94,7 +111,7 @@ class AnimeStatisticBottomSheet : BaseBottomSheetDialogFragment<SheetAnimeStatis
         }
     }
 
-    private fun setDataToListsChart(statuses: Array<Anime.RatesStatusesStats>) {
+    private fun setDataToStatusesChart(statuses: List<Anime.RatesStatusesStats>) {
         val colors = mutableListOf<Int>()
         val labels = mutableListOf<String>()
         val ctx = requireContext()
@@ -135,24 +152,41 @@ class AnimeStatisticBottomSheet : BaseBottomSheetDialogFragment<SheetAnimeStatis
         dataSet.setDrawValues(false)
 
 //        binding.listsChart.data = BarData(arrayListOf<IBarDataSet>(dataSet))
-        binding.chartLists.data = BarData(dataSet)
-        binding.chartLists.data.barWidth = 0.3f
-        binding.chartLists.invalidate()
+        binding.chartStatuses.data = BarData(dataSet)
+        binding.chartStatuses.data.barWidth = 0.3f
+        binding.chartStatuses.invalidate()
     }
 
-    private fun setDataToRatesChart(scores: Array<Anime.RatesScoresStats>) {
+    private fun setDataToScoresChart(scores: List<Anime.RatesScoresStats>) {
         val entries = scores.map { e ->
             BarEntry(e.name.toFloat(), e.value.toFloat())
         }
         val dataSet = BarDataSet(entries, "")
 
-        binding.chartRates.data = BarData(dataSet)
-        binding.chartRates.data.barWidth = 1f
-        binding.chartRates.invalidate()
+        binding.chartScores.data = BarData(dataSet)
+        binding.chartScores.data.barWidth = 1f
+        binding.chartScores.invalidate()
     }
 
     override fun onInflateView(
         inflater: LayoutInflater,
         container: ViewGroup?
     ) = SheetAnimeStatisticBinding.inflate(inflater, container, false)
+
+    companion object {
+        private const val ARG_STATUSES = "statuses"
+        private const val ARG_SCORES = "scores"
+
+        private const val TAG = "StatisticBottomSheet"
+        fun show(
+            fm: FragmentManager,
+            scores: List<Anime.RatesScoresStats>,
+            statuses: List<Anime.RatesStatusesStats>,
+        ) {
+            StatisticBottomSheet().withArgs(2){
+                putParcelable(ARG_STATUSES, ParcelableStatuses(statuses))
+                putParcelable(ARG_SCORES, ParcelableScores(scores))
+            }.show(fm, TAG)
+        }
+    }
 }

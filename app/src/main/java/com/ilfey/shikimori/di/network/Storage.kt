@@ -16,10 +16,6 @@ class Storage(context: Context) {
         get() = prefs.getString(KEY_REFRESH_TOKEN, null)
         set(value) = prefs.edit { putString(KEY_REFRESH_TOKEN, value) }
 
-    var user_id: Long
-        get() = prefs.getLong(KEY_USER_ID, 0)
-        set(value) = prefs.edit { putLong(KEY_USER_ID, value) }
-
     fun clear() = prefs.edit {
         clear()
     }
@@ -27,6 +23,5 @@ class Storage(context: Context) {
     companion object {
         private const val KEY_ACCESS_TOKEN = "access_token"
         private const val KEY_REFRESH_TOKEN = "refresh_token"
-        private const val KEY_USER_ID = "key_user_id"
     }
 }

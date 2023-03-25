@@ -4,36 +4,39 @@ import com.ilfey.shikimori.ui.anime.AnimeViewModel
 import com.ilfey.shikimori.ui.auth.AuthViewModel
 import com.ilfey.shikimori.ui.favorites.FavoritesViewModel
 import com.ilfey.shikimori.ui.history.HistoryViewModel
-import com.ilfey.shikimori.ui.home.HomeViewModel
+import com.ilfey.shikimori.ui.lists.ListsViewModel
+import com.ilfey.shikimori.ui.profile.ProfileViewModel
 import com.ilfey.shikimori.ui.main.MainViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val uiModule
     get() = module {
-
         viewModel {
-            AnimeViewModel(repository = get())
+            AnimeViewModel(settings = get(), repository = get())
         }
 
         viewModel {
-            AuthViewModel(authRepository = get(), authService = get(), storage = get())
+            AuthViewModel(storage = get(), repository = get(), service = get())
         }
 
         viewModel {
-            HistoryViewModel(storage = get(), repository = get())
+            HistoryViewModel(settings = get(), repository = get())
         }
 
         viewModel {
-            FavoritesViewModel(storage = get(), repository = get())
+            ListsViewModel(settings = get(), repository = get())
         }
 
         viewModel {
-            HomeViewModel(storage = get(), repository = get())
+            FavoritesViewModel(settings = get(), repository = get())
         }
 
         viewModel {
-            MainViewModel(storage = get())
+            ProfileViewModel(settings = get(), repository = get())
         }
 
+        viewModel {
+            MainViewModel(settings = get(), repository = get())
+        }
     }

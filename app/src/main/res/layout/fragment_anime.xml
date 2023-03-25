@@ -24,9 +24,9 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:overScrollMode="never"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -52,8 +52,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/poster"
-                app:layout_constraintTop_toBottomOf="@+id/title"
+                app:layout_constraintStart_toEndOf="@id/poster"
+                app:layout_constraintTop_toBottomOf="@id/title"
                 tools:text="Name" />
 
             <TextView
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/poster"
+                app:layout_constraintStart_toEndOf="@id/poster"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Anime title" />
 
@@ -84,8 +84,8 @@
                 android:stepSize="0.5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintStart_toEndOf="@+id/poster"
-                app:layout_constraintTop_toBottomOf="@+id/name"
+                app:layout_constraintStart_toEndOf="@id/poster"
+                app:layout_constraintTop_toBottomOf="@id/name"
                 tools:rating="4" />
 
             <TextView
@@ -96,8 +96,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/poster"
-                app:layout_constraintTop_toBottomOf="@+id/score_rating_bar"
+                app:layout_constraintStart_toEndOf="@id/poster"
+                app:layout_constraintTop_toBottomOf="@id/score_rating_bar"
                 tools:text="Тип: TV Сериал" />
 
             <TextView
@@ -108,8 +108,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/poster"
-                app:layout_constraintTop_toBottomOf="@+id/type"
+                app:layout_constraintStart_toEndOf="@id/poster"
+                app:layout_constraintTop_toBottomOf="@id/type"
                 tools:text="Эпизоды: 10/12" />
 
             <TextView
@@ -120,8 +120,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/poster"
-                app:layout_constraintTop_toBottomOf="@+id/episodes"
+                app:layout_constraintStart_toEndOf="@id/poster"
+                app:layout_constraintTop_toBottomOf="@id/episodes"
                 tools:text="Рейтинг: PG-13" />
 
             <TextView
@@ -132,8 +132,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/poster"
-                app:layout_constraintTop_toBottomOf="@+id/mpaa_rating"
+                app:layout_constraintStart_toEndOf="@id/poster"
+                app:layout_constraintTop_toBottomOf="@id/mpaa_rating"
                 tools:text="Онгоинг с 7 января 2023 по 25 марта 2023" />
 
             <!--    GENRES    -->
@@ -147,20 +147,16 @@
                 android:scrollbars="none"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/barrier"
+                app:layout_constraintTop_toBottomOf="@id/barrier"
                 tools:layout_height="32dp">
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/genres_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:foregroundGravity="center_horizontal"
-                    android:orientation="horizontal"
-                    app:chipSpacingHorizontal="5dp"
-                    app:chipSpacingVertical="0dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/title"
+                    app:layout_constraintTop_toBottomOf="@id/title"
                     app:singleSelection="true" />
 
             </HorizontalScrollView>
@@ -176,7 +172,7 @@
                 android:maxLines="4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/genres_scroll"
+                app:layout_constraintTop_toBottomOf="@id/genres_scroll"
                 tools:text="Description" />
 
             <Button
@@ -188,7 +184,7 @@
                 android:text="@string/show_description"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/description" />
+                app:layout_constraintTop_toBottomOf="@id/description" />
 
             <!--    CHARACTERS    -->
 
@@ -201,7 +197,7 @@
                 android:text="@string/main_characters"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/expand_description_btn" />
+                app:layout_constraintTop_toBottomOf="@id/expand_description_btn" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/characters"
@@ -213,7 +209,7 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/characters_tv"
+                app:layout_constraintTop_toBottomOf="@id/characters_tv"
                 tools:itemCount="2"
                 tools:listitem="@layout/item_character" />
 
@@ -228,7 +224,7 @@
                 android:text="@string/screenshots"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/characters" />
+                app:layout_constraintTop_toBottomOf="@id/characters" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/screenshots"
@@ -240,7 +236,7 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/screenshots_tv"
+                app:layout_constraintTop_toBottomOf="@id/screenshots_tv"
                 tools:itemCount="5" />
 
             <!--    VIDEOS    -->
@@ -254,7 +250,7 @@
                 android:text="@string/videos"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/screenshots" />
+                app:layout_constraintTop_toBottomOf="@id/screenshots" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/videos"
@@ -266,7 +262,7 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/videos_tv"
+                app:layout_constraintTop_toBottomOf="@id/videos_tv"
                 tools:itemCount="2"
                 tools:listitem="@layout/item_video" />
 

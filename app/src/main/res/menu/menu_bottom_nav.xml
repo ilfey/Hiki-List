@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.ilfey.shikimori.ScrollingActivity">
+
+    <item
+        android:id="@+id/nav_lists"
+        android:icon="@drawable/ic_checklist"
+        android:title="@string/lists" />
+
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/ic_person"
+        android:title="@string/profile" />
+</menu>

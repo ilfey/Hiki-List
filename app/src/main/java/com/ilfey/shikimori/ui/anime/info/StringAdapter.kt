@@ -1,4 +1,4 @@
-package com.ilfey.shikimori.ui.anime
+package com.ilfey.shikimori.ui.anime.info
 
 import android.annotation.SuppressLint
 import android.view.ViewGroup
@@ -30,13 +30,13 @@ class StringAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(list[position], position)
+        holder.bind(list[position])
     }
 
     inner class ViewHolder(
         private val tv: TextView,
     ) : RecyclerView.ViewHolder(tv) {
-        fun bind(item: String, position: Int) {
+        fun bind(item: String) {
             tv.text = item
         }
     }

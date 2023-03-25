@@ -2,7 +2,7 @@
 <resources>
 
     <color name="logo_color">#fff</color>
-    <color name="ic_launcher_background">#1F2937</color>
+    <color name="ic_launcher_background">#ECEFF1</color>
 
     <color name="indigo_600">#3949AB</color>
 

@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="12dp"
     android:background="@drawable/item_background"
     android:padding="@dimen/item_padding">
 
@@ -20,53 +19,52 @@
 
     <TextView
         android:id="@+id/description"
-        style="?attr/textAppearanceBody1"
+        style="?textAppearanceBodyLarge"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:textColor="?colorOnSurface"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/image"
+        app:layout_constraintStart_toEndOf="@id/image"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Description" />
 
     <TextView
         android:id="@+id/title"
-        style="?attr/textAppearanceBody2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:textColor="?colorOnSurfaceVariant"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/image"
-        app:layout_constraintTop_toBottomOf="@+id/description"
+        app:layout_constraintStart_toEndOf="@id/image"
+        app:layout_constraintTop_toBottomOf="@id/description"
         tools:text="Anime title" />
 
     <TextView
         android:id="@+id/name"
-        style="?attr/textAppearanceCaption"
+        style="?textAppearanceBodySmall"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:textColor="?colorOnSurfaceVariant"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/image"
-        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintStart_toEndOf="@id/image"
+        app:layout_constraintTop_toBottomOf="@id/title"
         tools:text="Anime name" />
 
     <TextView
         android:id="@+id/status"
-        style="?attr/textAppearanceBody2"
+        style="?textAppearanceBodySmall"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:textColor="?colorOnSurfaceVariant"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/image"
-        app:layout_constraintTop_toBottomOf="@+id/name"
+        app:layout_constraintStart_toEndOf="@id/image"
+        app:layout_constraintTop_toBottomOf="@id/name"
         tools:text="Status" />
 
     <RatingBar
@@ -85,8 +83,8 @@
         android:stepSize="0.5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/image"
-        app:layout_constraintTop_toBottomOf="@+id/status"
+        app:layout_constraintStart_toEndOf="@id/image"
+        app:layout_constraintTop_toBottomOf="@id/status"
         tools:rating="3.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

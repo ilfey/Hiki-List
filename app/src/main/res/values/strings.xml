@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Shikimori</string>
+    <string name="app_name">Hiki List</string>
     <string name="auth_canceled">Аутентификация не выполнена</string>
     <string name="sign_in">Войти</string>
     <string name="avatar">Аватар пользователя</string>
@@ -28,7 +28,7 @@
     <string name="on_people_lists">В списках у людей</string>
     <string name="people_ratings">Оценки людей</string>
     <string name="rating">Рейтинг</string>
-    <string name="your_rating">Ваша оценка</string>
+    <string name="your_score">Ваша оценка</string>
     <string name="common_rating">Общая оценка</string>
     <string name="functionality_not_implemented_yet">Данный функционал еще не реализован</string>
 
@@ -91,7 +91,11 @@
     <string name="type_special">Тип: Спешл</string>
     <string name="type_music">Тип: Музыка</string>
     <string name="episodes_of">"Эпизоды: %1$d/%2$d"</string>
+    <string name="episodes_of_null">"Эпизоды: %1$d/?"</string>
+    <string name="episodes_of_with_count">"Просмотрено: %1$d/%2$d (%3$d)"</string>
+    <string name="episodes_of_with_null">"Просмотрено: %1$d/%2$d (?)"</string>
     <string name="episodes">Эпизоды: %1$d</string>
+    <string name="episodes_with_count">Просмотрено: %1$d/%2$d</string>
     <string name="ongoing_from_to">Онгоинг с %1$s по %2$s</string>
     <string name="fandubbers">Озвучка</string>
     <string name="fansubbers">Субтитры</string>
@@ -99,5 +103,10 @@
     <string name="in_japanese">По-японски: %1$s</string>
     <string name="studios">Студия: %1$s</string>
     <string name="main_characters">Главные герои</string>
+    <string name="profile">Профиль</string>
+    <string name="lists">Списки</string>
+    <string name="list_is_empty">Список пуст</string>
+    <string name="your_score_with_score">"Ваша оценка: %1$d"</string>
+    <string name="sign_up">Зарегистрироваться</string>
 
 </resources>

@@ -3,12 +3,9 @@ package com.ilfey.shikimori.ui.anime
 import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.*
-import android.widget.RatingBar
-import android.widget.RatingBar.OnRatingBarChangeListener
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
+import androidx.fragment.app.commit
 import com.bumptech.glide.Glide
 import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -21,34 +18,39 @@ import com.ilfey.shikimori.di.network.enums.AnimeStatus
 import com.ilfey.shikimori.di.network.enums.Kind.*
 import com.ilfey.shikimori.di.network.enums.ListTypes.*
 import com.ilfey.shikimori.di.network.enums.Rating.*
-import com.ilfey.shikimori.di.network.models.Anime
-import com.ilfey.shikimori.di.network.models.Role
-import com.ilfey.shikimori.di.network.models.characters
-import com.ilfey.shikimori.di.network.models.mainCharacters
-import com.ilfey.shikimori.utils.addBackButton
-import com.ilfey.shikimori.utils.dp
-import com.ilfey.shikimori.utils.gone
-import com.ilfey.shikimori.utils.toast
+import com.ilfey.shikimori.di.network.models.*
+import com.ilfey.shikimori.ui.anime.info.InfoBottomSheet
+import com.ilfey.shikimori.ui.anime.statistic.StatisticBottomSheet
+import com.ilfey.shikimori.ui.screenshots.ScreenshotsFragment
+import com.ilfey.shikimori.utils.*
 import com.ilfey.shikimori.utils.widgets.HorizontalSpaceItemDecorator
 import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 
 
 class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener,
-    OnRatingBarChangeListener, Toolbar.OnMenuItemClickListener {
+    Toolbar.OnMenuItemClickListener {
 
     private val viewModel by inject<AnimeViewModel>()
-    private val args by navArgs<AnimeFragmentArgs>()
 
+    private val id by longArgument(ARG_ID)
+
+    private var rateId: Long? = null
     private var currentList = -1
     private var descriptionIsCollapsed = false
     private var collapsedMaxLines = 4
-    private var posterUrl: String = ""
+    private var posterUrl = ""
+    private var scoresStats = listOf<Anime.RatesScoresStats>()
+    private var statusesStats = listOf<Anime.RatesStatusesStats>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getRoles(args.id)
-        viewModel.getAnime(args.id)
+        if (id != null) {
+            viewModel.getRoles(id!!)
+            viewModel.getAnime(id!!)
+        } else {
+            context?.toast("zxc") // TODO: Ban
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,14 +59,14 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
         binding.toolbar.run {
             addBackButton { activity?.onBackPressedDispatcher?.onBackPressed() }
             inflateMenu(R.menu.anime_toolbar_menu)
-            setOnMenuItemClickListener(this@AnimeFragment)
+            setOnMenuItemClickListener(this@AnimeFragment) // TODO: Delegate this
         }
 
         binding.expandDescriptionBtn.setOnClickListener(this)
         binding.description.setOnClickListener(this)
     }
 
-    private fun createSelectListDialog(): AlertDialog {
+    private fun createSelectListDialog(): AlertDialog { // TODO: Delegate this
         val builder = MaterialAlertDialogBuilder(requireContext())
 
         val items = resources.getStringArray(R.array.statuses)
@@ -72,36 +74,21 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
             setTitle(R.string.select_list)
 
             setSingleChoiceItems(items, currentList) { dialog, index ->
-                viewModel.setStatus(
-                    args.id,
+                viewModel.setRate(
+                    rateId,
                     PatchUserRate.UserRate(
                         status = when (index) {
-                            0 -> { // PLANNED
-                                PLANNED
-                            }
-                            1 -> { // WATCHING
-                                WATCHING
-                            }
-                            2 -> { // REWATCHING
-                                REWATCHING
-                            }
-                            3 -> { // COMPLETED
-                                COMPLETED
-                            }
-                            4 -> { // ON_HOLD
-                                ON_HOLD
-                            }
-                            5 -> { // DROPPED
-                                DROPPED
-                            }
-                            else -> {
-                                PLANNED
-                            }
+                            0 -> PLANNED
+                            1 -> WATCHING
+                            2 -> REWATCHING
+                            3 -> COMPLETED
+                            4 -> ON_HOLD
+                            5 -> DROPPED
+                            else -> null
                         }
                     )
                 )
 
-//                context.toast()
                 currentList = index
                 dialog.dismiss()
             }
@@ -119,20 +106,24 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
             true
         }
         R.id.item_statistic -> {
-            findNavController().navigate(
-                AnimeFragmentDirections.actionAnimeFragmentToAnimeStatisticBottomSheet(
-                    viewModel.anime.value?.rates_scores_stats?.toTypedArray() ?: arrayOf(),
-                    viewModel.anime.value?.rates_statuses_stats?.toTypedArray() ?: arrayOf(),
-                )
+            StatisticBottomSheet.show(
+                parentFragmentManager,
+                viewModel.anime.value?.rates_scores_stats ?: listOf(),
+                viewModel.anime.value?.rates_statuses_stats ?: listOf(),
             )
             true
         }
         R.id.item_info -> {
 //            context?.toast()
-            findNavController().navigate(
-                AnimeFragmentDirections.actionAnimeFragmentToAnimeInfoBottomSheet(
-                    viewModel.anime.value!!
-                )
+            InfoBottomSheet.show(
+                parentFragmentManager,
+                viewModel.anime.value?.kind,
+                viewModel.anime.value?.studios?.map { studio -> studio.name }?.toTypedArray(),
+                viewModel.anime.value?.japanese?.filterNotNull()?.toTypedArray(),
+                viewModel.anime.value?.english?.filterNotNull()?.toTypedArray(),
+                viewModel.anime.value?.synonyms?.filterNotNull()?.toTypedArray(),
+                viewModel.anime.value?.fandubbers?.toTypedArray(),
+                viewModel.anime.value?.fansubbers?.toTypedArray(),
             )
             true
         }
@@ -141,6 +132,7 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
 
     override fun bindViewModel() {
         viewModel.anime.observe(viewLifecycleOwner, this::onAnimeUpdate)
+        viewModel.userRate.observe(viewLifecycleOwner, this::onUserRateUpdate)
         viewModel.roles.observe(viewLifecycleOwner, this::onRolesUpdate)
     }
 
@@ -151,6 +143,9 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
         )
         posterUrl = BuildConfig.APP_URL + anime.image.original
 
+        scoresStats = anime.rates_scores_stats
+        statusesStats = anime.rates_statuses_stats
+
         Glide
             .with(this)
             .load(posterUrl)
@@ -159,6 +154,7 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
         with(binding) {
             title.text = anime.russian
             name.text = anime.name
+
             type.text = when (anime.kind) {
                 TV -> getString(R.string.type_tv)
                 MOVIE -> getString(R.string.type_movie)
@@ -174,14 +170,56 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
                     ""
                 }
             }
+
+            /* YandereDev reference */
+
             if (anime.episodes != 0) {
-                episodes.text = if (anime.episodes == anime.episodes_aired) {
-                    getString(R.string.episodes, anime.episodes)
+                episodes.text = if (anime.user_rate?.episodes != 0) {
+                    if (anime.status == AnimeStatus.RELEASED) {
+                        getString(
+                            R.string.episodes_with_count,
+                            anime.user_rate!!.episodes,
+                            anime.episodes,
+                        )
+                    } else {
+                        getString(
+                            R.string.episodes_of_with_count,
+                            anime.user_rate!!.episodes,
+                            anime.episodes_aired,
+                            anime.episodes,
+                        )
+                    }
                 } else {
-                    getString(R.string.episodes_of, anime.episodes_aired, anime.episodes)
+                    if (anime.status == AnimeStatus.RELEASED) {
+                        getString(
+                            R.string.episodes,
+                            anime.episodes,
+                        )
+                    } else {
+                        getString(
+                            R.string.episodes_of,
+                            anime.episodes_aired,
+                            anime.episodes
+                        )
+                    }
                 }
             } else {
-                episodes.gone()
+                if (anime.status == AnimeStatus.ONGOING) {
+                    episodes.text = if (anime.user_rate?.episodes != 0) {
+                        getString(
+                            R.string.episodes_of_with_null,
+                            anime.user_rate!!.episodes,
+                            anime.episodes_aired,
+                        )
+                    } else {
+                        getString(
+                            R.string.episodes_of_null,
+                            anime.episodes_aired,
+                        )
+                    }
+                } else {
+                    episodes.gone()
+                }
             }
 
             mpaaRating.text = when (anime.rating) {
@@ -245,9 +283,6 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
             } else {
                 description.text = anime.description
             }
-//                userRating.text = it.user_rate?.score.toString()
-//                userRatingBar.rating = it.user_rate?.score?.toFloat()?.div(2) ?: 0f
-
 
             if (anime.screenshots.isEmpty()) {
                 screenshotsGroup.gone()
@@ -283,6 +318,8 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
             anime.studios.map {
                 binding.genresContainer.addView(createChip(it.name))
             }
+        } else {
+            binding.genresContainer.gone()
         }
 
         if (anime.genres.isNotEmpty()) {
@@ -292,16 +329,18 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
         } else {
             binding.genresContainer.gone()
         }
+    }
 
-        if (anime.user_rate != null) {
-            currentList = when (anime.user_rate.status) {
-                PLANNED -> 0
-                WATCHING -> 1
-                REWATCHING -> 2
-                COMPLETED -> 3
-                ON_HOLD -> 4
-                DROPPED -> 5
-            }
+    private fun onUserRateUpdate(rate: UserRate) {
+        rateId = rate.id
+
+        currentList = when (rate.status) {
+            PLANNED -> 0
+            WATCHING -> 1
+            REWATCHING -> 2
+            COMPLETED -> 3
+            ON_HOLD -> 4
+            DROPPED -> 5
         }
     }
 
@@ -328,12 +367,10 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
     }
 
     private fun openScreenshot(screenshots: Array<String>, pos: Int = 0) {
-        findNavController().navigate(
-            AnimeFragmentDirections.actionAnimeFragmentToScreenshotsFragment(
-                screenshots,
-                pos,
-            )
-        )
+        parentFragmentManager.commit {
+            add(R.id.container, ScreenshotsFragment.newInstance(screenshots, pos))
+            addToBackStack(null)
+        }
     }
 
     private fun createChip(text: String): Chip {
@@ -370,19 +407,21 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
 
     override fun onClick(v: View) {
         when (v.id) {
-//            binding.poster.id -> openScreenshot(arrayOf(posterUrl))
+//            R.id.poster -> openScreenshot(arrayOf(posterUrl))
 
-            binding.expandDescriptionBtn.id -> expandDescription()
+            R.id.expand_description_btn -> expandDescription()
         }
-    }
-
-    override fun onRatingChanged(v: RatingBar, rating: Float, fromUser: Boolean) {
-//        binding.userRating.text = (rating * 2).toInt().toString()
-//        TODO post rating
     }
 
     override fun onInflateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
     ) = FragmentAnimeBinding.inflate(inflater, container, false)
+
+    companion object {
+        private const val ARG_ID = "id"
+        fun newInstance(id: Long) = AnimeFragment().withArgs(1) {
+            putLong(ARG_ID, id)
+        }
+    }
 }

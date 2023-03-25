@@ -40,4 +40,8 @@ class FavoritesFragment : ListFragment() {
             binding.progress.gone()
         }
     }
+
+    companion object {
+        fun newInstance() = FavoritesFragment()
+    }
 }

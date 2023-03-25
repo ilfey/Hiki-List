@@ -6,7 +6,7 @@
     android:id="@+id/refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".ui.profile.ProfileFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -32,30 +32,30 @@
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/avatar"
+            app:layout_constraintTop_toBottomOf="@id/avatar"
             tools:text="@tools:sample/first_names" />
 
         <TextView
             android:id="@+id/age"
-            style="?attr/textAppearanceBody2"
+            style="?textAppearanceBodySmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/username"
+            app:layout_constraintTop_toBottomOf="@id/username"
             tools:text="Age" />
 
         <TextView
             android:id="@+id/website"
-            style="?attr/textAppearanceBody2"
+            style="?textAppearanceBodySmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:autoLink="web"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/age"
+            app:layout_constraintTop_toBottomOf="@id/age"
             tools:text="Site" />
 
         <Button
@@ -66,10 +66,10 @@
             android:layout_marginTop="32dp"
             android:drawableTop="@drawable/ic_star_outline"
             android:text="@string/starred"
-            app:layout_constraintEnd_toStartOf="@+id/history_btn"
+            app:layout_constraintEnd_toStartOf="@id/history_btn"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/website" />
+            app:layout_constraintTop_toBottomOf="@id/website" />
 
         <Button
             android:id="@+id/history_btn"
@@ -80,8 +80,8 @@
             android:drawableTop="@drawable/ic_history"
             android:text="@string/history"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/favorites_btn"
-            app:layout_constraintTop_toBottomOf="@+id/website" />
+            app:layout_constraintStart_toEndOf="@id/favorites_btn"
+            app:layout_constraintTop_toBottomOf="@id/website" />
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/chart"
@@ -90,7 +90,7 @@
             android:layout_marginTop="32dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/history_btn" />
+            app:layout_constraintTop_toBottomOf="@id/history_btn" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

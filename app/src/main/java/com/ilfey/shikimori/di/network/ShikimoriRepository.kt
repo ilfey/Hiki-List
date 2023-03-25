@@ -1,6 +1,7 @@
 package com.ilfey.shikimori.di.network
 
 import com.ilfey.shikimori.di.network.bodies.PatchUserRate
+import com.ilfey.shikimori.di.network.bodies.PostUserRate
 import com.ilfey.shikimori.di.network.enums.*
 import com.ilfey.shikimori.di.network.models.*
 import retrofit2.Call
@@ -102,8 +103,7 @@ interface ShikimoriRepository {
      * */
     @POST("/api/v2/user_rates")
     fun create_user_rate(
-        @Path("id") id: Long,
-        @Body body: PatchUserRate,
+        @Body body: PostUserRate,
     ): Call<UserRate>
 
     /**
@@ -150,7 +150,10 @@ interface ShikimoriRepository {
         @Path("id") id: Long,
         @Query("page") page: Int? = null,
         @Query("limit") limit: Int = 5000,
-        @Query("status") status: ListTypes? = null,
+        /**
+         * ListTypes
+         * */
+        @Query("status") status: String? = null,
         @Query("censored") censored: Boolean? = null,
     ): Call<List<AnimeRate>>
 }

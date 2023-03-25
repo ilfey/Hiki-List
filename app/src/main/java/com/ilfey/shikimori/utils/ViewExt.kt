@@ -34,3 +34,36 @@ fun View.invisible() {
 fun View.visible() {
     visibility = View.VISIBLE
 }
+
+/**
+ * check visible
+ * */
+fun View.isVisible(callback: ((View) -> Unit)? = null) =
+    if (visibility == View.VISIBLE) {
+        callback?.invoke(this)
+        true
+    } else {
+        false
+    }
+
+/**
+ * check gone
+ * */
+fun View.isGone(callback: ((View) -> Unit)? = null) =
+    if (visibility == View.VISIBLE) {
+        callback?.invoke(this)
+        true
+    } else {
+        false
+    }
+
+/**
+ * check invisible
+ * */
+fun View.isInvisible(callback: ((View) -> Unit)? = null) =
+    if (visibility == View.VISIBLE) {
+        callback?.invoke(this)
+        true
+    } else {
+        false
+    }

@@ -1,7 +1,9 @@
 package com.ilfey.shikimori.di.network.models
 
+import com.ilfey.shikimori.di.network.enums.AnimeStatus
 import com.ilfey.shikimori.di.network.enums.Kind
 import com.ilfey.shikimori.di.network.enums.ListTypes
+import java.util.Date
 
 data class AnimeRate(
     val id: Long,
@@ -46,10 +48,11 @@ data class AnimeRate(
         val url: String,
         val kind: Kind,
         val score: String,
+        val status: AnimeStatus,
         val episodes: Int,
         val episodes_aired: Int,
-        val aired_on: String?,
-        val released_on: String?,
+        val aired_on: Date,
+        val released_on: Date,
     ) {
         data class Image(
             val original: String,
@@ -59,5 +62,3 @@ data class AnimeRate(
         )
     }
 }
-
-fun List<AnimeRate>.filterByAnimeListStatus(list: ListTypes) = filter { it.status == list }

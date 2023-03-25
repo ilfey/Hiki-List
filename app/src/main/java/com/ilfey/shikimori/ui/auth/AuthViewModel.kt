@@ -21,8 +21,8 @@ import net.openid.appauth.TokenRequest
 
 class AuthViewModel(
     private val storage: Storage,
-    private val authRepository: Authenticator,
-    private val authService: AuthorizationService,
+    private val repository: Authenticator,
+    private val service: AuthorizationService,
 ) : ViewModel() {
 
     private val customTabsIntent = CustomTabsIntent.Builder().build()
@@ -32,10 +32,6 @@ class AuthViewModel(
     private val authSuccessEventChannel = Channel<Unit>(Channel.BUFFERED)
 
     private val loadingMutableStateFlow = MutableStateFlow(false)
-    private val isAuthorizeMutableStateFlow = MutableStateFlow(storage.accessToken != null)
-
-    val isAuthorizedFlow: Flow<Boolean>
-        get() = isAuthorizeMutableStateFlow.asStateFlow()
 
     val openAuthPageFlow: Flow<Intent>
         get() = openAuthPageEventChannel.receiveAsFlow()
@@ -64,7 +60,7 @@ class AuthViewModel(
                     "Oauth",
                     "4. Change code to token. Url = ${tokenRequest.configuration.tokenEndpoint}, verifier = ${tokenRequest.codeVerifier}"
                 )
-                authRepository.performTokenRequestSuspend(
+                repository.performTokenRequestSuspend(
                     tokenRequest = tokenRequest
                 )
             }.onSuccess {
@@ -79,14 +75,14 @@ class AuthViewModel(
     }
 
     fun openLoginPage() {
-        val authRequest = authRepository.getAuthRequest()
+        val authRequest = repository.getAuthRequest()
 
         Log.d(
             "Oauth",
             "1. Generated verifier=${authRequest.codeVerifier},challenge=${authRequest.codeVerifierChallenge}"
         )
 
-        val openAuthPageIntent = authService.getAuthorizationRequestIntent(
+        val openAuthPageIntent = service.getAuthorizationRequestIntent(
             authRequest,
             customTabsIntent
         )
@@ -97,6 +93,6 @@ class AuthViewModel(
 
     override fun onCleared() {
         super.onCleared()
-        authService.dispose()
+        service.dispose()
     }
 }

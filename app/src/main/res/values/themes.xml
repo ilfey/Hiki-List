@@ -60,7 +60,7 @@
 
     <style name="AppTheme.Launch">
         <item name="android:windowBackground">@drawable/splash_screen</item>
-        <item name="android:colorBackground">#1F2937</item>
+        <item name="android:colorBackground">@color/md_theme_light_background</item>
         <item name="android:statusBarColor">?android:colorBackground</item>
         <item name="android:navigationBarColor">?android:colorBackground</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>

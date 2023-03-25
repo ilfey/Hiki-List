@@ -43,7 +43,6 @@ class Authenticator(
         )
             .setGrantType(GrantTypeValues.REFRESH_TOKEN)
             .setRefreshToken(refreshToken)
-//            .setAdditionalParameters(mapOf("User-Agent" to BuildConfig.APP_NAME))
             .setCodeVerifier(null)
             .build()
     }
@@ -57,7 +56,6 @@ class Authenticator(
                     response != null -> {
                         storage.accessToken = response.accessToken.orEmpty()
                         storage.refreshToken = response.refreshToken.orEmpty()
-//                        idToken
 
                         it.resumeWith(Result.success(true))
                     }

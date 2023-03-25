@@ -104,20 +104,4 @@ data class Anime(
         val original: String,
         val preview: String,
     ) : Parcelable
-
-    @Parcelize
-    data class UserRate(
-        val id: Long,
-        val score: Int,
-        val status: ListTypes,
-        val text: String?,
-        val episodes: Int,
-        val chapters: Int?,
-        val volumes: Int?,
-        val text_html: String,
-        val rewatches: Int,
-        val created_at: String,
-        val updated_at: String,
-//        мб разрабам бэка стоит добавить поле is_starred? не?
-    ) : Parcelable
 }

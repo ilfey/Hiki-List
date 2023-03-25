@@ -3,19 +3,19 @@ package com.ilfey.shikimori.ui.anime
 import android.annotation.SuppressLint
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
+import androidx.fragment.app.commit
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.imageview.ShapeableImageView
 import com.ilfey.shikimori.BuildConfig
 import com.ilfey.shikimori.R
 import com.ilfey.shikimori.di.network.models.Anime
+import com.ilfey.shikimori.ui.screenshots.ScreenshotsFragment
 import com.ilfey.shikimori.utils.dp
 
 
 class ScreenshotsAdapter(
-    private val fragment: Fragment,
+    private val fragment: AnimeFragment,
     private var list: List<Anime.Screenshot>,
 ) : RecyclerView.Adapter<ScreenshotsAdapter.ViewHolder>() {
 
@@ -58,11 +58,10 @@ class ScreenshotsAdapter(
                 .into(img)
 
             img.setOnClickListener {
-                findNavController(fragment).navigate(
-                    AnimeFragmentDirections.actionAnimeFragmentToScreenshotsFragment(
-                        screenshotsUrl, position
-                    )
-                )
+                fragment.parentFragmentManager.commit {
+                    add(R.id.container, ScreenshotsFragment.newInstance(screenshotsUrl, position))
+                    addToBackStack(null)
+                }
             }
         }
     }

@@ -1,10 +1,10 @@
 package com.ilfey.shikimori.ui.history
 
-import android.os.Bundle
-import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.ilfey.shikimori.R
 import com.ilfey.shikimori.base.ListFragment
+import com.ilfey.shikimori.di.network.models.HistoryItem
 import com.ilfey.shikimori.utils.gone
+import com.ilfey.shikimori.utils.widgets.VerticalSpaceItemDecorator
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -13,23 +13,27 @@ class HistoryFragment : ListFragment() {
     override val viewModel by viewModel<HistoryViewModel>()
     override val isRefreshEnabled = true
 
-    private var listAdapter = ListAdapter()
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        with(binding.recycler) {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            adapter = listAdapter
-        }
+    override fun bindViewModel() {
+        viewModel.history.observe(viewLifecycleOwner, this::onHistoryUpdate)
     }
 
-    override fun bindViewModel() {
-        super.bindViewModel()
-
-        viewModel.history.observe(viewLifecycleOwner) {
-            listAdapter.setList(it)
-            binding.progress.gone()
+    private fun onHistoryUpdate(history: List<HistoryItem>) {
+        with(binding.recycler) {
+            if (adapter == null) {
+                adapter = ListAdapter(this@HistoryFragment)
+                addItemDecoration(
+                    VerticalSpaceItemDecorator(
+                        resources.getDimensionPixelOffset(R.dimen.container_padding)
+                    )
+                )
+            }
+            (adapter as ListAdapter).setList(history)
         }
+
+        binding.progress.gone()
+    }
+
+    companion object {
+        fun newInstance() = HistoryFragment()
     }
 }

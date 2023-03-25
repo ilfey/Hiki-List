@@ -2,6 +2,7 @@ package com.ilfey.shikimori.ui.favorites
 
 import androidx.lifecycle.MutableLiveData
 import com.ilfey.shikimori.base.ListViewModel
+import com.ilfey.shikimori.di.AppSettings
 import com.ilfey.shikimori.di.network.ShikimoriRepository
 import com.ilfey.shikimori.di.network.Storage
 import com.ilfey.shikimori.di.network.models.Favourites
@@ -9,7 +10,7 @@ import com.ilfey.shikimori.utils.RetrofitEnqueue.Companion.Result
 import com.ilfey.shikimori.utils.RetrofitEnqueue.Companion.enqueue
 
 class FavoritesViewModel(
-    private val storage: Storage,
+    private val settings: AppSettings,
     private val repository: ShikimoriRepository,
 ) : ListViewModel() {
 
@@ -25,7 +26,7 @@ class FavoritesViewModel(
 
     fun getFavorites() {
         repository.favorites(
-            storage.user_id
+            settings.userId
         ).enqueue {
             when (it) {
                 is Result.Success -> {

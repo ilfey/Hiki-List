@@ -28,13 +28,13 @@ class CharacterAdapter(
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(list[position], position)
+        holder.bind(list[position])
     }
 
     inner class ViewHolder(
         private val binding: ItemCharacterBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Role, position: Int) {
+        fun bind(item: Role) {
             Glide
                 .with(binding.card.context)
                 .load(BuildConfig.APP_URL + item.character?.image?.original)

@@ -15,7 +15,7 @@
         android:text="@string/on_people_lists" />
 
     <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/chart_lists"
+        android:id="@+id/chart_statuses"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginTop="16dp" />
@@ -31,7 +31,7 @@
         android:text="@string/people_ratings" />
 
     <com.github.mikephil.charting.charts.HorizontalBarChart
-        android:id="@+id/chart_rates"
+        android:id="@+id/chart_scores"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:layout_marginTop="16dp" />

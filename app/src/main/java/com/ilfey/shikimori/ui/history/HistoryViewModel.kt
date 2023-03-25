@@ -2,6 +2,7 @@ package com.ilfey.shikimori.ui.history
 
 import androidx.lifecycle.MutableLiveData
 import com.ilfey.shikimori.base.ListViewModel
+import com.ilfey.shikimori.di.AppSettings
 import com.ilfey.shikimori.di.network.ShikimoriRepository
 import com.ilfey.shikimori.di.network.Storage
 import com.ilfey.shikimori.di.network.models.HistoryItem
@@ -9,7 +10,7 @@ import com.ilfey.shikimori.utils.RetrofitEnqueue.Companion.Result
 import com.ilfey.shikimori.utils.RetrofitEnqueue.Companion.enqueue
 
 class HistoryViewModel(
-    private val storage: Storage,
+    private val settings: AppSettings,
     private val repository: ShikimoriRepository,
 ) : ListViewModel() {
 
@@ -25,7 +26,7 @@ class HistoryViewModel(
 
     fun getHistory() {
         repository.history(
-            id = storage.user_id,
+            id = settings.userId,
             limit = 100,
         ).enqueue {
             when(it) {
