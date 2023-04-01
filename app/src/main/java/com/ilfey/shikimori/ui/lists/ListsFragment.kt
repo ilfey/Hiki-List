@@ -1,11 +1,14 @@
 package com.ilfey.shikimori.ui.lists
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.chip.ChipGroup
+import com.google.android.material.search.SearchView
 import com.ilfey.shikimori.R
 import com.ilfey.shikimori.base.BaseFragment
 import com.ilfey.shikimori.databinding.FragmentListsBinding
@@ -17,7 +20,7 @@ import com.ilfey.shikimori.utils.widgets.VerticalSpaceItemDecorator
 import org.koin.android.ext.android.inject
 
 class ListsFragment : BaseFragment<FragmentListsBinding>(), ChipGroup.OnCheckedStateChangeListener,
-    SwipeRefreshLayout.OnRefreshListener {
+    SwipeRefreshLayout.OnRefreshListener, SearchView.TransitionListener {
 
     private val viewModel by inject<ListsViewModel>()
     private val adapter = ListAdapter(this, null)
@@ -32,6 +35,13 @@ class ListsFragment : BaseFragment<FragmentListsBinding>(), ChipGroup.OnCheckedS
         }
 
         with(binding) {
+            searchView.addTransitionListener(this@ListsFragment)
+            recyclerViewSearch.addItemDecoration(
+                VerticalSpaceItemDecorator(
+                    resources.getDimensionPixelOffset(R.dimen.container_padding),
+                )
+            )
+
             recyclerViewList.adapter = adapter
             recyclerViewList.addItemDecoration(
                 VerticalSpaceItemDecorator(
@@ -98,6 +108,43 @@ class ListsFragment : BaseFragment<FragmentListsBinding>(), ChipGroup.OnCheckedS
         settings.list = list
         viewModel.getList(list) // -> onListUpdate()
         adapter.setList(null)
+    }
+
+    override fun onStateChanged(
+        searchView: SearchView,
+        previousState: SearchView.TransitionState,
+        newState: SearchView.TransitionState
+    ) {
+        val adapter = ListAdapter(this, this.adapter._list)
+        val textWatcher = object : TextWatcher {
+            override fun beforeTextChanged(
+                text: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {}
+
+            override fun onTextChanged(text: CharSequence?, start: Int, count: Int, after: Int) {
+                adapter.setList(this@ListsFragment.adapter._list?.filter {
+                    it.anime.russian.lowercase()
+                        .contains(text.toString()) || it.anime.name.lowercase()
+                        .contains(text.toString())
+                })
+            }
+
+            override fun afterTextChanged(p0: Editable?) {}
+        }
+        when (newState) {
+            SearchView.TransitionState.SHOWING -> {
+                binding.searchView.editText.addTextChangedListener(textWatcher)
+                binding.recyclerViewSearch.adapter = adapter
+            }
+            SearchView.TransitionState.HIDING -> {
+                binding.recyclerViewSearch.adapter = null
+                binding.searchView.editText.removeTextChangedListener(textWatcher)
+            }
+            else -> {}
+        }
     }
 
     override fun onInflateView(

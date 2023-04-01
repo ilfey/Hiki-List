@@ -43,8 +43,10 @@
         <item name="materialIconButtonStyle">@style/Widget.Shikimori.IconButton</item>
         <item name="recyclerViewStyle">@style/Widget.Shikimori.RecyclerView</item>
         <item name="materialButtonStyle">@style/Widget.Shikimori.Button</item>
-        <item name="toolbarStyle">@style/Widget.Shikimori.Toolbar</item>
         <item name="chipStyle">@style/Widget.Shikimori.Chip</item>
+        <item name="toolbarStyle">@style/Widget.Material3.Toolbar</item>
+        <item name="materialSearchBarStyle">@style/Widget.Shikimori.SearchBar</item>
+        <item name="appBarLayoutStyle">@style/Widget.Material3.AppBarLayout</item>
 
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Shikimori.MaterialAlertDialog</item>
 

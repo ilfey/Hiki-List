@@ -2,11 +2,6 @@
 <resources>
 
     <!-- Buttons -->
-    <style name="Widget.Shikimori.Toolbar" parent="Widget.Material3.Toolbar">
-        <item name="android:background">?colorSurface</item>
-        <item name="android:textColor">?colorOnSurface</item>
-    </style>
-    <!-- Buttons -->
 
     <style name="Widget.Shikimori.IconButton" parent="Widget.Material3.Button.IconButton">
         <item name="android:textAllCaps">false</item>
@@ -65,8 +60,29 @@
     </style>
 
     <!-- RecyclerView -->
+
     <style name="Widget.Shikimori.RecyclerView" parent="">
         <item name="android:scrollbarStyle">outsideOverlay</item>
     </style>
 
+    <!-- SearchView -->
+
+    <style name="Widget.Shikimori.SearchView" parent="Widget.Material3.SearchView">
+        <item name="iconifiedByDefault">false</item>
+        <item name="searchIcon">@drawable/ic_search</item>
+        <item name="searchHintIcon">?colorOnSurface</item>
+        <item name="queryBackground">@null</item>
+        <item name="android:textColorHint">?attr/colorControlNormal</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <!-- SearchBar -->
+
+    <style name="Widget.Shikimori.SearchBar" parent="Widget.Material3.SearchBar">
+        <item name="android:minHeight">48dp</item>
+        <item name="maxButtonHeight">48dp</item>
+        <item name="android:layout_marginEnd">@dimen/container_padding</item>
+        <item name="android:layout_marginStart">@dimen/container_padding</item>
+<!--        <item name="defaultMarginsEnabled">false</item>-->
+    </style>
 </resources>

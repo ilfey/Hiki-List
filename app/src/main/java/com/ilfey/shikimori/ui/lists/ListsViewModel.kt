@@ -6,6 +6,7 @@ import com.ilfey.shikimori.di.AppSettings
 import com.ilfey.shikimori.di.network.ShikimoriRepository
 import com.ilfey.shikimori.di.network.enums.ListTypes
 import com.ilfey.shikimori.di.network.models.AnimeRate
+import com.ilfey.shikimori.di.network.models.Animes
 import com.ilfey.shikimori.utils.RetrofitEnqueue.Companion.Result.*
 import com.ilfey.shikimori.utils.RetrofitEnqueue.Companion.enqueue
 import kotlinx.coroutines.flow.MutableStateFlow

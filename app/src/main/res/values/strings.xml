@@ -108,5 +108,6 @@
     <string name="list_is_empty">Список пуст</string>
     <string name="your_score_with_score">"Ваша оценка: %1$d"</string>
     <string name="sign_up">Зарегистрироваться</string>
+    <string name="search_anime">Поиск аниме</string>
 
 </resources>

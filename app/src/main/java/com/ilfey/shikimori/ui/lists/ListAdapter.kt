@@ -20,14 +20,15 @@ import java.util.*
 
 class ListAdapter(
     private val fragment: Fragment,
-    private var list: List<AnimeRate>?,
+    var _list: List<AnimeRate>?,
 ) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
     @SuppressLint("NotifyDataSetChanged")
     fun setList(l: List<AnimeRate>?) {
-        list = l
+        _list = l
         notifyDataSetChanged()
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -35,10 +36,10 @@ class ListAdapter(
         )
     }
 
-    override fun getItemCount() = list?.size ?: 0
+    override fun getItemCount() = _list?.size ?: 0
 
     override fun onBindViewHolder(holder: ViewHolder, pos: Int) {
-        holder.bind(list!![pos])
+        holder.bind(_list!![pos])
     }
 
     inner class ViewHolder(
