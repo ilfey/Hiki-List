@@ -66,13 +66,15 @@ class ListsFragment : BaseFragment<FragmentListsBinding>(), ChipGroup.OnCheckedS
     override fun bindViewModel() {
         viewModel.list.observe(viewLifecycleOwner, this::onListUpdate)
         viewModel.loadingFlow.launchAndCollectIn(viewLifecycleOwner) {
-            if (it) {
-                binding.textViewListIsEmpty.isVisible { view ->
-                    view.gone()
+            with(binding){
+                if (it) {
+                    textViewListIsEmpty.isVisible { view ->
+                        view.gone()
+                    }
+                    progressBar.visible()
+                } else {
+                    progressBar.gone()
                 }
-                binding.progressBar.visible()
-            } else {
-                binding.progressBar.gone()
             }
         }
     }

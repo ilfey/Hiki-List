@@ -41,7 +41,7 @@ interface ShikimoriRepository {
         @Query("ids") ids: String? = null, // TODO: Move to enum
         @Query("exclude_ids") exclude_ids: String? = null,
         @Query("search") search: String? = null,
-    ): Call<List<Animes>>
+    ): Call<List<AnimeItem>>
 
     /**
      * Show an anime

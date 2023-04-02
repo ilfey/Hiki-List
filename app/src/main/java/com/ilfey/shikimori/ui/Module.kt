@@ -7,6 +7,7 @@ import com.ilfey.shikimori.ui.history.HistoryViewModel
 import com.ilfey.shikimori.ui.lists.ListsViewModel
 import com.ilfey.shikimori.ui.profile.ProfileViewModel
 import com.ilfey.shikimori.ui.main.MainViewModel
+import com.ilfey.shikimori.ui.search.SearchViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -38,5 +39,9 @@ val uiModule
 
         viewModel {
             MainViewModel(settings = get(), repository = get())
+        }
+
+        viewModel {
+            SearchViewModel(settings = get(), repository = get())
         }
     }

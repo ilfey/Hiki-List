@@ -7,6 +7,10 @@
         android:id="@+id/nav_lists"
         android:icon="@drawable/ic_checklist"
         android:title="@string/lists" />
+    <item
+        android:id="@+id/nav_search"
+        android:icon="@drawable/ic_search"
+        android:title="@string/lists" />
 
     <item
         android:id="@+id/nav_profile"

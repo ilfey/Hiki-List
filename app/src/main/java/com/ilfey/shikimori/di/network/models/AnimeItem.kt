@@ -1,22 +1,26 @@
 package com.ilfey.shikimori.di.network.models
 
+import com.ilfey.shikimori.di.network.enums.AnimeStatus
+import com.ilfey.shikimori.di.network.enums.Kind
+import java.util.*
+
 
 /**
  * https://shikimori.one/api/doc/1.0/animes/index
  **/
-data class Animes(
+data class AnimeItem(
     val id: Long,
     val name: String,
     val russian: String,
     val image: Image,
     val url: String,
-    val kind: String,
+    val kind: Kind,
     val score: String,
-    val status: String,
+    val status: AnimeStatus,
     val episodes: Int,
     val episodes_aired: Int,
-    val aired_on: String?,
-    val released_on: String?,
+    val aired_on: Date,
+    val released_on: Date,
 ) {
     data class Image(
         val original: String,

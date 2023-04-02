@@ -11,6 +11,7 @@ import com.ilfey.shikimori.R
 import com.ilfey.shikimori.di.AppSettings
 import com.ilfey.shikimori.ui.lists.ListsFragment
 import com.ilfey.shikimori.ui.profile.ProfileFragment
+import com.ilfey.shikimori.ui.search.SearchFragment
 
 private const val TAG_MAIN = "main"
 
@@ -40,6 +41,7 @@ class NavigationDelegate(
         setFragment(
             when (itemId) {
                 R.id.nav_lists -> ListsFragment.newInstance()
+                R.id.nav_search -> SearchFragment.newInstance()
                 R.id.nav_profile -> ProfileFragment.newInstance()
                 else -> return false
             },

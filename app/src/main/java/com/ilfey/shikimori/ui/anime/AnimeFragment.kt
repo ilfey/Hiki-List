@@ -174,7 +174,7 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
             /* YandereDev reference */
 
             if (anime.episodes != 0) {
-                episodes.text = if (anime.user_rate?.episodes != 0) {
+                episodes.text = if ((anime.user_rate?.episodes ?: 0) != 0) {
                     if (anime.status == AnimeStatus.RELEASED) {
                         getString(
                             R.string.episodes_with_count,
