@@ -3,6 +3,7 @@ package com.ilfey.shikimori.ui.history
 import android.annotation.SuppressLint
 import android.content.Context
 import android.text.Html
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -24,6 +25,7 @@ import java.util.*
 
 class ListAdapter(
     private val fragment: Fragment,
+    private val showFullTitles: Boolean,
 ) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
     private var list: List<HistoryItem> = listOf()
@@ -69,6 +71,11 @@ class ListAdapter(
                     status.gone()
                 } else {
                     title.text = item.target.russian
+                    if (!showFullTitles) {
+                        title.maxLines = 2
+                        title.ellipsize = TextUtils.TruncateAt.END
+                    }
+
                     name.text = item.target.name
 
                     item.target.score.toFloat().let { score ->

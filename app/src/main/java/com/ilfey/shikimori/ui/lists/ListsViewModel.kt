@@ -31,6 +31,7 @@ class ListsViewModel(
         repository.anime_rates(
             id = settings.userId,
             status = status.value,
+            censored = !settings.isNsfwEnable,
         ).enqueue {
             when (it) {
                 is Success -> {

@@ -1,0 +1,33 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <PreferenceCategory app:title="@string/appearance">
+
+        <SwitchPreferenceCompat
+            app:key="full_titles"
+            app:summary="@string/titles_will_not_be_truncated_in_lists"
+            app:title="@string/show_full_anime_titles" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/content">
+
+        <SwitchPreferenceCompat
+            app:key="nsfw"
+            app:summary="@string/rx_rated_anime_will_be_displayed"
+            app:title="@string/show_nsfw_anime" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/about_application">
+
+        <Preference
+            android:enabled="false"
+            android:key="app_version"
+            android:persistent="false"
+            tools:title="Версия: 1.0-dev" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

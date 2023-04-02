@@ -9,9 +9,11 @@ import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
+import androidx.appcompat.widget.Toolbar
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.commit
 import androidx.navigation.fragment.findNavController
@@ -30,12 +32,15 @@ import com.ilfey.shikimori.di.network.models.UserRate
 import com.ilfey.shikimori.di.network.models.filterByStatus
 import com.ilfey.shikimori.ui.favorites.FavoritesFragment
 import com.ilfey.shikimori.ui.history.HistoryFragment
+import com.ilfey.shikimori.ui.settings.SettingsActivity
+import com.ilfey.shikimori.ui.settings.SettingsFragment
+import com.ilfey.shikimori.utils.addBackButton
 import com.ilfey.shikimori.utils.getThemeColor
 import com.ilfey.shikimori.utils.gone
 import org.koin.android.ext.android.inject
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(), View.OnClickListener,
-    SwipeRefreshLayout.OnRefreshListener {
+    SwipeRefreshLayout.OnRefreshListener, Toolbar.OnMenuItemClickListener {
 
     private val viewModel by inject<ProfileViewModel>()
     private val customTabsIntent = CustomTabsIntent.Builder().build()
@@ -51,6 +56,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), View.OnClickList
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.toolbar.run {
+            inflateMenu(R.menu.profile_toolbar_menu)
+            setOnMenuItemClickListener(this@ProfileFragment) // TODO: Delegate this
+        }
 
         with(binding.chart) {
             isSelected = false
@@ -185,6 +195,17 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), View.OnClickList
         }
     }
 
+    override fun onMenuItemClick(item: MenuItem) =
+        when (item.itemId) {
+            R.id.item_settings -> {
+                startActivity(SettingsActivity.newIntent(requireContext()))
+                true
+            }
+            else -> {
+                false
+            }
+        }
+
     @CallSuper
     override fun onRefresh() {
         binding.refresh.isRefreshing = true
@@ -200,4 +221,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), View.OnClickList
     companion object {
         fun newInstance() = ProfileFragment()
     }
+
+
+
 }

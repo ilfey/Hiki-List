@@ -23,7 +23,7 @@ class ListsFragment : BaseFragment<FragmentListsBinding>(), ChipGroup.OnCheckedS
     SwipeRefreshLayout.OnRefreshListener, SearchView.TransitionListener {
 
     private val viewModel by inject<ListsViewModel>()
-    private val adapter = ListAdapter(this, null)
+    private val adapter = ListAdapter(this, null, settings.fullTitles)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -117,7 +117,7 @@ class ListsFragment : BaseFragment<FragmentListsBinding>(), ChipGroup.OnCheckedS
         previousState: SearchView.TransitionState,
         newState: SearchView.TransitionState
     ) {
-        val adapter = ListAdapter(this, this.adapter._list)
+        val adapter = ListAdapter(this, this.adapter._list, settings.fullTitles)
         val textWatcher = object : TextWatcher {
             override fun beforeTextChanged(
                 text: CharSequence?,

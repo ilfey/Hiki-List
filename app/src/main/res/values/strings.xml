@@ -111,4 +111,15 @@
     <string name="search_anime">Поиск аниме</string>
     <string name="not_found">Ничего не найдено</string>
 
+    <string name="appearance">Оформление</string>
+
+    <string name="settings">Настройки</string>
+    <string name="about_application">О приложении</string>
+    <string name="content">Контент</string>
+    <string name="app_version">"Версия: %1$s"</string>
+    <string name="titles_will_not_be_truncated_in_lists">Названия не будут обрезаться в списках</string>
+    <string name="show_full_anime_titles">Показывать полные названия аниме</string>
+    <string name="rx_rated_anime_will_be_displayed">Аниме с рейтингом Rx будет отображаться</string>
+    <string name="show_nsfw_anime">Показывать NSFW аниме</string>
+
 </resources>

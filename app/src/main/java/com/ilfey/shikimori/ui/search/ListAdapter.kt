@@ -1,6 +1,7 @@
 package com.ilfey.shikimori.ui.search
 
 import android.annotation.SuppressLint
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -23,6 +24,7 @@ import java.util.*
 class ListAdapter(
     private val fragment: Fragment,
     private var list: List<AnimeItem>?,
+    private val showFullTitles: Boolean,
 ) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
     @SuppressLint("NotifyDataSetChanged")
@@ -60,6 +62,11 @@ class ListAdapter(
                     .into(image)
 
                 title.text = item.russian
+                if (!showFullTitles) {
+                    title.maxLines = 2
+                    title.ellipsize = TextUtils.TruncateAt.END
+                }
+
                 name.text = item.name
 
                 status.text = parseStatus(

@@ -72,6 +72,7 @@ fun View.isInvisible(callback: ((View) -> Unit)? = null) =
  * gone many views with this
  * */
 fun View.gone(vararg views: View) {
+    this.gone()
     for (view in views) {
         view.gone()
     }
@@ -81,6 +82,7 @@ fun View.gone(vararg views: View) {
  * visible many views with this
  * */
 fun View.visible(vararg views: View) {
+    this.visible()
     for (view in views) {
         view.visible()
     }

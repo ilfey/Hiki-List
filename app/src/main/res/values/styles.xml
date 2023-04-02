@@ -85,4 +85,23 @@
         <item name="android:layout_marginStart">@dimen/container_padding</item>
 <!--        <item name="defaultMarginsEnabled">false</item>-->
     </style>
+
+    <!-- Preferences -->
+
+    <style name="PreferenceThemeOverlay.Shikimori">
+        <item name="preferenceCategoryTitleTextAppearance">?attr/textAppearanceBodyMedium</item>
+        <item name="singleLineTitle">false</item>
+    </style>
+
+    <style name="PreferenceThemeOverlay.Shikimori.Category" parent="Preference.Category.Material">
+        <item name="iconSpaceReserved">false</item>
+    </style>
+
+    <style name="PreferenceThemeOverlay.Shikimori.Preference" parent="Preference.Material">
+        <item name="iconSpaceReserved">false</item>
+    </style>
+
+    <style name="PreferenceThemeOverlay.Shikimori.Switch" parent="Preference.SwitchPreferenceCompat.Material">
+        <item name="iconSpaceReserved">false</item>
+    </style>
 </resources>

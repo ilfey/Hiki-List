@@ -25,7 +25,8 @@ class SearchViewModel(
     fun search(query: String?) {
         loadingMutableStateFlow.value = true
         repository.animes(
-            search = query
+            search = query,
+            censored = !settings.isNsfwEnable,
         ).enqueue {
             when(it) {
                 is Success -> {

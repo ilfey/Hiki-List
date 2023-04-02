@@ -31,4 +31,6 @@
         <item name="fontFamily">@font/roboto</item>
     </style>
 
+    <style name="TextAppearance.Shikimori.Preference.Secondary" parent="TextAppearance.Material3.BodySmall" />
+
 </resources>

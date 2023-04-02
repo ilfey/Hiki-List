@@ -39,16 +39,25 @@
         <item name="textAppearanceBodyMedium">@style/TextAppearance.Shikimori.BodyMedium</item>
         <item name="textAppearanceBodySmall">@style/TextAppearance.Shikimori.BodySmall</item>
 
+        <item name="android:textAppearanceListItemSecondary">@style/TextAppearance.Shikimori.Preference.Secondary</item>
+
         <item name="materialButtonOutlinedStyle">@style/Widget.Shikimori.OutlineButton</item>
         <item name="materialIconButtonStyle">@style/Widget.Shikimori.IconButton</item>
         <item name="recyclerViewStyle">@style/Widget.Shikimori.RecyclerView</item>
+
         <item name="materialButtonStyle">@style/Widget.Shikimori.Button</item>
         <item name="chipStyle">@style/Widget.Shikimori.Chip</item>
         <item name="toolbarStyle">@style/Widget.Material3.Toolbar</item>
         <item name="materialSearchBarStyle">@style/Widget.Shikimori.SearchBar</item>
         <item name="appBarLayoutStyle">@style/Widget.Material3.AppBarLayout</item>
+<!--        <item name="switchPreferenceCompatStyle">@style/Preference.SwitchPreferenceCompat.M3</item>-->
 
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Shikimori.MaterialAlertDialog</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Shikimori</item>
+        <item name="preferenceCategoryStyle">@style/PreferenceThemeOverlay.Shikimori.Category</item>
+        <item name="switchPreferenceCompatStyle">@style/PreferenceThemeOverlay.Shikimori.Switch</item>
+        <item name="preferenceStyle">@style/PreferenceThemeOverlay.Shikimori.Preference</item>
+
 
     </style>
 

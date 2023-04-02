@@ -1,6 +1,7 @@
 package com.ilfey.shikimori.ui.lists
 
 import android.annotation.SuppressLint
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -21,6 +22,7 @@ import java.util.*
 class ListAdapter(
     private val fragment: Fragment,
     var _list: List<AnimeRate>?,
+    private val showFullTitles: Boolean,
 ) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
     @SuppressLint("NotifyDataSetChanged")
@@ -59,6 +61,11 @@ class ListAdapter(
                     .into(image)
 
                 title.text = item.anime.russian
+                if (!showFullTitles) {
+                    title.maxLines = 2
+                    title.ellipsize = TextUtils.TruncateAt.END
+                }
+
                 name.text = item.anime.name
 
                 if (item.score != 0) {
