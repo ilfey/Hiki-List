@@ -11,8 +11,8 @@ class Authenticator(
     private val authService: AuthorizationService,
 ) {
     companion object {
-        private const val AUTH_URL = "https://shikimori.one/oauth/authorize"
-        private const val TOKEN_URL = "https://shikimori.one/oauth/token"
+        private const val AUTH_URL = "${BuildConfig.APP_URL}/oauth/authorize"
+        private const val TOKEN_URL = "${BuildConfig.APP_URL}/oauth/token"
         private const val CALLBACK_URL = "${BuildConfig.APPLICATION_ID}://oauth/shikimori"
         private const val SCOPE = ""
         private const val RESPONSE_TYPE = ResponseTypeValues.CODE

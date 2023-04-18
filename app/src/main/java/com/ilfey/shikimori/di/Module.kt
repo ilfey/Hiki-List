@@ -53,7 +53,7 @@ val diModule
 
             Retrofit.Builder()
                 .client(get())
-                .baseUrl("https://shikimori.one/")
+                .baseUrl("${BuildConfig.APP_URL}/")
                 .addConverterFactory(
                     GsonConverterFactory.create(gson)
                 )

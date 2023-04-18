@@ -11,7 +11,7 @@ interface ShikimoriRepository {
 
     /**
      * List user achievements
-     * See: https://shikimori.one/api/doc/1.0/achievements/index
+     * See: https://shikimori.me/api/doc/1.0/achievements/index
      * */
     @GET("/api/achievements")
     fun achievements(
@@ -20,7 +20,7 @@ interface ShikimoriRepository {
 
     /**
      * List animes
-     * See: https://shikimori.one/api/doc/1.0/animes
+     * See: https://shikimori.me/api/doc/1.0/animes
      * */
     @GET("/api/animes")
     fun animes(
@@ -45,7 +45,7 @@ interface ShikimoriRepository {
 
     /**
      * Show an anime
-     * See: https://shikimori.one/api/doc/1.0/animes/show
+     * See: https://shikimori.me/api/doc/1.0/animes/show
      * */
     @GET("/api/animes/{id}")
     fun anime(
@@ -54,7 +54,7 @@ interface ShikimoriRepository {
 
     /**
      * Show a roles of anime
-     * See: https://shikimori.one/api/doc/1.0/animes/show
+     * See: https://shikimori.me/api/doc/1.0/animes/show
      * */
     @GET("/api/animes/{id}/roles")
     fun animeRoles(
@@ -63,7 +63,7 @@ interface ShikimoriRepository {
 
     /**
      * Show user history
-     * See: https://shikimori.one/api/doc/1.0/users/history
+     * See: https://shikimori.me/api/doc/1.0/users/history
      * */
     @GET("/api/users/{id}/history")
     fun history(
@@ -76,7 +76,7 @@ interface ShikimoriRepository {
 
     /**
      * Show an user rate
-     * See: https://shikimori.one/api/doc/2.0/user_rates/show
+     * See: https://shikimori.me/api/doc/2.0/user_rates/show
      * */
     @GET("/api/v2/user_rates/{id}")
     fun user_rate(
@@ -85,7 +85,7 @@ interface ShikimoriRepository {
 
     /**
      * List user rates
-     * See: https://shikimori.one/api/doc/2.0/user_rates/index
+     * See: https://shikimori.me/api/doc/2.0/user_rates/index
      * */
     @GET("/api/v2/user_rates")
     fun user_rates(
@@ -99,7 +99,7 @@ interface ShikimoriRepository {
 
     /**
      * Create an user rate
-     * See: https://shikimori.one/api/doc/2.0/user_rates/create
+     * See: https://shikimori.me/api/doc/2.0/user_rates/create
      * */
     @POST("/api/v2/user_rates")
     fun create_user_rate(
@@ -108,7 +108,7 @@ interface ShikimoriRepository {
 
     /**
      * Update an user rate
-     * See: https://shikimori.one/api/doc/2.0/user_rates/update
+     * See: https://shikimori.me/api/doc/2.0/user_rates/update
      * */
     @PATCH("/api/v2/user_rates/{id}")
     fun update_user_rate(
@@ -118,7 +118,7 @@ interface ShikimoriRepository {
 
     /**
      * Update an user rate
-     * See: https://shikimori.one/api/doc/2.0/user_rates/update
+     * See: https://shikimori.me/api/doc/2.0/user_rates/update
      * */
     @PUT("/api/v2/user_rates/{id}")
     fun replace_user_rate(
@@ -127,14 +127,14 @@ interface ShikimoriRepository {
 
     /**
      * Show current user's brief info.
-     * See: https://shikimori.one/api/doc/1.0/users/whoami
+     * See: https://shikimori.me/api/doc/1.0/users/whoami
      * */
     @GET("/api/users/whoami")
     fun whoami(): Call<User>
 
     /**
      * Show user's favorites
-     * See: https://shikimori.one/api/doc/1.0/users/favourites
+     * See: https://shikimori.me/api/doc/1.0/users/favourites
      * */
     @GET("/api/users/{id}/favourites")
     fun favorites(
@@ -143,7 +143,7 @@ interface ShikimoriRepository {
 
     /**
      * Show user's anime list
-     * See: https://shikimori.one/api/doc/1.0/users/anime_rates
+     * See: https://shikimori.me/api/doc/1.0/users/anime_rates
      * */
     @GET("/api/users/{id}/anime_rates")
     fun anime_rates(

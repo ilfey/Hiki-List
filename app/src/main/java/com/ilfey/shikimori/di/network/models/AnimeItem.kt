@@ -6,7 +6,7 @@ import java.util.*
 
 
 /**
- * https://shikimori.one/api/doc/1.0/animes/index
+ * https://shikimori.me/api/doc/1.0/animes/index
  **/
 data class AnimeItem(
     val id: Long,
