@@ -83,7 +83,7 @@
         <item name="maxButtonHeight">48dp</item>
         <item name="android:layout_marginEnd">@dimen/container_padding</item>
         <item name="android:layout_marginStart">@dimen/container_padding</item>
-<!--        <item name="defaultMarginsEnabled">false</item>-->
+        <item name="defaultMarginsEnabled">false</item>
     </style>
 
     <!-- Preferences -->

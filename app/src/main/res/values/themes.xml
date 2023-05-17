@@ -32,6 +32,9 @@
 
         <item name="fontFamily">@font/roboto</item>
 
+        <item name="textAppearanceTitleLarge">@style/TextAppearance.Material3.TitleLarge</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.Material3.TitleMedium</item>
+        <item name="textAppearanceTitleSmall">@style/TextAppearance.Material3.TitleSmall</item>
         <item name="textAppearanceHeadlineLarge">@style/TextAppearance.Shikimori.HeadlineLarge</item>
         <item name="textAppearanceHeadlineMedium">@style/TextAppearance.Shikimori.HeadlineMedium</item>
         <item name="textAppearanceHeadlineSmall">@style/TextAppearance.Shikimori.HeadlineSmall</item>

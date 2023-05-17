@@ -142,7 +142,7 @@ class ListAdapter(
                 }
 
                 root.setOnClickListener {
-                    fragment.parentFragmentManager.commit {
+                    fragment.requireActivity().supportFragmentManager.commit {
                         add(R.id.container, AnimeFragment.newInstance(item.anime.id))
                         addToBackStack(null)
                     }

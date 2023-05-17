@@ -27,13 +27,12 @@ import com.ilfey.shikimori.utils.widgets.HorizontalSpaceItemDecorator
 import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 
-
 class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener,
     Toolbar.OnMenuItemClickListener {
 
     private val viewModel by inject<AnimeViewModel>()
 
-    private val id by longArgument(ARG_ID)
+    val id by longArgument(ARG_ID)
 
     private var rateId: Long? = null
     private var currentList = -1
@@ -64,6 +63,8 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
 
         binding.expandDescriptionBtn.setOnClickListener(this)
         binding.description.setOnClickListener(this)
+
+        references() // Create references
     }
 
     private fun createSelectListDialog(): AlertDialog { // TODO: Delegate this

@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     android:background="?android:colorBackground">
 
+    <TextView
+        android:id="@+id/textView_list_is_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/list_is_empty"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ProgressBar
         android:id="@+id/progress"
         android:layout_width="wrap_content"
@@ -36,7 +47,7 @@
             android:paddingHorizontal="@dimen/container_padding"
             android:scrollbars="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:itemCount="3"
+            tools:itemCount="0"
             tools:listitem="@layout/item_history" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

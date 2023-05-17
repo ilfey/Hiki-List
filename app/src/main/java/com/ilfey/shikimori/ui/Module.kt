@@ -4,6 +4,8 @@ import com.ilfey.shikimori.ui.anime.AnimeViewModel
 import com.ilfey.shikimori.ui.auth.AuthViewModel
 import com.ilfey.shikimori.ui.favorites.FavoritesViewModel
 import com.ilfey.shikimori.ui.history.HistoryViewModel
+import com.ilfey.shikimori.ui.lists.ListFragment
+import com.ilfey.shikimori.ui.lists.ListViewModel
 import com.ilfey.shikimori.ui.lists.ListsViewModel
 import com.ilfey.shikimori.ui.profile.ProfileViewModel
 import com.ilfey.shikimori.ui.main.MainViewModel
@@ -27,6 +29,10 @@ val uiModule
 
         viewModel {
             ListsViewModel(settings = get(), repository = get())
+        }
+
+        viewModel{
+            ListViewModel(settings = get(), repository = get())
         }
 
         viewModel {

@@ -121,5 +121,8 @@
     <string name="show_full_anime_titles">Показывать полные названия аниме</string>
     <string name="rx_rated_anime_will_be_displayed">Аниме с рейтингом Rx будет отображаться</string>
     <string name="show_nsfw_anime">Показывать NSFW аниме</string>
+    <string name="reference_kitty">Вы нашли отсылку на ковайную кошечку!</string>
+    <string name="reference_kidala">Поздравляем, вас кинули!</string>
+    <string name="search_in">Поиск в %1$s</string>
 
 </resources>

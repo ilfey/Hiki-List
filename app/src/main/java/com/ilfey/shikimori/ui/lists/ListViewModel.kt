@@ -1,45 +1,51 @@
 package com.ilfey.shikimori.ui.lists
 
 import androidx.lifecycle.MutableLiveData
-import com.ilfey.shikimori.base.ListViewModel
 import com.ilfey.shikimori.di.AppSettings
 import com.ilfey.shikimori.di.network.ShikimoriRepository
 import com.ilfey.shikimori.di.network.enums.ListTypes
-import com.ilfey.shikimori.di.network.models.AnimeItem
-import com.ilfey.shikimori.utils.RetrofitEnqueue.Companion.Result.*
+import com.ilfey.shikimori.di.network.models.AnimeRate
+import com.ilfey.shikimori.utils.RetrofitEnqueue
 import com.ilfey.shikimori.utils.RetrofitEnqueue.Companion.enqueue
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class ListsViewModel(
+class ListViewModel(
     private val settings: AppSettings,
     private val repository: ShikimoriRepository,
-) : ListViewModel() {
+): com.ilfey.shikimori.base.ListViewModel() {
+
 
     private val loadingMutableStateFlow = MutableStateFlow(false)
 
     val loadingFlow
         get() = loadingMutableStateFlow.asStateFlow()
 
-    val list = MutableLiveData<List<AnimeItem>>()
+    val list = MutableLiveData<List<AnimeRate>>()
 
-    fun searchInList(list: ListTypes, query: String) {
+    private var lastStatus: ListTypes = settings.list ?: ListTypes.PLANNED
+
+    fun getList(status: ListTypes) {
         loadingMutableStateFlow.value = true
-        repository.animes(
-            mylist = list.value,
-            search = query,
+        lastStatus = status
+        repository.anime_rates(
+            id = settings.userId,
+            status = status.value,
+            censored = !settings.isNsfwEnable,
         ).enqueue {
             when (it) {
-                is Success -> {
+                is RetrofitEnqueue.Companion.Result.Success -> {
                     if (it.response.isSuccessful && it.response.body() != null) {
-                        this.list.value = it.response.body()
+                        list.value = it.response.body()
                     }
                 }
-                is Failure -> {}
+                is RetrofitEnqueue.Companion.Result.Failure -> {}
             }
             loadingMutableStateFlow.value = false
         }
     }
 
-    override fun onRefresh() {}
+    override fun onRefresh() {
+        getList(lastStatus)
+    }
 }
