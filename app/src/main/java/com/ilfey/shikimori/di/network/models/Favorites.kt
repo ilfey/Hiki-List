@@ -1,6 +1,6 @@
 package com.ilfey.shikimori.di.network.models
 
-data class Favourites(
+data class Favorites(
     val animes: List<Entry>,
     val mangas: List<Entry>,
     val ranobe: List<Entry>,

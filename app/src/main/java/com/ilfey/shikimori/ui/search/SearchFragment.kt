@@ -21,7 +21,7 @@ import org.koin.android.ext.android.inject
 class SearchFragment : BaseFragment<FragmentSearchBinding>(), SearchView.TransitionListener {
 
     private val viewModel: SearchViewModel by inject()
-    private val adapter = ListAdapter(this, null, settings.fullTitles)
+    private val adapter = ListAdapter(null, settings.fullTitles)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,7 +84,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>(), SearchView.Transit
         previousState: SearchView.TransitionState,
         newState: SearchView.TransitionState
     ) {
-        val adapter = ListAdapter(this, null, settings.fullTitles)
+        val adapter = ListAdapter(null, settings.fullTitles)
         val textWatcher = object : TextWatcher {
             override fun beforeTextChanged(
                 text: CharSequence?,

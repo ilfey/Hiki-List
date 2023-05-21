@@ -2,35 +2,32 @@ package com.ilfey.shikimori.ui.anime
 
 import android.animation.ObjectAnimator
 import android.os.Bundle
+import android.util.Log
 import android.view.*
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.commit
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
+import com.google.android.material.R as mR
 import com.google.android.material.chip.Chip
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ilfey.shikimori.BuildConfig
 import com.ilfey.shikimori.R
 import com.ilfey.shikimori.base.BaseFragment
 import com.ilfey.shikimori.databinding.FragmentAnimeBinding
-import com.ilfey.shikimori.di.network.bodies.PatchUserRate
 import com.ilfey.shikimori.di.network.enums.AnimeStatus
 import com.ilfey.shikimori.di.network.enums.Kind.*
 import com.ilfey.shikimori.di.network.enums.ListTypes.*
 import com.ilfey.shikimori.di.network.enums.Rating.*
 import com.ilfey.shikimori.di.network.models.*
-import com.ilfey.shikimori.ui.anime.info.InfoBottomSheet
-import com.ilfey.shikimori.ui.anime.statistic.StatisticBottomSheet
-import com.ilfey.shikimori.ui.screenshots.ScreenshotsFragment
+import com.ilfey.shikimori.ui.anime.screenshots.ScreenshotsFragment
 import com.ilfey.shikimori.utils.*
 import com.ilfey.shikimori.utils.widgets.HorizontalSpaceItemDecorator
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import java.text.SimpleDateFormat
 
 class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener,
-    Toolbar.OnMenuItemClickListener {
+    SwipeRefreshLayout.OnRefreshListener {
 
-    private val viewModel by inject<AnimeViewModel>()
+    private val viewModel by activityViewModel<AnimeViewModel>()
 
     val id by longArgument(ARG_ID)
 
@@ -45,6 +42,7 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (id != null) {
+            Log.d(TAG, "start with id: $id")
             viewModel.getRoles(id!!)
             viewModel.getAnime(id!!)
         } else {
@@ -55,80 +53,16 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.toolbar.run {
-            addBackButton { activity?.onBackPressedDispatcher?.onBackPressed() }
-            inflateMenu(R.menu.anime_toolbar_menu)
-            setOnMenuItemClickListener(this@AnimeFragment) // TODO: Delegate this
-        }
-
         binding.expandDescriptionBtn.setOnClickListener(this)
         binding.description.setOnClickListener(this)
-
-        references() // Create references
-    }
-
-    private fun createSelectListDialog(): AlertDialog { // TODO: Delegate this
-        val builder = MaterialAlertDialogBuilder(requireContext())
-
-        val items = resources.getStringArray(R.array.statuses)
-        with(builder) {
-            setTitle(R.string.select_list)
-
-            setSingleChoiceItems(items, currentList) { dialog, index ->
-                viewModel.setRate(
-                    rateId,
-                    PatchUserRate.UserRate(
-                        status = when (index) {
-                            0 -> PLANNED
-                            1 -> WATCHING
-                            2 -> REWATCHING
-                            3 -> COMPLETED
-                            4 -> ON_HOLD
-                            5 -> DROPPED
-                            else -> null
-                        }
-                    )
-                )
-
-                currentList = index
-                dialog.dismiss()
-            }
-            setNegativeButton(R.string.cancel, null)
+        with(binding.refresh) {
+            setProgressBackgroundColorSchemeColor(context.getThemeColor(mR.attr.colorPrimary))
+            setColorSchemeColors(context.getThemeColor(mR.attr.colorOnPrimary))
+            setOnRefreshListener(this@AnimeFragment)
         }
 
-        val dialog = builder.create()
-
-        return dialog
-    }
-
-    override fun onMenuItemClick(item: MenuItem) = when (item.itemId) {
-        R.id.item_list -> {
-            createSelectListDialog().show()
-            true
-        }
-        R.id.item_statistic -> {
-            StatisticBottomSheet.show(
-                parentFragmentManager,
-                viewModel.anime.value?.rates_scores_stats ?: listOf(),
-                viewModel.anime.value?.rates_statuses_stats ?: listOf(),
-            )
-            true
-        }
-        R.id.item_info -> {
-//            context?.toast()
-            InfoBottomSheet.show(
-                parentFragmentManager,
-                viewModel.anime.value?.kind,
-                viewModel.anime.value?.studios?.map { studio -> studio.name }?.toTypedArray(),
-                viewModel.anime.value?.japanese?.filterNotNull()?.toTypedArray(),
-                viewModel.anime.value?.english?.filterNotNull()?.toTypedArray(),
-                viewModel.anime.value?.synonyms?.filterNotNull()?.toTypedArray(),
-                viewModel.anime.value?.fandubbers?.toTypedArray(),
-                viewModel.anime.value?.fansubbers?.toTypedArray(),
-            )
-            true
-        }
-        else -> false
+        // Create references
+        references()
     }
 
     override fun bindViewModel() {
@@ -414,12 +348,20 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
         }
     }
 
+    override fun onRefresh() {
+        binding.refresh.isRefreshing = true
+        viewModel.onRefresh()
+        binding.refresh.isRefreshing = true
+    }
+
     override fun onInflateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
     ) = FragmentAnimeBinding.inflate(inflater, container, false)
 
     companion object {
+        private const val TAG = "[AnimeFragment]"
+
         private const val ARG_ID = "id"
         fun newInstance(id: Long) = AnimeFragment().withArgs(1) {
             putLong(ARG_ID, id)

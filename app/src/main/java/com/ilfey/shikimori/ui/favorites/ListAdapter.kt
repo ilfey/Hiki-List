@@ -7,14 +7,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ilfey.shikimori.BuildConfig
 import com.ilfey.shikimori.databinding.ItemFavoritesBinding
-import com.ilfey.shikimori.di.network.models.Favourites
+import com.ilfey.shikimori.di.network.models.Favorites
 
-class ListAdapter : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
+class ListAdapter(
+    private val onClick: (Favorites.Entry) -> Unit = {},
+) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
-    private var list: List<Favourites.Entry> = listOf()
+    private var list: List<Favorites.Entry> = listOf()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setList(l: List<Favourites.Entry>) {
+    fun setList(l: List<Favorites.Entry>) {
         list = l
         notifyDataSetChanged()
     }
@@ -33,7 +35,7 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
         private val binding: ItemFavoritesBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Favourites.Entry) {
+        fun bind(item: Favorites.Entry) {
 
             Glide
                 .with(binding.image.context)
@@ -41,6 +43,11 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
                 .into(binding.image)
 
             binding.title.text = item.russian
+            binding.name.text = item.name
+
+            binding.root.setOnClickListener {
+                onClick?.invoke(item)
+            }
         }
     }
 }

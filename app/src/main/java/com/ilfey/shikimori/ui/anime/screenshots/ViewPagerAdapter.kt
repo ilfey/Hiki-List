@@ -1,4 +1,4 @@
-package com.ilfey.shikimori.ui.screenshots
+package com.ilfey.shikimori.ui.anime.screenshots
 
 import android.view.ViewGroup
 import android.widget.ImageView

@@ -19,6 +19,9 @@ fun Fragment.intArgument(name: String) = lazy(LazyThreadSafetyMode.NONE) {
     arguments?.getInt(name)
 }
 
+fun Fragment.stringArgument(name: String) = lazy(LazyThreadSafetyMode.NONE) {
+    arguments?.getString(name)
+}
 fun Fragment.stringArrayArgument(name: String) = lazy(LazyThreadSafetyMode.NONE) {
     arguments?.getStringArray(name)
 }

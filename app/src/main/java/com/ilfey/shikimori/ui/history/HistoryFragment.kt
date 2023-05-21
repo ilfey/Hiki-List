@@ -1,21 +1,25 @@
 package com.ilfey.shikimori.ui.history
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.ilfey.shikimori.R
-import com.ilfey.shikimori.base.ListFragment
+import com.ilfey.shikimori.base.BaseFragment
+import com.ilfey.shikimori.databinding.FragmentHistoryBinding
 import com.ilfey.shikimori.di.network.models.HistoryItem
-import com.ilfey.shikimori.utils.gone
+import com.ilfey.shikimori.utils.getThemeColor
 import com.ilfey.shikimori.utils.widgets.VerticalSpaceItemDecorator
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 
-class HistoryFragment : ListFragment() {
+class HistoryFragment : BaseFragment<FragmentHistoryBinding>(),
+    SwipeRefreshLayout.OnRefreshListener {
 
-    override val viewModel by viewModel<HistoryViewModel>()
-    override val isRefreshEnabled = true
+    private val viewModel by activityViewModel<HistoryViewModel>()
 
-    private val adapter = ListAdapter(this, settings.fullTitles)
+    private val adapter = ListAdapter(settings.fullTitles)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {
@@ -26,17 +30,35 @@ class HistoryFragment : ListFragment() {
                 )
             )
         }
+
+        with(binding.refresh) {
+            setProgressBackgroundColorSchemeColor(context.getThemeColor(com.google.android.material.R.attr.colorPrimary))
+            setColorSchemeColors(context.getThemeColor(com.google.android.material.R.attr.colorOnPrimary))
+            setOnRefreshListener(this@HistoryFragment)
+        }
     }
+
     override fun bindViewModel() {
         viewModel.history.observe(viewLifecycleOwner, this::onHistoryUpdate)
     }
 
     private fun onHistoryUpdate(history: List<HistoryItem>) {
         adapter.setList(history)
-        binding.progress.gone()
     }
+
+    override fun onInflateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ) = FragmentHistoryBinding.inflate(layoutInflater, container, false)
+
 
     companion object {
         fun newInstance() = HistoryFragment()
+    }
+
+    override fun onRefresh() {
+        binding.refresh.isRefreshing = true
+        viewModel.onRefresh()
+        binding.refresh.isRefreshing = false
     }
 }

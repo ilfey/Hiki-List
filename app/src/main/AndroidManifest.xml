@@ -28,12 +28,68 @@
         </activity>
 
         <activity
+            android:name=".ui.anime.AnimeActivity"
+            android:exported="true"
+            android:label="@string/anime">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- https://shikimori.me/animes/1 -->
+                <data
+                    android:host="shikimori.me"
+                    android:pathAdvancedPattern="/[a-z]{0,1}[0-9]+[a-zA-Z0-9-]*"
+                    android:pathPrefix="/animes/"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".ui.settings.SettingsActivity"
             android:exported="false"
             android:label="@string/settings" />
+
+        <activity
+            android:name=".ui.history.HistoryActivity"
+            android:exported="true"
+            android:label="@string/history">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- https://shikimori.me/ilfey/history -->
+                <data
+                    android:host="shikimori.me"
+                    android:pathPattern="/.*\\/history"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.favorites.FavoritesActivity"
+            android:exported="true"
+            android:label="@string/favorites">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- https://shikimori.me/ilfey/favorites -->
+                <data
+                    android:host="shikimori.me"
+                    android:pathPattern="/.*\\/favorites"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
+
 </manifest>

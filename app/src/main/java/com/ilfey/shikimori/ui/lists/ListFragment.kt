@@ -7,13 +7,13 @@ import com.ilfey.shikimori.di.network.enums.ListTypes
 import com.ilfey.shikimori.di.network.models.AnimeRate
 import com.ilfey.shikimori.utils.*
 import com.ilfey.shikimori.utils.widgets.VerticalSpaceItemDecorator
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ListFragment : com.ilfey.shikimori.base.ListFragment() {
-    override val viewModel: ListViewModel by inject()
+    override val viewModel by viewModel<ListsViewModel>()
     override val isRefreshEnabled = true
 
-    private val adapter = ListAdapter(this, null, settings.fullTitles)
+    private val adapter = ListAdapter(null, settings.fullTitles)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,9 +43,9 @@ class ListFragment : com.ilfey.shikimori.base.ListFragment() {
                     textViewListIsEmpty.isVisible { view ->
                         view.gone()
                     }
-                    progress.visible()
+                    progressBar.show()
                 } else {
-                    progress.gone()
+                    progressBar.hide()
                 }
             }
         }

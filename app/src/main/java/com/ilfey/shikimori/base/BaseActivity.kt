@@ -2,6 +2,7 @@ package com.ilfey.shikimori.base
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import com.ilfey.shikimori.R
@@ -25,8 +26,9 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
         viewBinding = binding
 
         setContentView(binding.root)
-    }
 
+        bindViewModel()
+    }
     protected fun setTheme() = setTheme(settings.theme)
 
     protected fun switchTheme() {
@@ -39,5 +41,11 @@ abstract class BaseActivity<B : ViewBinding> : AppCompatActivity() {
 
     protected fun toast(text: String, duration: Int = Toast.LENGTH_SHORT) = Toast.makeText(this, text, duration).show()
 
+    protected fun toast(@StringRes id: Int = R.string.functionality_not_implemented_yet) {
+        Toast.makeText(this, id, Toast.LENGTH_SHORT).show()
+    }
+
     protected abstract fun onInflateView(): B
+    protected open fun bindViewModel() {}
+
 }

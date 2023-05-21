@@ -124,5 +124,18 @@
     <string name="reference_kitty">Вы нашли отсылку на ковайную кошечку!</string>
     <string name="reference_kidala">Поздравляем, вас кинули!</string>
     <string name="search_in">Поиск в %1$s</string>
+    <string name="anime">Аниме</string>
+    <string name="user_history">"История %1$s"</string>
+    <string name="history_loading_error">Не удалось загрузить историю</string>
+    <string name="favorites">Избранное</string>
+    <string name="user_favorites">"Избранное %1$s"</string>
+    <string name="favorites_loading_error">Не удалось загрузить избранное</string>
+    <string name="manga">Манга</string>
+    <string name="ranobe">Ранобэ</string>
+    <string name="characters">Персонажи</string>
+    <string name="producers">Продюсеры</string>
+    <string name="seyu">Сэйю</string>
+    <string name="mangakas">Мангаки</string>
+    <string name="people">Люди</string>
 
 </resources>

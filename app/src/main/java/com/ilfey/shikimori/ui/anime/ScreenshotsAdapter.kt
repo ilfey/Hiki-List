@@ -10,7 +10,7 @@ import com.google.android.material.imageview.ShapeableImageView
 import com.ilfey.shikimori.BuildConfig
 import com.ilfey.shikimori.R
 import com.ilfey.shikimori.di.network.models.Anime
-import com.ilfey.shikimori.ui.screenshots.ScreenshotsFragment
+import com.ilfey.shikimori.ui.anime.screenshots.ScreenshotsFragment
 import com.ilfey.shikimori.utils.dp
 
 
@@ -59,7 +59,7 @@ class ScreenshotsAdapter(
 
             img.setOnClickListener {
                 fragment.parentFragmentManager.commit {
-                    add(R.id.container, ScreenshotsFragment.newInstance(screenshotsUrl, position))
+                    replace(R.id.container, ScreenshotsFragment.newInstance(screenshotsUrl, position))
                     addToBackStack(null)
                 }
             }

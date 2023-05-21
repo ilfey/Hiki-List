@@ -74,6 +74,15 @@ interface ShikimoriRepository {
         @Query("target_type") target_type: TargetType? = null,
     ): Call<List<HistoryItem>>
 
+    @GET("/api/users/{id}/history")
+    fun history(
+        @Path("id") id: String,
+        @Query("page") page: Int? = null,
+        @Query("limit") limit: Int = 100,
+        @Query("target_id") target_id: Long? = null,
+        @Query("target_type") target_type: TargetType? = null,
+    ): Call<List<HistoryItem>>
+
     /**
      * Show an user rate
      * See: https://shikimori.me/api/doc/2.0/user_rates/show
@@ -139,7 +148,12 @@ interface ShikimoriRepository {
     @GET("/api/users/{id}/favourites")
     fun favorites(
         @Path("id") id: Long,
-    ): Call<Favourites>
+    ): Call<Favorites>
+
+    @GET("/api/users/{id}/favourites")
+    fun favorites(
+        @Path("id") id: String,
+    ): Call<Favorites>
 
     /**
      * Show user's anime list

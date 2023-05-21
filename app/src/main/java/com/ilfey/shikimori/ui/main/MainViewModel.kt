@@ -16,6 +16,7 @@ class MainViewModel(
                 is Success -> {
                     if (it.response.isSuccessful && it.response.body() != null) {
                         settings.userId = it.response.body()!!.id
+                        settings.username = it.response.body()!!.nickname
                     }
                 }
                 is Failure -> {}

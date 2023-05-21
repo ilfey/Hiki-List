@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import com.ilfey.shikimori.R
 import com.ilfey.shikimori.di.AppSettings
 import org.koin.android.ext.android.inject
 
@@ -44,6 +46,8 @@ abstract class BaseFragment<B : ViewBinding> : Fragment() {
     protected fun toast(text: String, duration: Int = Toast.LENGTH_SHORT) =
         Toast.makeText(requireContext(), text, duration).show()
 
-    protected fun toast(resId: Int, duration: Int = Toast.LENGTH_SHORT) =
-        Toast.makeText(requireContext(), resId, duration).show()
+    protected fun toast(
+        @StringRes resId: Int = R.string.functionality_not_implemented_yet,
+        duration: Int = Toast.LENGTH_SHORT
+    ) = Toast.makeText(requireContext(), resId, duration).show()
 }

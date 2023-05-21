@@ -16,7 +16,6 @@ import androidx.annotation.CallSuper
 import androidx.appcompat.widget.Toolbar
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.fragment.app.commit
-import androidx.navigation.fragment.findNavController
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.github.mikephil.charting.components.Legend
@@ -30,19 +29,17 @@ import com.ilfey.shikimori.di.network.enums.ListTypes
 import com.ilfey.shikimori.di.network.models.User
 import com.ilfey.shikimori.di.network.models.UserRate
 import com.ilfey.shikimori.di.network.models.filterByStatus
-import com.ilfey.shikimori.ui.favorites.FavoritesFragment
-import com.ilfey.shikimori.ui.history.HistoryFragment
+import com.ilfey.shikimori.ui.favorites.FavoritesActivity
+import com.ilfey.shikimori.ui.history.HistoryActivity
 import com.ilfey.shikimori.ui.settings.SettingsActivity
-import com.ilfey.shikimori.ui.settings.SettingsFragment
-import com.ilfey.shikimori.utils.addBackButton
 import com.ilfey.shikimori.utils.getThemeColor
 import com.ilfey.shikimori.utils.gone
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(), View.OnClickListener,
     SwipeRefreshLayout.OnRefreshListener, Toolbar.OnMenuItemClickListener {
 
-    private val viewModel by inject<ProfileViewModel>()
+    private val viewModel by viewModel<ProfileViewModel>()
     private val customTabsIntent = CustomTabsIntent.Builder().build()
     private val isRefreshEnabled = true
 
@@ -184,13 +181,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), View.OnClickList
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.history_btn -> parentFragmentManager.commit {
-                add(R.id.container, HistoryFragment.newInstance())
-                addToBackStack(null)
+            R.id.history_btn -> {
+                val intent = HistoryActivity.newIntent(v.context)
+                startActivity(intent)
             }
             R.id.favorites_btn -> parentFragmentManager.commit {
-                add(R.id.container, FavoritesFragment.newInstance())
-                addToBackStack(null)
+                val intent = FavoritesActivity.newIntent(v.context)
+                startActivity(intent)
             }
         }
     }
@@ -198,7 +195,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), View.OnClickList
     override fun onMenuItemClick(item: MenuItem) =
         when (item.itemId) {
             R.id.item_settings -> {
-                startActivity(SettingsActivity.newIntent(requireContext()))
+                val intent = SettingsActivity.newIntent(requireContext())
+                startActivity(intent)
                 true
             }
             else -> {
@@ -219,9 +217,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), View.OnClickList
     ) = FragmentProfileBinding.inflate(inflater)
 
     companion object {
+        private const val TAG = "[ProfileFragment]"
+
         fun newInstance() = ProfileFragment()
     }
-
-
-
 }

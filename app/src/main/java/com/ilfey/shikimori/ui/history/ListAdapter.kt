@@ -17,6 +17,7 @@ import com.ilfey.shikimori.di.network.enums.AnimeStatus
 import com.ilfey.shikimori.di.network.enums.AnimeStatus.*
 import com.ilfey.shikimori.di.network.enums.Kind
 import com.ilfey.shikimori.di.network.models.HistoryItem
+import com.ilfey.shikimori.ui.anime.AnimeActivity
 import com.ilfey.shikimori.ui.anime.AnimeFragment
 import com.ilfey.shikimori.utils.gone
 import com.ilfey.shikimori.utils.toast
@@ -24,7 +25,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ListAdapter(
-    private val fragment: Fragment,
     private val showFullTitles: Boolean,
 ) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
@@ -112,10 +112,8 @@ class ListAdapter(
                             // TODO: Implement this
                             context.toast(context.getString(R.string.functionality_not_implemented_yet))
                         } else {
-                            fragment.parentFragmentManager.commit {
-                                add(R.id.container, AnimeFragment.newInstance(item.target.id))
-                                addToBackStack(null)
-                            }
+                            val intent = AnimeActivity.newIntent(root.context, item.target.id)
+                            root.context.startActivity(intent)
                         }
                     }
                 }

@@ -31,6 +31,10 @@ class AppSettings(context: Context) {
         get() = prefs.getLong(KEY_USER_ID, 0)
         set(value) = prefs.edit { putLong(KEY_USER_ID, value) }
 
+    var username: String?
+        get() = prefs.getString(KEY_USERNAME, null)
+        set(value) = prefs.edit { putString(KEY_USERNAME, value) }
+
     var theme: Int
         get() = prefs.getInt(KEY_THEME, R.style.AppTheme_Light)
         set(value) = prefs.edit { putInt(KEY_THEME, value) }
@@ -49,6 +53,7 @@ class AppSettings(context: Context) {
         private const val KEY_LIST = "list"
         private const val KEY_FRAGMENT = "fragment"
         private const val KEY_USER_ID = "user_id"
+        private const val KEY_USERNAME = "username"
 
         const val KEY_THEME = "theme"
         const val KEY_NSFW = "nsfw"
