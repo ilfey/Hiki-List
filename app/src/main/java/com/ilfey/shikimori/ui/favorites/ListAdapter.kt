@@ -39,14 +39,14 @@ class ListAdapter(
 
             Glide
                 .with(binding.image.context)
-                .load(BuildConfig.APP_URL + item.image)
+                .load(BuildConfig.APP_URL + item.image.replace("x64", "original"))
                 .into(binding.image)
 
             binding.title.text = item.russian
             binding.name.text = item.name
 
             binding.root.setOnClickListener {
-                onClick?.invoke(item)
+                onClick.invoke(item)
             }
         }
     }

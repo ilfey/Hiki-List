@@ -35,6 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        style="?textAppearanceBodyMedium"
         android:textColor="?colorOnSurfaceVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/image"
@@ -56,8 +57,8 @@
 
     <TextView
         android:id="@+id/status"
-        style="?textAppearanceBodySmall"
         android:layout_width="0dp"
+        style="?textAppearanceBodyMedium"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"

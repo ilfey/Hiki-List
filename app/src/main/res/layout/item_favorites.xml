@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/item_background"
     android:orientation="vertical"
-    android:gravity="center"
+    android:gravity="center_horizontal|top"
     android:padding="@dimen/item_padding">
 
     <com.google.android.material.imageview.ShapeableImageView
@@ -23,17 +23,16 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:textAlignment="center"
-        android:textSize="14sp"
         tools:text="Anime title" />
+
     <TextView
         android:id="@+id/name"
-        style="?textAppearanceBodyMedium"
+        style="?textAppearanceBodySmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="?colorOnSurfaceVariant"
         android:layout_marginTop="8dp"
         android:textAlignment="center"
-        android:textSize="14sp"
         tools:text="Anime subtitle" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
