@@ -1,7 +1,7 @@
 package com.ilfey.shikimori.di.network.models.parcelables
 
 import android.os.Parcel
-import com.ilfey.shikimori.di.network.enums.ListTypes
+import com.ilfey.shikimori.di.network.enums.ListType
 import com.ilfey.shikimori.di.network.models.Anime
 
 fun Anime.RatesStatusesStats.writeToParcel(out: Parcel) {
@@ -10,7 +10,7 @@ fun Anime.RatesStatusesStats.writeToParcel(out: Parcel) {
 }
 
 fun Parcel.readStatusesStats() = Anime.RatesStatusesStats(
-    name = ListTypes.valueOf(requireNotNull(readString())),
+    name = ListType.valueOf(requireNotNull(readString())),
     value = readInt(),
 )
 

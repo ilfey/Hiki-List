@@ -25,7 +25,7 @@ import com.github.mikephil.charting.data.PieEntry
 import com.ilfey.shikimori.R
 import com.ilfey.shikimori.base.BaseFragment
 import com.ilfey.shikimori.databinding.FragmentProfileBinding
-import com.ilfey.shikimori.di.network.enums.ListTypes
+import com.ilfey.shikimori.di.network.enums.ListType
 import com.ilfey.shikimori.di.network.models.User
 import com.ilfey.shikimori.di.network.models.UserRate
 import com.ilfey.shikimori.di.network.models.filterByStatus
@@ -145,12 +145,12 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), View.OnClickList
 
     private fun setData(rates: List<UserRate>) {
         val statuses = arrayListOf(
-            rates.filterByStatus(ListTypes.PLANNED).count(),
-            rates.filterByStatus(ListTypes.WATCHING).count(),
-            rates.filterByStatus(ListTypes.REWATCHING).count(),
-            rates.filterByStatus(ListTypes.COMPLETED).count(),
-            rates.filterByStatus(ListTypes.ON_HOLD).count(),
-            rates.filterByStatus(ListTypes.DROPPED).count(),
+            rates.filterByStatus(ListType.PLANNED).count(),
+            rates.filterByStatus(ListType.WATCHING).count(),
+            rates.filterByStatus(ListType.REWATCHING).count(),
+            rates.filterByStatus(ListType.COMPLETED).count(),
+            rates.filterByStatus(ListType.ON_HOLD).count(),
+            rates.filterByStatus(ListType.DROPPED).count(),
         )
 
         val statuses_titles = resources.getStringArray(R.array.statuses_with_count)

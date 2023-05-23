@@ -3,7 +3,7 @@ package com.ilfey.shikimori.di.network.models
 import android.os.Parcelable
 import com.ilfey.shikimori.di.network.enums.AnimeStatus
 import com.ilfey.shikimori.di.network.enums.Kind
-import com.ilfey.shikimori.di.network.enums.ListTypes
+import com.ilfey.shikimori.di.network.enums.ListType
 import com.ilfey.shikimori.di.network.enums.Rating
 import kotlinx.parcelize.Parcelize
 import java.util.Date
@@ -67,7 +67,7 @@ data class Anime(
 
     @Parcelize
     data class RatesStatusesStats(
-        val name: ListTypes,
+        val name: ListType,
         val value: Int,
     ) : Parcelable
 

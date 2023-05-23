@@ -1,12 +1,10 @@
 package com.ilfey.shikimori.di
 
 import android.content.Context
-import androidx.annotation.StyleRes
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.ilfey.shikimori.R
-import com.ilfey.shikimori.di.network.Storage
-import com.ilfey.shikimori.di.network.enums.ListTypes
+import com.ilfey.shikimori.di.network.enums.ListType
 
 class AppSettings(context: Context) {
     private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -19,8 +17,8 @@ class AppSettings(context: Context) {
         get() = prefs.getBoolean(KEY_AUTHORIZED, false)
         set(value) = prefs.edit { putBoolean(KEY_AUTHORIZED, value) }
 
-    var list: ListTypes?
-        get() = prefs.getString(KEY_LIST, null)?.let { ListTypes.valueOf(it) }
+    var list: ListType?
+        get() = prefs.getString(KEY_LIST, null)?.let { ListType.valueOf(it) }
         set(value) = prefs.edit { putString(KEY_LIST, value?.name) }
 
     var fragment: Int
@@ -47,6 +45,10 @@ class AppSettings(context: Context) {
         get() = prefs.getBoolean(KEY_FULL_TITLES, false)
         set(value) = prefs.edit { putBoolean(KEY_FULL_TITLES, value) }
 
+    var showIcons: Boolean
+        get() = prefs.getBoolean(KEY_SHOW_ICONS, false)
+        set(value) = prefs.edit { putBoolean(KEY_SHOW_ICONS, value) }
+
     companion object {
         private const val KEY_AUTHORIZED = "authorized"
         private const val KEY_VISITED = "visited"
@@ -58,6 +60,7 @@ class AppSettings(context: Context) {
         const val KEY_THEME = "theme"
         const val KEY_NSFW = "nsfw"
         const val KEY_FULL_TITLES = "full_titles"
+        const val KEY_SHOW_ICONS = "show_icons"
         const val KEY_APP_VERSION = "app_version"
     }
 }

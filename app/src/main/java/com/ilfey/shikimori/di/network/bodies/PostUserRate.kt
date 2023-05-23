@@ -1,6 +1,6 @@
 package com.ilfey.shikimori.di.network.bodies
 
-import com.ilfey.shikimori.di.network.enums.ListTypes
+import com.ilfey.shikimori.di.network.enums.ListType
 import com.ilfey.shikimori.di.network.enums.TargetType
 
 data class PostUserRate(
@@ -14,7 +14,7 @@ data class PostUserRate(
         val episodes: Int? = null,
         val rewatches: Int? = null,
         val score: Int? = null,
-        val status: ListTypes? = null,
+        val status: ListType? = null,
         val volumes: Int? = null,
     )
 }

@@ -1,7 +1,6 @@
 package com.ilfey.shikimori.di.network
 
 import android.net.Uri
-import android.util.Log
 import com.ilfey.shikimori.BuildConfig
 import net.openid.appauth.*
 import kotlin.coroutines.suspendCoroutine
@@ -14,7 +13,7 @@ class Authenticator(
         private const val AUTH_URL = "${BuildConfig.APP_URL}/oauth/authorize"
         private const val TOKEN_URL = "${BuildConfig.APP_URL}/oauth/token"
         private const val CALLBACK_URL = "${BuildConfig.APPLICATION_ID}://oauth/shikimori"
-        private const val SCOPE = ""
+        private const val SCOPE = "user_rates"
         private const val RESPONSE_TYPE = ResponseTypeValues.CODE
     }
 

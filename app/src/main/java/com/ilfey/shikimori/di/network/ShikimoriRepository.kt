@@ -28,7 +28,7 @@ interface ShikimoriRepository {
         @Query("limit") limit: Int = 50,
         @Query("order") order: Order? = null, // Must be grouped
         @Query("kind") kind: Kind? = null,
-        @Query("status") status: ListTypes? = null,
+        @Query("status") status: ListType? = null,
         @Query("season") season: String? = null,
         @Query("score") score: Int? = null,
         @Query("duration") duration: Duration? = null,
@@ -74,6 +74,10 @@ interface ShikimoriRepository {
         @Query("target_type") target_type: TargetType? = null,
     ): Call<List<HistoryItem>>
 
+    /**
+     * Show user history
+     * See: https://shikimori.me/api/doc/1.0/users/history
+     * */
     @GET("/api/users/{id}/history")
     fun history(
         @Path("id") id: String,

@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.*
 import com.ilfey.shikimori.base.BaseFragment
 import com.ilfey.shikimori.databinding.FragmentListsBinding
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ListsFragment : BaseFragment<FragmentListsBinding>() {
 
-    private val viewModel by inject<ListsViewModel>()
+    private val viewModel by viewModel<ListsViewModel>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

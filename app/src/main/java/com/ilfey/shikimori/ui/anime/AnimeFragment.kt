@@ -15,7 +15,7 @@ import com.ilfey.shikimori.base.BaseFragment
 import com.ilfey.shikimori.databinding.FragmentAnimeBinding
 import com.ilfey.shikimori.di.network.enums.AnimeStatus
 import com.ilfey.shikimori.di.network.enums.Kind.*
-import com.ilfey.shikimori.di.network.enums.ListTypes.*
+import com.ilfey.shikimori.di.network.enums.ListType.*
 import com.ilfey.shikimori.di.network.enums.Rating.*
 import com.ilfey.shikimori.di.network.models.*
 import com.ilfey.shikimori.ui.anime.screenshots.ScreenshotsFragment
@@ -216,6 +216,7 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
                 expandDescriptionBtn.gone()
                 description.text = getString(R.string.no_description)
             } else {
+                // TODO: compile bb-code
                 description.text = anime.description
             }
 
@@ -301,12 +302,12 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
         }
     }
 
-    private fun openScreenshot(screenshots: Array<String>, pos: Int = 0) {
-        parentFragmentManager.commit {
-            add(R.id.container, ScreenshotsFragment.newInstance(screenshots, pos))
-            addToBackStack(null)
-        }
-    }
+//    private fun openScreenshot(screenshots: Array<String>, pos: Int = 0) {
+//        parentFragmentManager.commit {
+//            add(R.id.container, ScreenshotsFragment.newInstance(screenshots, pos))
+//            addToBackStack(null)
+//        }
+//    }
 
     private fun createChip(text: String): Chip {
         val chip = Chip(requireContext())

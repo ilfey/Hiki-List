@@ -2,13 +2,13 @@ package com.ilfey.shikimori.di.network.models
 
 import com.ilfey.shikimori.di.network.enums.AnimeStatus
 import com.ilfey.shikimori.di.network.enums.Kind
-import com.ilfey.shikimori.di.network.enums.ListTypes
+import com.ilfey.shikimori.di.network.enums.ListType
 import java.util.Date
 
 data class AnimeRate(
     val id: Long,
     val score: Int,
-    val status: ListTypes,
+    val status: ListType,
     val text: String?,
     val episodes: Int,
     val chapters: Int?, // TODO: Check

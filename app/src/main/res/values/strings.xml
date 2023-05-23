@@ -137,5 +137,7 @@
     <string name="seyu">Сэйю</string>
     <string name="mangakas">Мангаки</string>
     <string name="people">Люди</string>
+    <string name="search">Поиск</string>
+    <string name="news">Новости</string>
 
 </resources>

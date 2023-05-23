@@ -9,6 +9,11 @@
             app:summary="@string/titles_will_not_be_truncated_in_lists"
             app:title="@string/show_full_anime_titles" />
 
+        <SwitchPreferenceCompat
+            app:key="show_icons"
+            app:summary="Иконки будут отображаться в названиях списков"
+            app:title="Показывать иконки в названиях списков" />
+
     </PreferenceCategory>
 
     <PreferenceCategory app:title="@string/content">

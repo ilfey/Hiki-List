@@ -3,7 +3,7 @@ package com.ilfey.shikimori.ui.lists
 import android.os.Bundle
 import android.view.View
 import com.ilfey.shikimori.R
-import com.ilfey.shikimori.di.network.enums.ListTypes
+import com.ilfey.shikimori.di.network.enums.ListType
 import com.ilfey.shikimori.di.network.models.AnimeRate
 import com.ilfey.shikimori.utils.*
 import com.ilfey.shikimori.utils.widgets.VerticalSpaceItemDecorator
@@ -18,7 +18,7 @@ class ListFragment : com.ilfey.shikimori.base.ListFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val list = arguments?.getString(ARG_LIST_TYPE)?.let { enumValueOf(it) } ?: ListTypes.PLANNED
+        val list = arguments?.getString(ARG_LIST_TYPE)?.let { enumValueOf(it) } ?: ListType.PLANNED
 
         viewModel.getList(list)
     }
@@ -64,7 +64,7 @@ class ListFragment : com.ilfey.shikimori.base.ListFragment() {
         private const val ARG_LIST_TYPE = "list_type"
 
         fun newInstance(
-            lt: ListTypes?
+            lt: ListType?
         ) = ListFragment().withArgs(1){
             putString(ARG_LIST_TYPE, lt?.name)
         }

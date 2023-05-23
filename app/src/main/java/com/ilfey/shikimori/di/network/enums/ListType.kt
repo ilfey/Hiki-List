@@ -2,7 +2,7 @@ package com.ilfey.shikimori.di.network.enums
 
 import com.google.gson.annotations.SerializedName
 
-enum class ListTypes(val value: String) {
+enum class ListType(val value: String) {
     @SerializedName("planned", alternate = ["Запланировано"])
     PLANNED("planned"),
     @SerializedName("watching", alternate = ["Смотрю"])

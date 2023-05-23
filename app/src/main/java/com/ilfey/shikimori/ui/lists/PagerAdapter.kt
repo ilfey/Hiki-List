@@ -2,7 +2,7 @@ package com.ilfey.shikimori.ui.lists
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.ilfey.shikimori.di.network.enums.ListTypes.*
+import com.ilfey.shikimori.di.network.enums.ListType.*
 
 class PagerAdapter(
     fragment: Fragment,

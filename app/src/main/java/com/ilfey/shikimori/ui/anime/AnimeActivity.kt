@@ -13,7 +13,7 @@ import com.ilfey.shikimori.R
 import com.ilfey.shikimori.base.BaseActivity
 import com.ilfey.shikimori.databinding.ActivityAnimeBinding
 import com.ilfey.shikimori.di.network.bodies.PatchUserRate
-import com.ilfey.shikimori.di.network.enums.ListTypes
+import com.ilfey.shikimori.di.network.enums.ListType
 import com.ilfey.shikimori.di.network.models.Anime
 import com.ilfey.shikimori.di.network.models.UserRate
 import com.ilfey.shikimori.ui.anime.info.InfoBottomSheet
@@ -116,12 +116,12 @@ class AnimeActivity : BaseActivity<ActivityAnimeBinding>(), Toolbar.OnMenuItemCl
                     rateId,
                     PatchUserRate.UserRate(
                         status = when (index) {
-                            0 -> ListTypes.PLANNED
-                            1 -> ListTypes.WATCHING
-                            2 -> ListTypes.REWATCHING
-                            3 -> ListTypes.COMPLETED
-                            4 -> ListTypes.ON_HOLD
-                            5 -> ListTypes.DROPPED
+                            0 -> ListType.PLANNED
+                            1 -> ListType.WATCHING
+                            2 -> ListType.REWATCHING
+                            3 -> ListType.COMPLETED
+                            4 -> ListType.ON_HOLD
+                            5 -> ListType.DROPPED
                             else -> null
                         }
                     )

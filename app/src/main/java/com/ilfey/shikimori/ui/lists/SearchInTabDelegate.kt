@@ -15,8 +15,8 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.ilfey.shikimori.R
 import com.ilfey.shikimori.di.AppSettings
-import com.ilfey.shikimori.di.network.enums.ListTypes
-import com.ilfey.shikimori.di.network.enums.ListTypes.*
+import com.ilfey.shikimori.di.network.enums.ListType
+import com.ilfey.shikimori.di.network.enums.ListType.*
 import com.ilfey.shikimori.di.network.models.AnimeItem
 import com.ilfey.shikimori.utils.gone
 import com.ilfey.shikimori.utils.isVisible
@@ -28,7 +28,7 @@ class SearchInTabDelegate(
     private val fragment: Fragment,
     private val searchBar: SearchBar,
     private val tabLayout: TabLayout,
-    private val pager: ViewPager2,
+    pager: ViewPager2,
     private val searchView: SearchView,
     private val settings: AppSettings,
     private val viewModel: ListsViewModel,
@@ -41,7 +41,7 @@ class SearchInTabDelegate(
         searchView.findViewById<ContentLoadingProgressBar>(R.id.progressBar_search)
     private val recyclerView = fragment.view?.findViewById<RecyclerView>(R.id.recyclerView_search)
 
-    private var currentList: ListTypes
+    private var currentList: ListType
         get() = settings.list ?: PLANNED
         set(value) {
             settings.list = value
@@ -144,7 +144,9 @@ class SearchInTabDelegate(
 //    }
     private fun TabLayout.Tab.create(@StringRes title: Int, @DrawableRes icon: Int) {
         text = tabLayout.context.getString(title)
-        setIcon(icon)
+        if (settings.showIcons) {
+            setIcon(icon)
+        }
     }
 
     override fun beforeTextChanged(text: CharSequence, start: Int, count: Int, after: Int) {}

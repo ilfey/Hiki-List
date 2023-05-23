@@ -11,7 +11,7 @@ import com.github.mikephil.charting.data.BarEntry
 import com.ilfey.shikimori.R
 import com.ilfey.shikimori.base.BaseBottomSheetDialogFragment
 import com.ilfey.shikimori.databinding.SheetAnimeStatisticBinding
-import com.ilfey.shikimori.di.network.enums.ListTypes.*
+import com.ilfey.shikimori.di.network.enums.ListType.*
 import com.ilfey.shikimori.di.network.models.Anime
 import com.ilfey.shikimori.di.network.models.parcelables.ParcelableScores
 import com.ilfey.shikimori.di.network.models.parcelables.ParcelableStatuses

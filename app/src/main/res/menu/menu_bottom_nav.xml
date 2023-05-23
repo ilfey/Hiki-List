@@ -1,5 +1,4 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.ilfey.shikimori.ScrollingActivity">
 
@@ -7,10 +6,11 @@
         android:id="@+id/nav_lists"
         android:icon="@drawable/ic_checklist"
         android:title="@string/lists" />
+
     <item
         android:id="@+id/nav_search"
         android:icon="@drawable/ic_search"
-        android:title="@string/lists" />
+        android:title="@string/search" />
 
     <item
         android:id="@+id/nav_profile"

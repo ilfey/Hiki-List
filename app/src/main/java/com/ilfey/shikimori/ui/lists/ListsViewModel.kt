@@ -4,8 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import com.ilfey.shikimori.base.ListViewModel
 import com.ilfey.shikimori.di.AppSettings
 import com.ilfey.shikimori.di.network.ShikimoriRepository
-import com.ilfey.shikimori.di.network.enums.ListTypes
-import com.ilfey.shikimori.di.network.enums.ListTypes.*
+import com.ilfey.shikimori.di.network.enums.ListType
+import com.ilfey.shikimori.di.network.enums.ListType.*
 import com.ilfey.shikimori.di.network.models.AnimeItem
 import com.ilfey.shikimori.di.network.models.AnimeRate
 import com.ilfey.shikimori.utils.RetrofitEnqueue.Companion.Result.*
@@ -26,7 +26,7 @@ class ListsViewModel(
     val searchList = MutableLiveData<List<AnimeItem>>()
     val list = MutableLiveData<List<AnimeRate>>()
 
-    val lists = mutableMapOf<ListTypes, List<AnimeRate>?>(
+    val lists = mutableMapOf<ListType, List<AnimeRate>?>(
         PLANNED to null,
         WATCHING to null,
         COMPLETED to null,
@@ -35,7 +35,7 @@ class ListsViewModel(
         DROPPED to null,
     )
 
-    fun searchInList(list: ListTypes, query: String) {
+    fun searchInList(list: ListType, query: String) {
         loadingMutableStateFlow.value = true
         repository.animes(
             mylist = list.value,
@@ -54,9 +54,9 @@ class ListsViewModel(
         }
     }
 
-    private var lastStatus: ListTypes = settings.list ?: PLANNED
+    private var lastStatus: ListType = settings.list ?: PLANNED
 
-    fun getList(status: ListTypes, refresh: Boolean = false) {
+    fun getList(status: ListType, refresh: Boolean = false) {
         loadingMutableStateFlow.value = true
         lastStatus = status
 
