@@ -174,4 +174,30 @@ interface ShikimoriRepository {
         @Query("status") status: String? = null,
         @Query("censored") censored: Boolean? = null,
     ): Call<List<AnimeRate>>
+
+    /**
+     * Show current user's messages
+     * Requires messages oauth scope
+     * See: https://shikimori.one/api/doc/1.0/users/messages
+     */
+    @GET("/api/users/{id}/messages")
+    fun messages(
+        @Path("id") id: Long,
+        @Query("page") page: Int? = null,
+        @Query("limit") limit: Int = 100,
+        @Query("type") type: MessageType,
+    ): Call<List<Message>>
+
+    /**
+     * Show current user's messages
+     * Requires messages oauth scope
+     * See: https://shikimori.one/api/doc/1.0/users/messages
+     */
+    @GET("/api/users/{id}/messages")
+    fun messages(
+        @Path("id") id: String,
+        @Query("page") page: Int? = null,
+        @Query("limit") limit: Int = 100,
+        @Query("type") type: MessageType,
+    ): Call<List<Message>>
 }

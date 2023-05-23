@@ -10,13 +10,14 @@ import com.google.android.material.navigation.NavigationBarView
 import com.ilfey.shikimori.R
 import com.ilfey.shikimori.di.AppSettings
 import com.ilfey.shikimori.ui.lists.ListsFragment
+import com.ilfey.shikimori.ui.news.NewsFragment
 import com.ilfey.shikimori.ui.profile.ProfileFragment
 import com.ilfey.shikimori.ui.search.SearchFragment
 
 private const val TAG_MAIN = "main"
 
 class NavigationDelegate(
-    private val navBar: NavigationBarView,
+    navBar: NavigationBarView,
     private val fragmentManager: FragmentManager,
     private val settings: AppSettings,
 ) : OnBackPressedCallback(false), NavigationBarView.OnItemSelectedListener,
@@ -42,6 +43,7 @@ class NavigationDelegate(
             when (itemId) {
                 R.id.nav_lists -> ListsFragment.newInstance()
                 R.id.nav_search -> SearchFragment.newInstance()
+                R.id.nav_news -> NewsFragment.newInstance()
                 R.id.nav_profile -> ProfileFragment.newInstance()
                 else -> return false
             },
