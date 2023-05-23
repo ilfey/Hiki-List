@@ -3,10 +3,8 @@ package com.ilfey.shikimori.ui.favorites
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.ilfey.shikimori.base.ListViewModel
-import com.ilfey.shikimori.di.AppSettings
 import com.ilfey.shikimori.di.network.ShikimoriRepository
 import com.ilfey.shikimori.di.network.models.Favorites
-import com.ilfey.shikimori.ui.history.HistoryViewModel
 import com.ilfey.shikimori.utils.RetrofitEnqueue.Companion.Result
 import com.ilfey.shikimori.utils.RetrofitEnqueue.Companion.enqueue
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +12,6 @@ import kotlinx.coroutines.flow.asStateFlow
 
 
 class FavoritesViewModel(
-    private val settings: AppSettings,
     private val repository: ShikimoriRepository,
 ) : ListViewModel() {
 

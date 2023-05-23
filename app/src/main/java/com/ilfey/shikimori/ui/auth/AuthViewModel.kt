@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ilfey.shikimori.R
 import com.ilfey.shikimori.di.network.Authenticator
-import com.ilfey.shikimori.di.network.Storage
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
@@ -20,7 +19,6 @@ import net.openid.appauth.AuthorizationService
 import net.openid.appauth.TokenRequest
 
 class AuthViewModel(
-    private val storage: Storage,
     private val repository: Authenticator,
     private val service: AuthorizationService,
 ) : ViewModel() {

@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ilfey.shikimori.di.AppSettings
 import com.ilfey.shikimori.di.network.ShikimoriRepository
-import com.ilfey.shikimori.di.network.Storage
 import com.ilfey.shikimori.di.network.models.User
 import com.ilfey.shikimori.di.network.models.UserRate
 import com.ilfey.shikimori.utils.RetrofitEnqueue.Companion.enqueue
@@ -41,7 +40,7 @@ class ProfileViewModel(
 
     fun getRates(user_id: Long) {
         repository.user_rates(
-            user_id = user_id
+            user_id = user_id,
         ).enqueue {
             when (it) {
                 is Result.Success -> {

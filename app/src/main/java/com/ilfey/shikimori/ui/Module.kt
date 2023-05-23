@@ -18,11 +18,11 @@ val uiModule
         }
 
         viewModel {
-            AuthViewModel(storage = get(), repository = get(), service = get())
+            AuthViewModel(repository = get(), service = get())
         }
 
         viewModel {
-            HistoryViewModel(settings = get(), repository = get())
+            HistoryViewModel(repository = get())
         }
 
         viewModel {
@@ -30,7 +30,7 @@ val uiModule
         }
 
         viewModel {
-            FavoritesViewModel(settings = get(), repository = get())
+            FavoritesViewModel(repository = get())
         }
 
         viewModel {

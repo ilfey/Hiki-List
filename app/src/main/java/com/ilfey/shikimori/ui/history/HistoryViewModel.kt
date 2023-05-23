@@ -3,7 +3,6 @@ package com.ilfey.shikimori.ui.history
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.ilfey.shikimori.base.ListViewModel
-import com.ilfey.shikimori.di.AppSettings
 import com.ilfey.shikimori.di.network.ShikimoriRepository
 import com.ilfey.shikimori.di.network.models.HistoryItem
 import com.ilfey.shikimori.utils.RetrofitEnqueue.Companion.Result
@@ -12,7 +11,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class HistoryViewModel(
-    private val settings: AppSettings,
     private val repository: ShikimoriRepository,
 ) : ListViewModel() {
 
