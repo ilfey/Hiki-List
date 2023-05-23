@@ -15,12 +15,6 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/item_statistic"
-        android:icon="@drawable/ic_chart"
-        android:title="@string/statistic"
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/item_info"
         android:icon="@drawable/ic_info"
         android:title="@string/info"

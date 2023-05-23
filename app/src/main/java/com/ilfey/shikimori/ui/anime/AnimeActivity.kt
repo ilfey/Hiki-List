@@ -17,7 +17,6 @@ import com.ilfey.shikimori.di.network.enums.ListType
 import com.ilfey.shikimori.di.network.models.Anime
 import com.ilfey.shikimori.di.network.models.UserRate
 import com.ilfey.shikimori.ui.anime.info.InfoBottomSheet
-import com.ilfey.shikimori.ui.anime.statistic.StatisticBottomSheet
 import com.ilfey.shikimori.utils.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -25,6 +24,7 @@ class AnimeActivity : BaseActivity<ActivityAnimeBinding>(), Toolbar.OnMenuItemCl
 
     private val viewModel by viewModel<AnimeViewModel>()
     private var id: Long = 0
+    private var currentList = -1
     private var rateId: Long? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,6 +71,14 @@ class AnimeActivity : BaseActivity<ActivityAnimeBinding>(), Toolbar.OnMenuItemCl
 
     private fun onRateUpdate(rate: UserRate) {
         rateId = rate.id
+        currentList = when (rate.status) {
+            ListType.PLANNED -> 0
+            ListType.WATCHING -> 1
+            ListType.REWATCHING -> 2
+            ListType.COMPLETED -> 3
+            ListType.ON_HOLD -> 4
+            ListType.DROPPED -> 5
+        }
     }
 
     override fun onMenuItemClick(item: MenuItem) = when (item.itemId) {
@@ -78,31 +86,12 @@ class AnimeActivity : BaseActivity<ActivityAnimeBinding>(), Toolbar.OnMenuItemCl
             createSelectListDialog().show()
             true
         }
-        R.id.item_statistic -> {
-            StatisticBottomSheet.show(
-                supportFragmentManager,
-                viewModel.anime.value?.rates_scores_stats ?: listOf(),
-                viewModel.anime.value?.rates_statuses_stats ?: listOf(),
-            )
-            true
-        }
         R.id.item_info -> {
-            InfoBottomSheet.show(
-                supportFragmentManager,
-                viewModel.anime.value?.kind,
-                viewModel.anime.value?.studios?.map { studio -> studio.name }?.toTypedArray(),
-                viewModel.anime.value?.japanese?.filterNotNull()?.toTypedArray(),
-                viewModel.anime.value?.english?.filterNotNull()?.toTypedArray(),
-                viewModel.anime.value?.synonyms?.filterNotNull()?.toTypedArray(),
-                viewModel.anime.value?.fandubbers?.toTypedArray(),
-                viewModel.anime.value?.fansubbers?.toTypedArray(),
-            )
+            InfoBottomSheet.show(supportFragmentManager)
             true
         }
         else -> false
     }
-
-    private var currentList = -1
 
     private fun createSelectListDialog(): AlertDialog { // TODO: Delegate this
         val builder = MaterialAlertDialogBuilder(this)

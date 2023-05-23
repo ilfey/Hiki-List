@@ -26,7 +26,7 @@ interface ShikimoriRepository {
     fun animes(
         @Query("page") page: Int? = null,
         @Query("limit") limit: Int = 50,
-        @Query("order") order: Order? = null, // Must be grouped
+        @Query("order") order: Order? = null, // TODO: Must be grouped
         @Query("kind") kind: Kind? = null,
         @Query("status") status: ListType? = null,
         @Query("season") season: String? = null,

@@ -21,9 +21,11 @@ abstract class BaseBottomSheetDialogFragment<B : ViewBinding> : BottomSheetDialo
     ): View? {
         val binding = onInflateView(inflater, container)
         viewBinding = binding
-
+        bindViewModel()
         return binding.root
     }
+
+    protected open fun bindViewModel() {}
 
     protected abstract fun onInflateView(inflater: LayoutInflater, container: ViewGroup?): B
 }

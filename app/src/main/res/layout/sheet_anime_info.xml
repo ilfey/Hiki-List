@@ -27,12 +27,16 @@
             android:layout_marginTop="8dp"
             tools:text="Студия: Passione" />
 
+        <!--    ALTERNATIVE TITLES    -->
+
         <TextView
             style="?textAppearanceBodyLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/other_titles" />
+
+        <!--    JAPANESE TITLE    -->
 
         <TextView
             android:id="@+id/in_japanese"
@@ -41,6 +45,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             tools:text="По японски: 私の百合はお仕事です！" />
+
+        <!--    ENGLISH TITLE    -->
 
         <TextView
             android:id="@+id/in_english"
@@ -57,6 +63,48 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             tools:text="Другие названия: Schwestern in Liebe!,W atayuri" />
+
+        <!--    USER LISTS    -->
+
+        <TextView
+            android:id="@+id/textView_lists"
+            style="?attr/textAppearanceBody1"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/on_people_lists" />
+
+        <HorizontalScrollView
+            android:id="@+id/scrollView_statuses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            tools:layout_height="32dp">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroup_statuses"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </HorizontalScrollView>
+
+        <!--    USERS RATING    -->
+
+        <TextView
+            android:id="@+id/textView_rates"
+            style="?attr/textAppearanceBody1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/people_ratings" />
+
+        <com.github.mikephil.charting.charts.HorizontalBarChart
+            android:id="@+id/chart_scores"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginTop="16dp" />
 
         <TextView
             android:id="@+id/textView_fandubbers"
