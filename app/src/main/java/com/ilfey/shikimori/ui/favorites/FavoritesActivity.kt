@@ -7,7 +7,7 @@ import android.util.Log
 import com.ilfey.shikimori.R
 import com.ilfey.shikimori.base.BaseActivity
 import com.ilfey.shikimori.databinding.ActivityFavoritesBinding
-import com.ilfey.shikimori.di.network.models.Favorites
+import com.ilfey.shikimori.di.network.entities.Favorites
 import com.ilfey.shikimori.utils.addBackButton
 import com.ilfey.shikimori.utils.gone
 import com.ilfey.shikimori.utils.launchAndCollectIn

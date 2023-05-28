@@ -31,4 +31,4 @@
 # Application classes that will be serialized/deserialized over Gson
 -keep class com.ilfey.shikimori.di.network.bodies.** { *; }
 -keep class com.ilfey.shikimori.di.network.enums.** { *; }
--keep class com.ilfey.shikimori.di.network.models.** { *; }
+-keep class com.ilfey.shikimori.di.network.entities.** { *; }

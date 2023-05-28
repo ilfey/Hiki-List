@@ -139,5 +139,6 @@
     <string name="people">Люди</string>
     <string name="search">Поиск</string>
     <string name="news">Новости</string>
+    <string name="no_title">Названия еще нет</string>
 
 </resources>

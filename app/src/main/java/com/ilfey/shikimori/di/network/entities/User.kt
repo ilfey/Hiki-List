@@ -1,16 +1,19 @@
-package com.ilfey.shikimori.di.network.models
+package com.ilfey.shikimori.di.network.entities
+
+import java.util.Date
 
 data class User(
     val id: Long,
     val nickname: String,
     val avatar: String,
     val image: Image,
-    val last_online: String,
+    val last_online_at: Date,
     val url: String,
-    val name: String,
+    val name: String?,
     val sex: String,
-    val website: String?,
-    val full_years: Int,
+    val website: String,
+    val birth_on: Date?,
+    val full_years: Int?,
 ) {
     data class Image(
         val x160: String,

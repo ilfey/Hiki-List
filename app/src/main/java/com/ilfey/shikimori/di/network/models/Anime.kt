@@ -1,31 +1,22 @@
 package com.ilfey.shikimori.di.network.models
 
-import android.os.Parcelable
-import com.ilfey.shikimori.di.network.enums.AnimeStatus
-import com.ilfey.shikimori.di.network.enums.Kind
-import com.ilfey.shikimori.di.network.enums.ListType
-import com.ilfey.shikimori.di.network.enums.Rating
-import kotlinx.parcelize.Parcelize
+import android.content.Context
 import java.util.Date
+import com.ilfey.shikimori.di.network.entities.Anime as eAnime
 
-@Parcelize
 data class Anime(
     val id: Long,
-    val name: String,
-    val russian: String,
-    val image: Image,
-    val url: String,
-    val kind: Kind,
-    val score: String,
-    val status: AnimeStatus,
-    val episodes: Int,
-    val episodes_aired: Int,
-    val aired_on: Date?,
-    val released_on: Date?,
-    val rating: Rating?,
-    val english: List<String?>,
-    val japanese: List<String?>,
-    val synonyms: List<String?>,
+    val titleEn: String,
+    val titleRu: String,
+    val image: String,
+    val kind: String?,
+    val score: Float,
+    val status: String,
+    val episodes: String?,
+    val rating: String?,
+    val english: List<String>?,
+    val japanese: List<String>?,
+    val synonyms: List<String>?,
     val license_name_ru: String?,
     val duration: Int,
     val description: String?,
@@ -33,75 +24,67 @@ data class Anime(
 //    val description_source: String?, // TODO: Check
     val franchise: String?,
     val favoured: Boolean,
-    val anons: Boolean,
-    val ongoing: Boolean,
-    val thread_id: Long,
-    val topic_id: Long,
+    val threadId: Long,
+    val topicId: Long,
 //    val myanimelist_id: Long,
-    val rates_scores_stats: List<RatesScoresStats>,
-    val rates_statuses_stats: List<RatesStatusesStats>,
-    val updated_at: String,
-    val next_episode_at: String?,
-    val fansubbers: List<String>,
-    val fandubbers: List<String>,
-    val licensors: List<String>,
-    val genres: List<Genre>,
-    val studios: List<Studio>,
-    val videos: List<Video>,
-    val screenshots: List<Screenshot>,
-    val user_rate: UserRate?,
-) : Parcelable {
-    @Parcelize
-    data class Image(
-        val original: String,
-        val preview: String,
-        val x96: String,
-        val x48: String,
-    ) : Parcelable
+    val scoresStats: List<eAnime.RatesScoresStats>?,
+    val statusesStats: List<eAnime.RatesStatusesStats>?,
+    val updatedAt: Date,
+    val nextEpsAt: Date?,
+    val fansubbers: List<String>?,
+    val fandubbers: List<String>?,
+    val licensors: List<String>?,
+    val genres: List<eAnime.Genre>?,
+    val studios: List<eAnime.Studio>?,
+    val videos: List<eAnime.Video>?,
+    val screenshots: List<String>?,
+    val userRate: UserRate?,
+) {
+    companion object {
+        fun parseFromEntity(ctx: Context, e: eAnime): Anime {
+            return Anime(
+                id = e.id,
+                titleEn = e.name,
+                titleRu = e.russian,
+                image = makeUrl(e.image.original),
+                kind = ctx.parseKind(e.kind),
+                score = parseScore(e.score),
+                status = ctx.parseStatus(e.status, e.aired_on, e.released_on),
+                episodes = ctx.parseEpisodes(e.status, e.episodes, e.user_rate?.episodes ?: 0, e.episodes_aired),
+                rating = ctx.parseRating(e.rating),
+                english = parseAltTitles(e.english),
+                japanese = parseAltTitles(e.japanese),
+                synonyms = parseAltTitles(e.synonyms),
 
-    @Parcelize
-    data class RatesScoresStats(
-        val name: Int,
-        val value: Int,
-    ) : Parcelable
+                license_name_ru = e.license_name_ru,
+                duration = e.duration,
+                description = e.description,
+                franchise = e.franchise,
+                favoured = e.favoured,
+                threadId = e.thread_id,
+                topicId = e.topic_id,
+                scoresStats = e.rates_scores_stats,
+                statusesStats = e.rates_statuses_stats,
+                updatedAt = e.updated_at,
+                nextEpsAt = e.next_episode_at,
+                fansubbers = e.fansubbers.ifEmpty { null },
+                fandubbers = e.fandubbers.ifEmpty { null },
+                licensors = e.licensors.ifEmpty { null },
+                genres = e.genres,
+                studios = e.studios.ifEmpty { null },
+                videos = e.videos.ifEmpty { null },
 
-    @Parcelize
-    data class RatesStatusesStats(
-        val name: ListType,
-        val value: Int,
-    ) : Parcelable
+                screenshots = if (e.screenshots.isEmpty()) null else e.screenshots.map { makeUrl(it.original) },
+                userRate = if (e.user_rate != null) UserRate.parseFromEntity(ctx, e.user_rate) else null
+            )
+        }
 
-    @Parcelize
-    data class Genre(
-        val id: Long,
-        val name: String,
-        val russian: String,
-        val kind: String, // Anime
-    ) : Parcelable
+        private fun parseAltTitles(l: List<String?>): List<String>? {
+            if (l.isEmpty()) {
+                return null
+            }
 
-    @Parcelize
-    data class Studio(
-        val id: Long,
-        val name: String,
-        val filtered_name: String,
-        val real: Boolean,
-        val image: String,
-    ) : Parcelable
-
-    @Parcelize
-    data class Video(
-        val id: Long,
-        val url: String,
-        val image_url: String,
-        val player_url: String,
-        val name: String,
-        val kind: String, // Op
-        val hosting: String,
-    ) : Parcelable
-
-    @Parcelize
-    data class Screenshot(
-        val original: String,
-        val preview: String,
-    ) : Parcelable
+            return l.filterNotNull().filter { it.isNotEmpty() }
+        }
+    }
 }

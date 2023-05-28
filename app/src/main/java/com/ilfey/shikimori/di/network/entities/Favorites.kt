@@ -1,4 +1,4 @@
-package com.ilfey.shikimori.di.network.models
+package com.ilfey.shikimori.di.network.entities
 
 data class Favorites(
     val animes: List<Entry>,

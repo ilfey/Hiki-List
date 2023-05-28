@@ -7,27 +7,20 @@ import androidx.fragment.app.commit
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.imageview.ShapeableImageView
-import com.ilfey.shikimori.BuildConfig
 import com.ilfey.shikimori.R
-import com.ilfey.shikimori.di.network.models.Anime
 import com.ilfey.shikimori.ui.anime.screenshots.ScreenshotsFragment
 import com.ilfey.shikimori.utils.dp
 
 
 class ScreenshotsAdapter(
     private val fragment: AnimeFragment,
-    private var list: List<Anime.Screenshot>,
 ) : RecyclerView.Adapter<ScreenshotsAdapter.ViewHolder>() {
 
-    private val screenshotsUrl: Array<String>
-        get() = list.map {
-            BuildConfig.APP_URL + it.original
-        }.toTypedArray()
-
+    private var list = listOf<String>()
     override fun getItemCount() = list.size
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setList(l: List<Anime.Screenshot>) {
+    fun setList(l: List<String>) {
         list = l
 
         notifyDataSetChanged()
@@ -51,15 +44,15 @@ class ScreenshotsAdapter(
     inner class ViewHolder(
         private val img: ImageView,
     ) : RecyclerView.ViewHolder(img) {
-        fun bind(item: Anime.Screenshot, position: Int) {
+        fun bind(item: String, position: Int) {
             Glide
                 .with(img)
-                .load(BuildConfig.APP_URL + item.original)
+                .load(item)
                 .into(img)
 
             img.setOnClickListener {
                 fragment.parentFragmentManager.commit {
-                    replace(R.id.container, ScreenshotsFragment.newInstance(screenshotsUrl, position))
+                    replace(R.id.container, ScreenshotsFragment.newInstance(position))
                     addToBackStack(null)
                 }
             }

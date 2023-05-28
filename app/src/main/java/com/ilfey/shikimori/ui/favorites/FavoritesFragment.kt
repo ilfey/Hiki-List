@@ -4,13 +4,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.ilfey.shikimori.base.ListFragment
-import com.ilfey.shikimori.di.network.models.Favorites
+import com.ilfey.shikimori.di.network.entities.Favorites
 import com.ilfey.shikimori.ui.anime.AnimeActivity
 import com.ilfey.shikimori.ui.favorites.FavoritesFragment.Companion.FavoriteTypes.*
 import com.ilfey.shikimori.utils.*
 import com.ilfey.shikimori.utils.widgets.GridSpaceItemDecorator
-import com.ilfey.shikimori.utils.widgets.HorizontalSpaceItemDecorator
-import com.ilfey.shikimori.utils.widgets.VerticalSpaceItemDecorator
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class FavoritesFragment : ListFragment() {

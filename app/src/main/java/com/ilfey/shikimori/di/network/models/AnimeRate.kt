@@ -1,64 +1,43 @@
 package com.ilfey.shikimori.di.network.models
 
-import com.ilfey.shikimori.di.network.enums.AnimeStatus
-import com.ilfey.shikimori.di.network.enums.Kind
-import com.ilfey.shikimori.di.network.enums.ListType
-import java.util.Date
+import android.content.Context
+import com.ilfey.shikimori.R
+import com.ilfey.shikimori.di.network.entities.AnimeRate as eAnimeRate
 
 data class AnimeRate(
     val id: Long,
-    val score: Int,
-    val status: ListType,
-    val text: String?,
+    val score: String?,
+    val scoreInt: Int,
     val episodes: Int,
-    val chapters: Int?, // TODO: Check
-    val volumes: Int?, // TODO: Check
-    val text_html: String,
     val rewatchers: Int,
-    val created_at: String,
-    val updated_at: String,
     val user: User,
-    val anime: Anime,
-    val manga: Any?,
+    val anime: AnimeItem,
 ) {
     data class User(
         val id: Long,
-        val nickname: String,
+        val username: String,
         val avatar: String,
-        val image: Image,
-        val last_online_at: String,
-        val url: String,
-    ) {
-        data class Image(
-            val x160: String,
-            val x148: String,
-            val x80: String,
-            val x64: String,
-            val x48: String,
-            val x32: String,
-            val x16: String,
-        )
-    }
+    )
 
-    data class Anime(
-        val id: Long,
-        val name: String,
-        val russian: String,
-        val image: Image,
-        val url: String,
-        val kind: Kind,
-        val score: String,
-        val status: AnimeStatus,
-        val episodes: Int,
-        val episodes_aired: Int,
-        val aired_on: Date,
-        val released_on: Date,
-    ) {
-        data class Image(
-            val original: String,
-            val preview: String,
-            val x96: String,
-            val x48: String,
-        )
+    companion object {
+        fun parseFromEntity(ctx: Context, e: eAnimeRate): AnimeRate {
+            return AnimeRate(
+                id = e.id,
+                score = if (e.score != 0) ctx.getString(R.string.your_score_with_score, e.score) else null,
+                scoreInt = e.score,
+                episodes = e.episodes,
+                rewatchers = e.rewatchers,
+                user = parseUser(e.user),
+                anime = AnimeItem.parseFromEntity(ctx, e.anime, e.episodes),
+            )
+        }
+
+        private fun parseUser(e: eAnimeRate.User): User {
+            return User(
+                id = e.id,
+                username = e.nickname,
+                avatar = e.avatar,
+            )
+        }
     }
 }

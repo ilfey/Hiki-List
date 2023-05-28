@@ -3,10 +3,13 @@ package com.ilfey.shikimori.ui.auth
 import android.content.Intent
 import android.util.Log
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ilfey.shikimori.R
 import com.ilfey.shikimori.di.network.Authenticator
+import com.ilfey.shikimori.di.network.models.CurrentUser
+import com.ilfey.shikimori.di.network.services.UserService
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
@@ -21,6 +24,7 @@ import net.openid.appauth.TokenRequest
 class AuthViewModel(
     private val repository: Authenticator,
     private val service: AuthorizationService,
+    private val userService: UserService,
 ) : ViewModel() {
 
     private val customTabsIntent = CustomTabsIntent.Builder().build()
@@ -43,9 +47,26 @@ class AuthViewModel(
     val authSuccessFlow: Flow<Unit>
         get() = authSuccessEventChannel.receiveAsFlow()
 
+    val user = MutableLiveData<CurrentUser>()
+
     fun onAuthCodeFailed(exception: AuthorizationException) {
         toastEventChannel.trySendBlocking(R.string.auth_canceled)
     }
+
+    fun currentUser() {
+        loadingMutableStateFlow.value = true
+        userService.currentUser(
+            onSuccess = this::onUserSuccess,
+            onFailure = this::onUserFailure,
+        )
+    }
+
+    private fun onUserSuccess(user: CurrentUser) {
+        this.user.value = user
+        loadingMutableStateFlow.value = false
+    }
+
+    private fun onUserFailure(tr: Throwable) {}
 
     fun onAuthCodeReceived(tokenRequest: TokenRequest) {
 

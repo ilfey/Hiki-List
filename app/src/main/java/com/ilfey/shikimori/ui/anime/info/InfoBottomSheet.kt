@@ -12,11 +12,12 @@ import com.google.android.material.chip.Chip
 import com.ilfey.shikimori.R
 import com.ilfey.shikimori.base.BaseBottomSheetDialogFragment
 import com.ilfey.shikimori.databinding.SheetAnimeInfoBinding
-import com.ilfey.shikimori.di.network.enums.Kind
 import com.ilfey.shikimori.di.network.enums.ListType
 import com.ilfey.shikimori.di.network.models.Anime
+import com.ilfey.shikimori.di.network.entities.Anime as eAnime
 import com.ilfey.shikimori.ui.anime.AnimeViewModel
 import com.ilfey.shikimori.utils.gone
+import com.ilfey.shikimori.utils.visible
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class InfoBottomSheet : BaseBottomSheetDialogFragment<SheetAnimeInfoBinding>() {
@@ -36,62 +37,57 @@ class InfoBottomSheet : BaseBottomSheetDialogFragment<SheetAnimeInfoBinding>() {
     private fun onAnimeUpdate(anime: Anime) {
         /* TYPE */
 
-        binding.type.text = when (anime.kind) {
-            Kind.TV -> getString(R.string.type_tv)
-            Kind.MOVIE -> getString(R.string.type_movie)
-            Kind.OVA -> getString(R.string.type_ova)
-            Kind.ONA -> getString(R.string.type_ona)
-            Kind.SPECIAL -> getString(R.string.type_special)
-            Kind.MUSIC -> getString(R.string.type_music)
-            Kind.TV_13 -> getString(R.string.type_tv)
-            Kind.TV_24 -> getString(R.string.type_tv)
-            Kind.TV_48 -> getString(R.string.type_tv)
-            else -> {
-                binding.type.gone()
-                ""
-            }
+        if (anime.kind != null) {
+            binding.type.text = anime.kind
+            binding.type.visible()
+        } else {
+            binding.type.gone()
         }
 
         /* STUDIOS */
 
-        if (anime.studios.isNotEmpty()) {
+        if (anime.studios != null) {
             binding.studio.text =
                 getString(R.string.studios, anime.studios.joinToString { studio -> studio.name })
+            binding.studio.visible()
         } else {
             binding.studio.gone()
         }
 
         /* JAPANESE */
 
-        if (anime.japanese.isNotEmpty()) {
+        if (anime.japanese != null) {
             binding.inJapanese.text =
                 getString(R.string.in_japanese, anime.japanese.joinToString { s -> s.toString() })
+            binding.inJapanese.visible()
         } else {
             binding.inJapanese.gone()
         }
 
         /* ENGLISH */
 
-        if (anime.english.isNotEmpty()) {
+        if (anime.english != null) {
             binding.inEnglish.text =
                 getString(R.string.in_english, anime.english.joinToString { s -> s.toString() })
+            binding.inEnglish.visible()
         } else {
             binding.inEnglish.gone()
         }
 
         /* ALTERNATIVE TITLES */
 
-        if (anime.synonyms.isNotEmpty()) {
+        if (anime.synonyms != null) {
             binding.altTitles.text =
                 getString(R.string.alt_titles, anime.synonyms.joinToString { s -> s.toString() })
+            binding.altTitles.visible()
         } else {
             binding.altTitles.gone()
         }
 
         /* USER LISTS */
 
-        if (anime.rates_statuses_stats.isNotEmpty()){
-            anime.rates_statuses_stats.map {
+        if (anime.statusesStats != null){
+            anime.statusesStats.map {
                 binding.chipGroupStatuses.addView(createChip( when (it.name) {
                     ListType.PLANNED -> getString(R.string.planned_with_count, it.value)
                     ListType.WATCHING -> getString(R.string.watching_with_count, it.value)
@@ -111,8 +107,8 @@ class InfoBottomSheet : BaseBottomSheetDialogFragment<SheetAnimeInfoBinding>() {
 
         /* SCORES */
 
-        if (anime.rates_scores_stats.isNotEmpty()) {
-            setDataToScoresChart(anime.rates_scores_stats)
+        if (anime.scoresStats != null) {
+            setDataToScoresChart(anime.scoresStats)
         } else {
             binding.textViewRates.gone()
             binding.chartScores.gone()
@@ -120,14 +116,18 @@ class InfoBottomSheet : BaseBottomSheetDialogFragment<SheetAnimeInfoBinding>() {
 
         /* FUNDUBBERS */
 
-        if (anime.fandubbers.isNotEmpty()) {
+        if (anime.fandubbers != null) {
             binding.fandubbers.adapter = StringAdapter(anime.fandubbers)
+            binding.textViewFandubbers.visible()
+            binding.fandubbers.visible()
         } else {
             binding.textViewFandubbers.gone()
             binding.fandubbers.gone()
         }
-        if (anime.fansubbers.isNotEmpty()) {
+        if (anime.fansubbers != null) {
             binding.fansubbers.adapter = StringAdapter(anime.fansubbers)
+            binding.textViewFansubbers.visible()
+            binding.fansubbers.visible()
         } else {
             binding.textViewFansubbers.gone()
             binding.fansubbers.gone()
@@ -159,7 +159,7 @@ class InfoBottomSheet : BaseBottomSheetDialogFragment<SheetAnimeInfoBinding>() {
             setNoDataText("")
         }
     }
-    private fun setDataToScoresChart(scores: List<Anime.RatesScoresStats>) {
+    private fun setDataToScoresChart(scores: List<eAnime.RatesScoresStats>) {
         val entries = scores.map { e ->
             BarEntry(e.name.toFloat(), e.value.toFloat())
         }

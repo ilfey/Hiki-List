@@ -62,7 +62,7 @@ class AnimeActivity : BaseActivity<ActivityAnimeBinding>(), Toolbar.OnMenuItemCl
         }
     }
     private fun onAnimeUpdate(anime: Anime) {
-        binding.toolbar.title = anime.russian
+        binding.toolbar.title = anime.titleRu
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             replace(R.id.container, AnimeFragment.newInstance(anime.id))
@@ -71,7 +71,7 @@ class AnimeActivity : BaseActivity<ActivityAnimeBinding>(), Toolbar.OnMenuItemCl
 
     private fun onRateUpdate(rate: UserRate) {
         rateId = rate.id
-        currentList = when (rate.status) {
+        currentList = when (rate.list) {
             ListType.PLANNED -> 0
             ListType.WATCHING -> 1
             ListType.REWATCHING -> 2
@@ -103,7 +103,7 @@ class AnimeActivity : BaseActivity<ActivityAnimeBinding>(), Toolbar.OnMenuItemCl
             setSingleChoiceItems(items, currentList) { dialog, index ->
                 viewModel.setRate(
                     rateId,
-                    PatchUserRate.UserRate(
+                    PatchUserRate.newInstance(
                         status = when (index) {
                             0 -> ListType.PLANNED
                             1 -> ListType.WATCHING

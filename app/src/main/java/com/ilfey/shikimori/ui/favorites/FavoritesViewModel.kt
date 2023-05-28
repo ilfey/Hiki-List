@@ -3,8 +3,8 @@ package com.ilfey.shikimori.ui.favorites
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.ilfey.shikimori.base.ListViewModel
-import com.ilfey.shikimori.di.network.ShikimoriRepository
-import com.ilfey.shikimori.di.network.models.Favorites
+import com.ilfey.shikimori.di.network.apis.UserApi
+import com.ilfey.shikimori.di.network.entities.Favorites
 import com.ilfey.shikimori.utils.RetrofitEnqueue.Companion.Result
 import com.ilfey.shikimori.utils.RetrofitEnqueue.Companion.enqueue
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
 
 
 class FavoritesViewModel(
-    private val repository: ShikimoriRepository,
+    private val userApi: UserApi,
 ) : ListViewModel() {
 
     private var lastUsername: String? = null
@@ -43,7 +43,7 @@ class FavoritesViewModel(
         
         if (refresh || favorites.value == null) {
             Log.d(TAG, "getFavorites: from network")
-            repository.favorites(
+            userApi.favorites(
                 id = id,
             ).enqueue {
                 when (it) {

@@ -7,7 +7,7 @@ import com.bumptech.glide.Glide
 import com.ilfey.shikimori.BuildConfig
 
 class ViewPagerAdapter(
-    private val list: Array<String>,
+    private val list: List<String>,
 ) : RecyclerView.Adapter<ViewPagerAdapter.ViewHolder>() {
 
     override fun getItemCount() = list.size

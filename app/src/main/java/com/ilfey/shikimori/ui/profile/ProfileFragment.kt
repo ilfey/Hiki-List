@@ -26,9 +26,8 @@ import com.ilfey.shikimori.R
 import com.ilfey.shikimori.base.BaseFragment
 import com.ilfey.shikimori.databinding.FragmentProfileBinding
 import com.ilfey.shikimori.di.network.enums.ListType
-import com.ilfey.shikimori.di.network.models.User
 import com.ilfey.shikimori.di.network.models.UserRate
-import com.ilfey.shikimori.di.network.models.filterByStatus
+import com.ilfey.shikimori.di.network.models.CurrentUser
 import com.ilfey.shikimori.ui.favorites.FavoritesActivity
 import com.ilfey.shikimori.ui.history.HistoryActivity
 import com.ilfey.shikimori.ui.settings.SettingsActivity
@@ -46,9 +45,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), View.OnClickList
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.getUser {
-            viewModel.getRates(it.id)
-        }
+        viewModel.getUser()
+        viewModel.getUserAnimeRates()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -99,22 +97,22 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), View.OnClickList
         viewModel.rates.observe(viewLifecycleOwner, this::onRatesUpdate)
     }
 
-    private fun onUserUpdate(user: User) {
+    private fun onUserUpdate(user: CurrentUser) {
         Glide
             .with(this)
-            .load(user.image.x160)
+            .load(user.image)
             .circleCrop()
             .into(binding.avatar)
 
-        binding.username.text = user.nickname
+        binding.username.text = user.username
 
-        if (user.full_years != 0) {
-            binding.age.text = getAge(user.full_years)
+        if (user.age != null) {
+            binding.age.text = user.age
         } else {
             binding.age.gone()
         }
 
-        if (user.website?.isNotEmpty() == true) {
+        if (user.website != null) {
             val text = getString(R.string.website)
             val spannableString = SpannableStringBuilder(text)
 
@@ -134,8 +132,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), View.OnClickList
             )
             binding.website.text = spannableString
             binding.website.movementMethod = LinkMovementMethod.getInstance()
-        } else {
+        } else  {
             binding.website.gone()
+
         }
     }
 
@@ -145,12 +144,12 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), View.OnClickList
 
     private fun setData(rates: List<UserRate>) {
         val statuses = arrayListOf(
-            rates.filterByStatus(ListType.PLANNED).count(),
-            rates.filterByStatus(ListType.WATCHING).count(),
-            rates.filterByStatus(ListType.REWATCHING).count(),
-            rates.filterByStatus(ListType.COMPLETED).count(),
-            rates.filterByStatus(ListType.ON_HOLD).count(),
-            rates.filterByStatus(ListType.DROPPED).count(),
+            rates.count { it.list == ListType.PLANNED },
+            rates.count { it.list == ListType.WATCHING },
+            rates.count { it.list == ListType.REWATCHING },
+            rates.count { it.list == ListType.COMPLETED },
+            rates.count { it.list == ListType.ON_HOLD },
+            rates.count { it.list == ListType.DROPPED },
         )
 
         val statuses_titles = resources.getStringArray(R.array.statuses_with_count)
@@ -168,16 +167,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), View.OnClickList
         binding.chart.data = data
         binding.chart.invalidate()
     }
-
-    private fun getAge(age: Int) =
-        if (age in 12..13) {
-            getString(R.string.age_3, age)
-        } else if (age % 10 == 1) {
-            getString(R.string.age_1, age)
-        } else if (age % 10 in 2..4) {
-            getString(R.string.age_2, age)
-        } else getString(R.string.age_3, age)
-
 
     override fun onClick(v: View) {
         when (v.id) {

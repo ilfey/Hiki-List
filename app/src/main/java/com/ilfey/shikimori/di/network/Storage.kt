@@ -2,8 +2,6 @@ package com.ilfey.shikimori.di.network
 
 import android.content.Context
 import androidx.core.content.edit
-import com.ilfey.shikimori.di.network.models.User
-import org.jsoup.internal.StringUtil.StringJoiner
 
 class Storage(context: Context) {
     private val prefs = context.getSharedPreferences("Shikimori", Context.MODE_PRIVATE)

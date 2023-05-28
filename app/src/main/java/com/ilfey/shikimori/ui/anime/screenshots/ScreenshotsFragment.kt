@@ -11,7 +11,6 @@ import com.ilfey.shikimori.base.BaseFragment
 import com.ilfey.shikimori.databinding.FragmentScreenshotsBinding
 import com.ilfey.shikimori.ui.anime.AnimeViewModel
 import com.ilfey.shikimori.utils.intArgument
-import com.ilfey.shikimori.utils.stringArrayArgument
 import com.ilfey.shikimori.utils.withArgs
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
@@ -20,18 +19,24 @@ class ScreenshotsFragment : BaseFragment<FragmentScreenshotsBinding>() {
     private val viewModel by activityViewModel<AnimeViewModel>()
 
     private val position by intArgument(ARG_POSITION)
-    private val screenshots by stringArrayArgument(ARG_SCREENSHOTS)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setToolbarTitle(position!! + 1, screenshots?.size ?: 1)
-
         with(binding.pager) {
-            adapter = ViewPagerAdapter(screenshots!!)
             setCurrentItem(position!!, false)
             offscreenPageLimit = 5
             registerOnPageChangeCallback(pageChangeCallback)
+        }
+    }
+
+    override fun bindViewModel() {
+        viewModel.anime.observe(viewLifecycleOwner) {
+            if (it.screenshots != null) {
+                setToolbarTitle(position!! + 1, it.screenshots.size)
+                binding.pager.adapter = ViewPagerAdapter(it.screenshots)
+            }
+//            TODO: handle no screenshots
         }
     }
 
@@ -40,7 +45,7 @@ class ScreenshotsFragment : BaseFragment<FragmentScreenshotsBinding>() {
     }
 
     private val pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
-        override fun onPageSelected(position: Int) = setToolbarTitle(position + 1, screenshots?.size ?: 1)
+        override fun onPageSelected(position: Int) = setToolbarTitle(position + 1, viewModel.anime.value?.screenshots?.size ?: 1)
 
     }
 
@@ -51,19 +56,16 @@ class ScreenshotsFragment : BaseFragment<FragmentScreenshotsBinding>() {
 
     override fun onDetach() {
         super.onDetach()
-        activity?.findViewById<MaterialToolbar>(R.id.toolbar)?.title = viewModel.anime.value!!.russian
+        activity?.findViewById<MaterialToolbar>(R.id.toolbar)?.title = viewModel.anime.value!!.titleRu
     }
 
     companion object {
-        private const val ARG_SCREENSHOTS = "screenshots"
         private const val ARG_POSITION = "position"
 
         fun newInstance(
-            screenshots: Array<String>,
             position: Int = 0,
-        ) = ScreenshotsFragment().withArgs(2) {
+        ) = ScreenshotsFragment().withArgs(1) {
             putInt(ARG_POSITION, position)
-            putStringArray(ARG_SCREENSHOTS, screenshots)
         }
     }
 }

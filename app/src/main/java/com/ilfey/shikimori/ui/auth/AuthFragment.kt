@@ -10,21 +10,19 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.view.isVisible
 import androidx.fragment.app.commit
-import androidx.navigation.fragment.findNavController
 import com.ilfey.shikimori.BuildConfig
 import com.ilfey.shikimori.R
 import com.ilfey.shikimori.base.BaseFragment
 import com.ilfey.shikimori.databinding.FragmentAuthBinding
 import com.ilfey.shikimori.ui.main.MainFragment
-import com.ilfey.shikimori.ui.profile.ProfileFragment
 import com.ilfey.shikimori.utils.launchAndCollectIn
 import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationResponse
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AuthFragment : BaseFragment<FragmentAuthBinding>(), View.OnClickListener {
 
-    private val viewModel by inject<AuthViewModel>()
+    private val viewModel by viewModel<AuthViewModel>()
     private val customTabsIntent = CustomTabsIntent.Builder().build()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,6 +43,12 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(), View.OnClickListener {
         }
         viewModel.authSuccessFlow.launchAndCollectIn(viewLifecycleOwner) {
             settings.isAuthorized = true
+            viewModel.currentUser()
+        }
+        viewModel.user.observe(viewLifecycleOwner) {
+            settings.userId = it.id
+            settings.username = it.username
+
             parentFragmentManager.commit {
                 replace(R.id.container, MainFragment.newInstance())
                 disallowAddToBackStack()
@@ -82,7 +86,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(), View.OnClickListener {
         when (v.id) {
             R.id.sign_in_button -> viewModel.openLoginPage()
             R.id.sign_up_button -> customTabsIntent.launchUrl(
-                requireContext(),
+                v.context,
                 Uri.parse(BuildConfig.APP_URL + "/users/sign_up")
             )
         }

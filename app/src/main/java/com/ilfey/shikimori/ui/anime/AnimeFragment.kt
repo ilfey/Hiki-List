@@ -4,25 +4,23 @@ import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import androidx.fragment.app.commit
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.google.android.material.R as mR
 import com.google.android.material.chip.Chip
-import com.ilfey.shikimori.BuildConfig
 import com.ilfey.shikimori.R
 import com.ilfey.shikimori.base.BaseFragment
 import com.ilfey.shikimori.databinding.FragmentAnimeBinding
-import com.ilfey.shikimori.di.network.enums.AnimeStatus
-import com.ilfey.shikimori.di.network.enums.Kind.*
+import com.ilfey.shikimori.di.network.models.Role
+import com.ilfey.shikimori.di.network.models.UserRate
+import com.ilfey.shikimori.di.network.entities.characters
+import com.ilfey.shikimori.di.network.entities.mainCharacters
 import com.ilfey.shikimori.di.network.enums.ListType.*
-import com.ilfey.shikimori.di.network.enums.Rating.*
-import com.ilfey.shikimori.di.network.models.*
-import com.ilfey.shikimori.ui.anime.screenshots.ScreenshotsFragment
+import com.ilfey.shikimori.di.network.models.Anime
+import com.ilfey.shikimori.di.network.entities.Anime as eAnime
 import com.ilfey.shikimori.utils.*
 import com.ilfey.shikimori.utils.widgets.HorizontalSpaceItemDecorator
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
-import java.text.SimpleDateFormat
 
 class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener,
     SwipeRefreshLayout.OnRefreshListener {
@@ -36,8 +34,8 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
     private var descriptionIsCollapsed = false
     private var collapsedMaxLines = 4
     private var posterUrl = ""
-    private var scoresStats = listOf<Anime.RatesScoresStats>()
-    private var statusesStats = listOf<Anime.RatesStatusesStats>()
+    private var scoresStats = listOf<eAnime.RatesScoresStats>()
+    private var statusesStats = listOf<eAnime.RatesStatusesStats>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,14 +70,15 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
     }
 
     private fun onAnimeUpdate(anime: Anime) {
-        val dateFormat = SimpleDateFormat(
-            "dd MMMM yyyy",
-            requireContext().resources.configuration.locales.get(0),
-        )
-        posterUrl = BuildConfig.APP_URL + anime.image.original
+        posterUrl = anime.image
 
-        scoresStats = anime.rates_scores_stats
-        statusesStats = anime.rates_statuses_stats
+        if (anime.scoresStats != null) {
+            scoresStats = anime.scoresStats
+        }
+
+        if (anime.statusesStats != null) {
+            statusesStats = anime.statusesStats
+        }
 
         Glide
             .with(this)
@@ -87,181 +86,91 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
             .into(binding.poster)
 
         with(binding) {
-            title.text = anime.russian
-            name.text = anime.name
+            title.text = anime.titleRu
+            name.text = anime.titleEn
 
-            type.text = when (anime.kind) {
-                TV -> getString(R.string.type_tv)
-                MOVIE -> getString(R.string.type_movie)
-                OVA -> getString(R.string.type_ova)
-                ONA -> getString(R.string.type_ona)
-                SPECIAL -> getString(R.string.type_special)
-                MUSIC -> getString(R.string.type_music)
-                TV_13 -> getString(R.string.type_tv)
-                TV_24 -> getString(R.string.type_tv)
-                TV_48 -> getString(R.string.type_tv)
-                else -> {
-                    type.gone()
-                    ""
-                }
-            }
-
-            /* YandereDev reference */
-
-            if (anime.episodes != 0) {
-                episodes.text = if ((anime.user_rate?.episodes ?: 0) != 0) {
-                    if (anime.status == AnimeStatus.RELEASED) {
-                        getString(
-                            R.string.episodes_with_count,
-                            anime.user_rate!!.episodes,
-                            anime.episodes,
-                        )
-                    } else {
-                        getString(
-                            R.string.episodes_of_with_count,
-                            anime.user_rate!!.episodes,
-                            anime.episodes_aired,
-                            anime.episodes,
-                        )
-                    }
-                } else {
-                    if (anime.status == AnimeStatus.RELEASED) {
-                        getString(
-                            R.string.episodes,
-                            anime.episodes,
-                        )
-                    } else {
-                        getString(
-                            R.string.episodes_of,
-                            anime.episodes_aired,
-                            anime.episodes
-                        )
-                    }
-                }
+            if (anime.kind != null) {
+                type.text = anime.kind
+                type.visible()
             } else {
-                if (anime.status == AnimeStatus.ONGOING) {
-                    episodes.text = if (anime.user_rate?.episodes != 0) {
-                        getString(
-                            R.string.episodes_of_with_null,
-                            anime.user_rate!!.episodes,
-                            anime.episodes_aired,
-                        )
-                    } else {
-                        getString(
-                            R.string.episodes_of_null,
-                            anime.episodes_aired,
-                        )
-                    }
-                } else {
-                    episodes.gone()
-                }
+                type.gone()
             }
 
-            mpaaRating.text = when (anime.rating) {
-                G -> getString(R.string.rating_g)
-                NONE -> {
-                    mpaaRating.gone()
-                    ""
-                }
-                PG -> getString(R.string.rating_pg)
-                PG_13 -> getString(R.string.rating_pg_13)
-                R -> getString(R.string.rating_r)
-                R_PLUS -> getString(R.string.rating_r_plus)
-                RX -> getString(R.string.rating_rx)
-                null -> {
-                    mpaaRating.gone()
-                    ""
-                }
-            }
-
-            status.text = when (anime.status) {
-                AnimeStatus.ANONS -> {
-                    if (anime.aired_on != null) {
-                        getString(R.string.anons_for, dateFormat.format(anime.aired_on))
-                    } else {
-                        getString(R.string.anons)
-                    }
-                }
-                AnimeStatus.ONGOING -> {
-                    if (anime.aired_on != null && anime.released_on != null) {
-                        getString(
-                            R.string.ongoing_from_to,
-                            dateFormat.format(anime.aired_on),
-                            dateFormat.format(anime.released_on)
-                        )
-                    } else if (anime.aired_on != null) {
-                        getString(R.string.ongoing_from, dateFormat.format(anime.aired_on))
-                    } else {
-                        getString(R.string.ongoing)
-                    }
-                }
-                AnimeStatus.RELEASED -> {
-                    if (anime.released_on != null) {
-                        getString(R.string.released_on, dateFormat.format(anime.released_on))
-                    } else {
-                        getString(R.string.released)
-                    }
-                }
-            }
-
-            anime.score.toFloat().let {
-                if (it != 0f) {
-                    scoreRatingBar.rating = it / 2
-                } else {
-                    scoreRatingBar.gone()
-                }
-            }
-
-            if (anime.description == null) {
-                expandDescriptionBtn.gone()
-                description.text = getString(R.string.no_description)
+            if (anime.episodes != null) {
+                episodes.text = anime.episodes
+                episodes.visible()
             } else {
+                episodes.gone()
+            }
+
+            if (anime.rating != null) {
+                mpaaRating.text = anime.rating
+                mpaaRating.visible()
+            } else {
+                mpaaRating.gone()
+            }
+
+
+            status.text = anime.status
+
+            if (anime.score != 0F) {
+                scoreRatingBar.rating = anime.score
+                scoreRatingBar.visible()
+            } else {
+                scoreRatingBar.gone()
+            }
+
+            if (anime.description != null) {
                 // TODO: compile bb-code
                 description.text = anime.description
+                expandDescriptionBtn.visible()
+            } else {
+                description.text = getString(R.string.no_description)
+                expandDescriptionBtn.gone()
             }
 
-            if (anime.screenshots.isEmpty()) {
-                screenshotsGroup.gone()
-            } else {
+            if (anime.screenshots != null) {
                 if (screenshots.adapter == null) {
-                    screenshots.adapter = ScreenshotsAdapter(
-                        this@AnimeFragment,
-                        anime.screenshots,
-                    )
+                    screenshots.adapter = ScreenshotsAdapter(this@AnimeFragment)
                     screenshots.addItemDecoration(
                         HorizontalSpaceItemDecorator(
                             videos.context.dp(12),
                         ),
                     )
-                } else {
-                    (screenshots.adapter as ScreenshotsAdapter).setList(anime.screenshots)
                 }
+
+                (screenshots.adapter as ScreenshotsAdapter).setList(anime.screenshots)
+                screenshotsGroup.visible()
+            } else {
+                screenshotsGroup.gone()
             }
 
-            if (anime.videos.isEmpty()) {
-                videosGroup.gone()
-            } else {
+            if (anime.videos != null) {
                 if (videos.adapter == null) {
                     videos.adapter = VideosAdapter(anime.videos)
                     videos.addItemDecoration(HorizontalSpaceItemDecorator(videos.context.dp(12)))
-                } else {
-                    (videos.adapter as VideosAdapter).setList(anime.videos)
                 }
+
+                (videos.adapter as VideosAdapter).setList(anime.videos)
+            } else {
+                videosGroup.gone()
             }
         }
 
-        if (anime.studios.isNotEmpty()) {
+        if (anime.studios != null) {
             anime.studios.map {
                 binding.genresContainer.addView(createChip(it.name))
             }
+            binding.genresContainer.visible()
         } else {
             binding.genresContainer.gone()
         }
 
-        if (anime.genres.isNotEmpty()) {
+        if (anime.genres != null) {
             anime.genres.map {
                 binding.genresContainer.addView(createChip(it.russian))
             }
+            binding.genresContainer.visible()
         } else {
             binding.genresContainer.gone()
         }
@@ -270,7 +179,7 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
     private fun onUserRateUpdate(rate: UserRate) {
         rateId = rate.id
 
-        currentList = when (rate.status) {
+        currentList = when (rate.list) {
             PLANNED -> 0
             WATCHING -> 1
             REWATCHING -> 2
@@ -281,8 +190,8 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
     }
 
     private fun onRolesUpdate(roles: List<Role>) {
-        val listCharacters = roles.characters()
-        val mainCharacters = listCharacters.mainCharacters()
+        val listCharacters = roles.filter { it.character != null }
+        val mainCharacters = listCharacters.filter { "Main" in it.roles }
 
         with(binding) {
             if (mainCharacters.isNotEmpty()) {

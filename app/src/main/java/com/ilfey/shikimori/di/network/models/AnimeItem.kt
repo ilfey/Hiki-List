@@ -1,32 +1,40 @@
 package com.ilfey.shikimori.di.network.models
 
-import com.ilfey.shikimori.di.network.enums.AnimeStatus
+import android.content.Context
+import com.ilfey.shikimori.R
 import com.ilfey.shikimori.di.network.enums.Kind
-import java.util.*
+import java.text.SimpleDateFormat
+import com.ilfey.shikimori.di.network.entities.AnimeItem as eAnimeItem
 
-
-/**
- * https://shikimori.me/api/doc/1.0/animes/index
- **/
 data class AnimeItem(
     val id: Long,
-    val name: String,
-    val russian: String,
-    val image: Image,
+    val titleEn: String,
+    val titleRu: String,
+    val image: String,
     val url: String,
-    val kind: Kind,
-    val score: String,
-    val status: AnimeStatus,
-    val episodes: Int,
-    val episodes_aired: Int,
-    val aired_on: Date,
-    val released_on: Date,
+    val kind: Kind?,
+    val score: Float,
+    val status: String,
+    val episodes: String?,
 ) {
-    data class Image(
-        val original: String,
-        val preview: String,
-        val x96: String,
-        val x48: String,
-    )
+    companion object {
+        fun parseFromEntity(ctx: Context, e: eAnimeItem, userEpisodes: Int = 0): AnimeItem {
+            return AnimeItem(
+                id = e.id,
+                titleEn = e.name,
+                titleRu = e.russian.ifEmpty { ctx.getString(R.string.no_title) },
+                image = makeUrl(e.image.original),
+                url = makeUrl(e.url),
+                kind = e.kind,
+                score = parseScore(e.score),
+                status = ctx.parseStatus(e.status, e.aired_on, e.released_on),
+                episodes = ctx.parseEpisodes(
+                    e.status,
+                    e.episodes,
+                    userEpisodes,
+                    e.episodes_aired
+                )
+            )
+        }
+    }
 }
-

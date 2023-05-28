@@ -12,11 +12,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>() {
 
     private val viewModel by viewModel<MainViewModel>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.getUser()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

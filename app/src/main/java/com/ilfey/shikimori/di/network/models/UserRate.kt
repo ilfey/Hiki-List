@@ -1,28 +1,41 @@
 package com.ilfey.shikimori.di.network.models
 
-import android.os.Parcelable
+import android.content.Context
 import com.ilfey.shikimori.di.network.enums.ListType
 import com.ilfey.shikimori.di.network.enums.TargetType
-import kotlinx.parcelize.Parcelize
+import com.ilfey.shikimori.di.network.entities.UserRate as eUserRate
+import java.util.Date
 
-@Parcelize
 data class UserRate(
-    val id: Long?,
-    val user_id: Long?,
-    val target_id: Long?,
-    val target_type: TargetType?,
+    val id: Long,
+    val userId: Long,
+    val targetId: Long,
+    val targetType: TargetType?,
     val score: Int,
-    val status: ListType,
+    val list: ListType,
     val rewatches: Int,
     val episodes: Int,
     val volumes: Int,
     val chapters: Int,
-    val text: String?,
-    val text_html: String?,
-    val created_at: String,
-    val updated_at: String,
-) : Parcelable
-
-fun List<UserRate>.filterByStatus(status: ListType) = this.filter { it.status == status }
-fun List<UserRate>.filterByTargetType(target_type: TargetType) =
-    this.filter { it.target_type == target_type }
+    val createdAt: Date,
+    val updatedAt: Date,
+) {
+    companion object {
+        fun parseFromEntity(ctx: Context, e: eUserRate): UserRate {
+            return UserRate(
+                id = e.id,
+                userId = e.user_id,
+                targetId = e.target_id,
+                targetType = e.target_type,
+                score = e.score,
+                list = e.status,
+                rewatches = e.rewatches,
+                episodes = e.episodes,
+                volumes = e.volumes,
+                chapters = e.chapters,
+                createdAt = e.created_at,
+                updatedAt = e.updated_at,
+            )
+        }
+    }
+}

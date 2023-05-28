@@ -3,53 +3,49 @@ package com.ilfey.shikimori.ui.profile
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ilfey.shikimori.di.AppSettings
-import com.ilfey.shikimori.di.network.ShikimoriRepository
-import com.ilfey.shikimori.di.network.models.User
 import com.ilfey.shikimori.di.network.models.UserRate
-import com.ilfey.shikimori.utils.RetrofitEnqueue.Companion.enqueue
-import com.ilfey.shikimori.utils.RetrofitEnqueue.Companion.Result
+import com.ilfey.shikimori.di.network.enums.TargetType
+import com.ilfey.shikimori.di.network.models.CurrentUser
+import com.ilfey.shikimori.di.network.services.UserRateService
+import com.ilfey.shikimori.di.network.services.UserService
 
 class ProfileViewModel(
     private val settings: AppSettings,
-    private val repository: ShikimoriRepository,
+    private val userRateService: UserRateService,
+    private val userService: UserService,
 ) : ViewModel() {
 
-    val user = MutableLiveData<User>()
+    val user = MutableLiveData<CurrentUser>()
     val rates = MutableLiveData<List<UserRate>>()
 
     fun onRefresh() {
-        getUser {
-            getRates(it.id)
-        }
+        getUser()
+        getUserAnimeRates()
     }
 
-    fun getUser(callback: ((User) -> Unit)? = null) {
-        repository.whoami().enqueue {
-            when (it) {
-                is Result.Success -> {
-                    if (it.response.isSuccessful && it.response.body() != null) {
-                        settings.userId = it.response.body()!!.id
-                        user.value = it.response.body()
-                        callback?.invoke(it.response.body()!!)
-                    }
-                }
-                is Result.Failure -> {}
-            }
-        }
+    fun getUser() {
+        userService.currentUser(
+            onSuccess = this::onUserSuccess,
+            onFailure = this::onUserFailure,
+        )
     }
 
-    fun getRates(user_id: Long) {
-        repository.user_rates(
-            user_id = user_id,
-        ).enqueue {
-            when (it) {
-                is Result.Success -> {
-                    if (it.response.isSuccessful && it.response.body() != null) {
-                        rates.value = it.response.body()
-                    }
-                }
-                is Result.Failure -> {}
-            }
-        }
+    private fun onUserSuccess(user: CurrentUser) {
+        settings.userId = user.id
+        this.user.value = user
+    }
+
+    private fun onUserFailure(tr: Throwable) {}
+
+    fun getUserAnimeRates() {
+        userRateService.userRates(
+            userId = settings.userId,
+            targetType = TargetType.ANIME,
+            onSuccess = this::onUserAnimeRatesSuccess,
+        )
+    }
+
+    private fun onUserAnimeRatesSuccess(list: List<UserRate>) {
+        rates.value = list
     }
 }

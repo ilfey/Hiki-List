@@ -14,34 +14,34 @@ import org.koin.dsl.module
 val uiModule
     get() = module {
         viewModel {
-            AnimeViewModel(settings = get(), repository = get())
+            AnimeViewModel(settings = get(), userRateService = get(), animeService = get())
         }
 
         viewModel {
-            AuthViewModel(repository = get(), service = get())
+            AuthViewModel(repository = get(), service = get(), userService = get())
         }
 
         viewModel {
-            HistoryViewModel(repository = get())
+            HistoryViewModel(userService = get())
         }
 
         viewModel {
-            ListsViewModel(settings = get(), repository = get())
+            ListsViewModel(settings = get(), animeService = get(), userService = get())
         }
 
         viewModel {
-            FavoritesViewModel(repository = get())
+            FavoritesViewModel(userApi = get())
         }
 
         viewModel {
-            ProfileViewModel(settings = get(), repository = get())
+            ProfileViewModel(settings = get(), userRateService = get(), userService = get())
         }
 
         viewModel {
-            MainViewModel(settings = get(), repository = get())
+            MainViewModel()
         }
 
         viewModel {
-            SearchViewModel(settings = get(), repository = get())
+            SearchViewModel(animeService = get())
         }
     }

@@ -4,19 +4,15 @@ import android.annotation.SuppressLint
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.ilfey.shikimori.BuildConfig
 import com.ilfey.shikimori.R
 import com.ilfey.shikimori.databinding.ItemAnimeListBinding
-import com.ilfey.shikimori.di.network.enums.AnimeStatus
 import com.ilfey.shikimori.di.network.enums.AnimeStatus.*
 import com.ilfey.shikimori.di.network.models.AnimeRate
 import com.ilfey.shikimori.ui.anime.AnimeActivity
-import com.ilfey.shikimori.ui.anime.AnimeFragment
 import com.ilfey.shikimori.utils.gone
+import com.ilfey.shikimori.utils.visible
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -57,88 +53,38 @@ class ListAdapter(
             with(binding) {
                 Glide
                     .with(image.context)
-                    .load(BuildConfig.APP_URL + item.anime.image.original)
+                    .load(item.anime.image)
                     .into(image)
 
-                title.text = item.anime.russian
+                title.text = item.anime.titleRu
                 if (!showFullTitles) {
                     title.maxLines = 2
                     title.ellipsize = TextUtils.TruncateAt.END
                 }
 
-                name.text = item.anime.name
+                name.text = item.anime.titleEn
 
-                if (item.score != 0) {
-                    userScore.text =
-                        binding.userScore.context.getString(
-                            R.string.your_score_with_score,
-                            item.score
-                        )
+                if (item.score != null) {
+                    userScore.text = item.score
+                    userScore.visible()
                 } else {
                     userScore.gone()
                 }
 
-                status.text = parseStatus(
-                    item.anime.status,
-                    item.anime.aired_on,
-                    item.anime.released_on
-                )
+                status.text = item.anime.status
 
-                if (item.anime.score.toFloat() != 0f) {
-                    score.rating = item.anime.score.toFloat() / 2
+                if (item.anime.score != 0f) {
+                    score.rating = item.anime.score
+                    score.visible()
                 } else {
                     score.gone()
                 }
 
-                /* YandereDev reference */
-
-                if (item.anime.episodes != 0) {
-                    episodes.text = if (item.episodes != 0) {
-                        if (item.anime.status == RELEASED) {
-                            context.getString(
-                                R.string.episodes_with_count,
-                                item.episodes,
-                                item.anime.episodes,
-                            )
-                        } else {
-                            context.getString(
-                                R.string.episodes_of_with_count,
-                                item.episodes,
-                                item.anime.episodes_aired,
-                                item.anime.episodes,
-                            )
-                        }
-                    } else {
-                        if (item.anime.status == RELEASED) {
-                            context.getString(
-                                R.string.episodes,
-                                item.anime.episodes,
-                            )
-                        } else {
-                            context.getString(
-                                R.string.episodes_of,
-                                item.anime.episodes_aired,
-                                item.anime.episodes
-                            )
-                        }
-                    }
+                if (item.anime.episodes != null) {
+                    episodes.text = item.anime.episodes
+                    episodes.visible()
                 } else {
-                    if (item.anime.status == ONGOING) {
-                        episodes.text = if (item.episodes != 0) {
-                            context.getString(
-                                R.string.episodes_of_with_null,
-                                item.episodes,
-                                item.anime.episodes_aired,
-                            )
-                        } else {
-                            context.getString(
-                                R.string.episodes_of_null,
-                                item.anime.episodes_aired,
-                            )
-                        }
-                    } else {
-                        episodes.gone()
-                    }
+                    episodes.gone()
                 }
 
                 root.setOnClickListener {
@@ -147,30 +93,5 @@ class ListAdapter(
                 }
             }
         }
-
-        private fun parseStatus(status: AnimeStatus, aired_on: Date?, released_on: Date?) =
-            when (status) {
-                ANONS -> {
-                    if (aired_on != null) {
-                        context.getString(R.string.anons_for, dateFormat.format(aired_on))
-                    } else {
-                        context.getString(R.string.anons)
-                    }
-                }
-                ONGOING -> {
-                    if (aired_on != null) {
-                        context.getString(R.string.ongoing_from, dateFormat.format(aired_on))
-                    } else {
-                        context.getString(R.string.ongoing)
-                    }
-                }
-                RELEASED -> {
-                    if (released_on != null) {
-                        context.getString(R.string.released_on, dateFormat.format(released_on))
-                    } else {
-                        context.getString(R.string.released)
-                    }
-                }
-            }
     }
 }

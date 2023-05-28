@@ -1,28 +1,38 @@
 package com.ilfey.shikimori.di.network.models
 
+import android.content.Context
+import com.ilfey.shikimori.di.network.entities.Role as eRole
+
 data class Role(
     val roles: List<String>,
-    val roles_russian: List<String>,
+    val rolesRu: List<String>,
     val character: CharacterOrPerson?,
     val person: CharacterOrPerson?,
 ) {
     data class CharacterOrPerson(
         val id: Long,
         val name: String,
-        val russian: String,
-        val image: Image,
-        val url: String,
-    ) {
-        data class Image(
-            val original: String,
-            val preview: String,
-            val x96: String,
-            val x48: String,
-        )
+        val nameRu: String,
+        val image: String,
+    )
+
+    companion object {
+        fun parseFromEntity(ctx: Context, e: eRole) : Role {
+            return Role(
+                roles = e.roles,
+                rolesRu = e.roles_russian,
+                character = if (e.character != null) parseCharacterOrPerson(e.character) else null,
+                person = if (e.person != null) parseCharacterOrPerson(e.person) else null,
+            )
+        }
+
+        private fun parseCharacterOrPerson(e: eRole.CharacterOrPerson) : CharacterOrPerson{
+            return CharacterOrPerson(
+                id = e.id,
+                name = e.name,
+                nameRu = e.russian,
+                image = makeUrl(e.image.original),
+            )
+        }
     }
 }
-
-fun List<Role>.characters() = filter { it.character != null }
-fun List<Role>.person() = filter { it.person != null }
-fun List<Role>.mainCharacters() = filter { "Main" in it.roles }
-fun List<Role>.supportingCharacters() = filter { "Supporting" in it.roles }

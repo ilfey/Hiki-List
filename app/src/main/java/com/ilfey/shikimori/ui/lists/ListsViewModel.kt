@@ -3,20 +3,22 @@ package com.ilfey.shikimori.ui.lists
 import androidx.lifecycle.MutableLiveData
 import com.ilfey.shikimori.base.ListViewModel
 import com.ilfey.shikimori.di.AppSettings
-import com.ilfey.shikimori.di.network.ShikimoriRepository
 import com.ilfey.shikimori.di.network.enums.ListType
 import com.ilfey.shikimori.di.network.enums.ListType.*
 import com.ilfey.shikimori.di.network.models.AnimeItem
 import com.ilfey.shikimori.di.network.models.AnimeRate
-import com.ilfey.shikimori.utils.RetrofitEnqueue.Companion.Result.*
-import com.ilfey.shikimori.utils.RetrofitEnqueue.Companion.enqueue
+import com.ilfey.shikimori.di.network.services.AnimeService
+import com.ilfey.shikimori.di.network.services.UserService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class ListsViewModel(
     private val settings: AppSettings,
-    private val repository: ShikimoriRepository,
+    private val animeService: AnimeService,
+    private val userService: UserService,
 ) : ListViewModel() {
+
+    private var lastStatus: ListType = settings.list ?: PLANNED
 
     private val loadingMutableStateFlow = MutableStateFlow(false)
 
@@ -37,46 +39,36 @@ class ListsViewModel(
 
     fun searchInList(list: ListType, query: String) {
         loadingMutableStateFlow.value = true
-        repository.animes(
-            mylist = list.value,
+        animeService.animes(
+            list = list,
             search = query,
-            censored = !settings.isNsfwEnable,
-        ).enqueue {
-            when (it) {
-                is Success -> {
-                    if (it.response.isSuccessful && it.response.body() != null) {
-                        this.searchList.value = it.response.body()
-                    }
-                }
-                is Failure -> {}
-            }
-            loadingMutableStateFlow.value = false
-        }
+            onSuccess = this::onSearchSuccess,
+            onFailure = this::onSearchFailure
+        )
     }
 
-    private var lastStatus: ListType = settings.list ?: PLANNED
+    private fun onSearchSuccess(list: List<AnimeItem>) {
+        this.searchList.value = list
+        loadingMutableStateFlow.value = false
+    }
+
+    private fun onSearchFailure(tr: Throwable) {}
 
     fun getList(status: ListType, refresh: Boolean = false) {
         loadingMutableStateFlow.value = true
         lastStatus = status
 
         if (refresh || lists[status] == null) {
-            repository.anime_rates(
-                id = settings.userId,
-                status = status.value,
-                censored = !settings.isNsfwEnable,
-            ).enqueue {
-                when (it) {
-                    is Success -> {
-                        if (it.response.isSuccessful && it.response.body() != null) {
-                            list.value = it.response.body()
-                            lists[status] = it.response.body()
-                        }
-                    }
-                    is Failure -> {}
-                }
-                loadingMutableStateFlow.value = false
-            }
+            userService.animeRates(
+                userId = settings.userId,
+                status = status,
+                onSuccess = {
+                    this.list.value = it
+                    this.lists[status] = it
+                    loadingMutableStateFlow.value = false
+                },
+                onFailure = this::onListFailure,
+            )
             return
         }
 
@@ -84,6 +76,8 @@ class ListsViewModel(
 
         loadingMutableStateFlow.value = false
     }
+
+    private fun onListFailure(tr: Throwable) {}
 
     override fun onRefresh() {
         getList(lastStatus, true)

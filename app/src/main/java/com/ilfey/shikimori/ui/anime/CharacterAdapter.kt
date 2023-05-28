@@ -37,10 +37,10 @@ class CharacterAdapter(
         fun bind(item: Role) {
             Glide
                 .with(binding.card.context)
-                .load(BuildConfig.APP_URL + item.character?.image?.original)
+                .load(item.character!!.image)
                 .into(binding.card)
 
-            binding.name.text = item.character?.russian
+            binding.name.text = item.character.nameRu
         }
     }
 }

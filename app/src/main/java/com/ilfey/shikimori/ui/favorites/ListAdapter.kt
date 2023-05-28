@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ilfey.shikimori.BuildConfig
 import com.ilfey.shikimori.databinding.ItemFavoritesBinding
-import com.ilfey.shikimori.di.network.models.Favorites
+import com.ilfey.shikimori.di.network.entities.Favorites
 
 class ListAdapter(
     private val onClick: (Favorites.Entry) -> Unit = {},
