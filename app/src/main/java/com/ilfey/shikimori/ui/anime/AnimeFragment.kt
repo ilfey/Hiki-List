@@ -17,6 +17,7 @@ import com.ilfey.shikimori.di.network.entities.characters
 import com.ilfey.shikimori.di.network.entities.mainCharacters
 import com.ilfey.shikimori.di.network.enums.ListType.*
 import com.ilfey.shikimori.di.network.models.Anime
+import com.ilfey.shikimori.ui.anime.utils.references
 import com.ilfey.shikimori.di.network.entities.Anime as eAnime
 import com.ilfey.shikimori.utils.*
 import com.ilfey.shikimori.utils.widgets.HorizontalSpaceItemDecorator
