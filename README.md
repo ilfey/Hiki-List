@@ -1,6 +1,6 @@
 # Hiki List
 
-![logo](https://i.imgur.com/C1AAS6d.png)
+![logo](https://imgur.com/yj1Bqem.png)
 
 Это очередной мобильный клиент для шикимори.
 
