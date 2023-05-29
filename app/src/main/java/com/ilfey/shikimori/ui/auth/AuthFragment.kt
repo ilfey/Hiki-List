@@ -8,14 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.core.view.isVisible
 import androidx.fragment.app.commit
 import com.ilfey.shikimori.BuildConfig
 import com.ilfey.shikimori.R
 import com.ilfey.shikimori.base.BaseFragment
 import com.ilfey.shikimori.databinding.FragmentAuthBinding
 import com.ilfey.shikimori.ui.main.MainFragment
+import com.ilfey.shikimori.utils.invisible
 import com.ilfey.shikimori.utils.launchAndCollectIn
+import com.ilfey.shikimori.utils.visible
 import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationResponse
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -62,10 +63,14 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(), View.OnClickListener {
             handleAuthResponseIntent(dataIntent)
         }
 
-    private fun updateIsLoading(isLoading: Boolean) = with(binding) {
-        signInButton.isVisible = !isLoading
-        loginProgress.isVisible = isLoading
+    private fun updateIsLoading(isLoading: Boolean) = if (isLoading) {
+        binding.content.invisible()
+        binding.loginProgress.show()
+    } else {
+        binding.content.visible()
+        binding.loginProgress.hide()
     }
+
 
     private fun openAuthPage(intent: Intent) {
         getAuthResponse.launch(intent)
