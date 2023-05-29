@@ -49,7 +49,7 @@ class UserRateService(
         userRateApi.userRates(
             user_id = userId,
             target_id = targetId,
-            target_type = targetType,
+            target_type = targetType?.value,
             status = status,
             page = page,
             limit = count,

@@ -25,7 +25,7 @@ interface UserRateApi {
     fun userRates(
         @Query("user_id") user_id: Long,
         @Query("target_id") target_id: Long? = null,
-        @Query("target_type") target_type: TargetType? = null, // enum
+        @Query("target_type") target_type: String? = null,
         @Query("status") status: String? = null,
         @Query("page") page: Int? = null,
         @Query("limit") limit: Int = 1000,
