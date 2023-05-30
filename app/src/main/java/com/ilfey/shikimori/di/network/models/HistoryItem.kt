@@ -18,7 +18,8 @@ data class HistoryItem(
         val titleRu: String,
         val image: String,
         val url: String,
-        val kind: Kind,
+        val kind: Kind?,
+        val kindString: String?,
         val score: Float,
         val status: String,
         val episodes: String?,
@@ -54,6 +55,7 @@ data class HistoryItem(
                 image = makeUrl(target.image.original),
                 url = makeUrl(target.url),
                 kind = target.kind,
+                kindString = ctx.parseKind(target.kind),
                 score = target.score.toFloat() / 2,
                 status = ctx.parseStatus(
                     target.status,

@@ -6,7 +6,6 @@ import com.ilfey.shikimori.R
 import com.ilfey.shikimori.di.network.enums.AnimeStatus
 import com.ilfey.shikimori.di.network.enums.Kind
 import com.ilfey.shikimori.di.network.enums.Rating
-import com.ilfey.shikimori.utils.gone
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -116,7 +115,7 @@ fun Context.parseRating(rating: Rating?) = when (rating) {
     else -> null
 }
 
-fun Context.parseKind(kind: Kind) = when (kind) {
+fun Context.parseKind(kind: Kind?) = when (kind) {
     Kind.TV -> getString(R.string.type_tv)
     Kind.MOVIE -> getString(R.string.type_movie)
     Kind.OVA -> getString(R.string.type_ova)

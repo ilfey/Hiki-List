@@ -9,8 +9,8 @@ data class AnimeRate(
     val status: ListType,
     val text: String?,
     val episodes: Int,
-    val chapters: Int?, // TODO: Check
-    val volumes: Int?, // TODO: Check
+    val chapters: Int?,
+    val volumes: Int?,
     val text_html: String,
     val rewatchers: Int,
     val created_at: String,

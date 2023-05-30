@@ -26,8 +26,8 @@ data class Anime(
     val license_name_ru: String?,
     val duration: Int,
     val description: String?,
-//    val description_html: String?, // TODO: Check
-//    val description_source: String?, // TODO: Check
+    val description_html: String?,
+    val description_source: String?,
     val franchise: String?,
     val favoured: Boolean,
     val anons: Boolean,
