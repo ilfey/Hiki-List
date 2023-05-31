@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.ilfey.shikimori.base.ListFragment
-import com.ilfey.shikimori.di.network.entities.Favorites
+import com.ilfey.shikimori.di.network.models.Favorites
 import com.ilfey.shikimori.ui.anime.AnimeActivity
 import com.ilfey.shikimori.ui.favorites.FavoritesFragment.Companion.FavoriteTypes.*
 import com.ilfey.shikimori.utils.*
@@ -63,11 +63,12 @@ class FavoritesFragment : ListFragment() {
         }
     }
 
-    private fun onListUpdate(list: List<Favorites.Entry>) {
-        listAdapter.setList(list)
-        if (list.isEmpty()) {
+    private fun onListUpdate(list: List<Favorites.Entry>?) {
+        if (list.isNullOrEmpty()) {
+            listAdapter.setList(listOf())
             binding.textViewListIsEmpty.visible()
         } else {
+            listAdapter.setList(list)
             binding.textViewListIsEmpty.gone()
         }
     }

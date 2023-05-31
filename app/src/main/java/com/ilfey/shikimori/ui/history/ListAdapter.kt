@@ -90,7 +90,7 @@ class ListAdapter(
                                 Kind.DOUJIN,
                             )
                         ) {
-                            // TODO: Implement this
+                            // TODO: Implement this activity
                             context.toast()
                         } else {
                             val intent = AnimeActivity.newIntent(root.context, item.target.id)
