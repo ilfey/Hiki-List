@@ -30,24 +30,32 @@ class AnimeActivity : BaseActivity<ActivityAnimeBinding>(), Toolbar.OnMenuItemCl
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val id: Long?
         val url = intent.data
         if (url == null) {
-            id = intent.getLongExtra(EXTRA_ID, 1) // TODO: Handle error
+            val extra = intent.getLongExtra(EXTRA_ID, -1)
+            id = if (extra == -1L) null else extra
             Log.d(TAG, "onCreate: start with id: $id")
         } else {
             val reg = Regex("\\d+")
             val idString = reg.find(url.lastPathSegment.toString())?.value
-            id = idString?.toLong() ?: 1 // TODO: Handle error
+            id = idString?.toLong()
             Log.d(TAG, "onCreate: start with url: $url")
         }
 
         binding.toolbar.run {
             addBackButton { onBackPressedDispatcher.onBackPressed() }
             inflateMenu(R.menu.anime_toolbar_menu)
-            setOnMenuItemClickListener(this@AnimeActivity) // TODO: Delegate this
+            setOnMenuItemClickListener(this@AnimeActivity)
         }
 
-        viewModel.getAnime(id)
+        if (id != null) {
+            this.id = id
+            viewModel.getAnime(id)
+        } else {
+            binding.container.gone()
+            binding.loadingError.visible()
+        }
     }
 
     override fun bindViewModel() {
@@ -93,7 +101,7 @@ class AnimeActivity : BaseActivity<ActivityAnimeBinding>(), Toolbar.OnMenuItemCl
         else -> false
     }
 
-    private fun createSelectListDialog(): AlertDialog { // TODO: Delegate this
+    private fun createSelectListDialog(): AlertDialog {
         val builder = MaterialAlertDialogBuilder(this)
 
         val items = resources.getStringArray(R.array.statuses)
@@ -122,9 +130,7 @@ class AnimeActivity : BaseActivity<ActivityAnimeBinding>(), Toolbar.OnMenuItemCl
             setNegativeButton(R.string.cancel, null)
         }
 
-        val dialog = builder.create()
-
-        return dialog
+        return builder.create()
     }
 
     override fun onInflateView() = ActivityAnimeBinding.inflate(layoutInflater)

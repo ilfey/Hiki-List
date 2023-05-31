@@ -2,7 +2,6 @@ package com.ilfey.shikimori.ui.anime
 
 import android.animation.ObjectAnimator
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
@@ -13,8 +12,6 @@ import com.ilfey.shikimori.base.BaseFragment
 import com.ilfey.shikimori.databinding.FragmentAnimeBinding
 import com.ilfey.shikimori.di.network.models.Role
 import com.ilfey.shikimori.di.network.models.UserRate
-import com.ilfey.shikimori.di.network.entities.characters
-import com.ilfey.shikimori.di.network.entities.mainCharacters
 import com.ilfey.shikimori.di.network.enums.ListType.*
 import com.ilfey.shikimori.di.network.models.Anime
 import com.ilfey.shikimori.ui.anime.utils.references
@@ -37,17 +34,6 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
     private var posterUrl = ""
     private var scoresStats = listOf<eAnime.RatesScoresStats>()
     private var statusesStats = listOf<eAnime.RatesStatusesStats>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        if (id != null) {
-            Log.d(TAG, "start with id: $id")
-            viewModel.getRoles(id!!)
-            viewModel.getAnime(id!!)
-        } else {
-            context?.toast("zxc") // TODO: Ban
-        }
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

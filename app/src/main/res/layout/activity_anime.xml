@@ -28,6 +28,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
 
+    <TextView
+        android:id="@+id/loadingError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/error_loading_anime"
+        android:visibility="gone"/>
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/container"
         android:layout_width="match_parent"

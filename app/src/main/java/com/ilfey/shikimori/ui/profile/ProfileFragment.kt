@@ -54,7 +54,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), View.OnClickList
 
         binding.toolbar.run {
             inflateMenu(R.menu.profile_toolbar_menu)
-            setOnMenuItemClickListener(this@ProfileFragment) // TODO: Delegate this
+            setOnMenuItemClickListener(this@ProfileFragment)
         }
 
         with(binding.chart) {

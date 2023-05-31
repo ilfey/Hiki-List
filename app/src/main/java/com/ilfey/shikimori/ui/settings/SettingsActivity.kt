@@ -3,9 +3,7 @@ package com.ilfey.shikimori.ui.settings
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
-import androidx.preference.PreferenceFragmentCompat
 import com.ilfey.shikimori.R
 import com.ilfey.shikimori.base.BaseActivity
 import com.ilfey.shikimori.databinding.ActivitySettingsBinding
@@ -25,10 +23,8 @@ class SettingsActivity : BaseActivity<ActivitySettingsBinding>() {
     }
 
     private fun openDefaultFragment() {
-        val fragment = when (intent?.action) {
-            // TODO create intends
-            else -> SettingsFragment.newInstance()
-        }
+        val fragment = SettingsFragment.newInstance()
+
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             replace(R.id.container, fragment)
