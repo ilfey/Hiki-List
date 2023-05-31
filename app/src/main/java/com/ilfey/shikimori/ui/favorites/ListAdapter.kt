@@ -5,9 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.ilfey.shikimori.BuildConfig
 import com.ilfey.shikimori.databinding.ItemFavoritesBinding
-import com.ilfey.shikimori.di.network.entities.Favorites
+import com.ilfey.shikimori.di.network.models.Favorites
 
 class ListAdapter(
     private val onClick: (Favorites.Entry) -> Unit = {},
@@ -39,11 +38,11 @@ class ListAdapter(
 
             Glide
                 .with(binding.image.context)
-                .load(BuildConfig.APP_URL + item.image.replace("x64", "original"))
+                .load(item.image)
                 .into(binding.image)
 
-            binding.title.text = item.russian
-            binding.name.text = item.name
+            binding.title.text = item.titleRu
+            binding.name.text = item.titleEn
 
             binding.root.setOnClickListener {
                 onClick.invoke(item)

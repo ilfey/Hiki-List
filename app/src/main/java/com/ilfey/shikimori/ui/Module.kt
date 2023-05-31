@@ -30,7 +30,7 @@ val uiModule
         }
 
         viewModel {
-            FavoritesViewModel(userApi = get())
+            FavoritesViewModel(userService = get())
         }
 
         viewModel {

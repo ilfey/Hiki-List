@@ -9,6 +9,7 @@ import com.ilfey.shikimori.utils.RetrofitEnqueue.Companion.Result.*
 import com.ilfey.shikimori.di.network.enums.TargetType
 import com.ilfey.shikimori.di.network.models.AnimeRate
 import com.ilfey.shikimori.di.network.models.CurrentUser
+import com.ilfey.shikimori.di.network.models.Favorites
 import com.ilfey.shikimori.di.network.models.HistoryItem
 
 class UserService(
@@ -34,6 +35,47 @@ class UserService(
             }
         }
     }
+
+    fun favorites(
+        user: String,
+        onSuccess: (Favorites) -> Unit = {},
+        onFailure: (Throwable) -> Unit = {},
+    ) {
+        userApi.favorites(
+            id = user,
+        ).enqueue {
+            when (it) {
+                is Success -> {
+                    val body = it.response.body()
+                    if (it.response.isSuccessful && body != null) {
+                        onSuccess(Favorites.parseFromEntity(context, body))
+                    }
+                }
+                is Failure -> onFailure(it.error)
+            }
+        }
+    }
+
+    fun favorites(
+        userId: Long,
+        onSuccess: (Favorites) -> Unit = {},
+        onFailure: (Throwable) -> Unit = {},
+    ) {
+        userApi.favorites(
+            id = userId,
+        ).enqueue {
+            when (it) {
+                is Success -> {
+                    val body = it.response.body()
+                    if (it.response.isSuccessful && body != null) {
+                        onSuccess(Favorites.parseFromEntity(context, body))
+                    }
+                }
+                is Failure -> onFailure(it.error)
+            }
+        }
+    }
+
 
     fun history(
         user: String,
