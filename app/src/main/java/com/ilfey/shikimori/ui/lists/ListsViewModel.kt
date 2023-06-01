@@ -42,8 +42,8 @@ class ListsViewModel(
     private fun listByType(type: ListType) = when (type) {
         PLANNED -> planned
         WATCHING -> watching
-        REWATCHING -> completed
-        COMPLETED -> rewatching
+        REWATCHING -> rewatching
+        COMPLETED -> completed
         ON_HOLD -> on_hold
         DROPPED -> dropped
     }

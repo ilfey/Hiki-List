@@ -2,8 +2,6 @@ package com.ilfey.shikimori.ui.lists
 
 import android.os.Bundle
 import android.view.View
-import com.google.android.material.snackbar.BaseTransientBottomBar
-import com.google.android.material.snackbar.Snackbar
 import com.ilfey.shikimori.R
 import com.ilfey.shikimori.di.network.enums.ListType
 import com.ilfey.shikimori.di.network.enums.ListType.*
@@ -53,7 +51,6 @@ class ListFragment : com.ilfey.shikimori.base.ListFragment() {
             DROPPED -> viewModel.dropped.observe(viewLifecycleOwner, this::onListUpdate)
         }
 
-        viewModel.moveAnime.observe(viewLifecycleOwner, this::onAnimeMove)
         viewModel.loadingFlow.launchAndCollectIn(viewLifecycleOwner) {
             with(binding) {
                 if (it) {
@@ -68,39 +65,7 @@ class ListFragment : com.ilfey.shikimori.base.ListFragment() {
         }
     }
 
-    private fun onAnimeMove(move: ListsViewModel.MoveAnime?) {
-        if (move != null) {
-            val listTitle = when (move.toList) {
-                PLANNED -> getString(R.string.planned)
-                WATCHING -> getString(R.string.watching)
-                REWATCHING -> getString(R.string.rewatching)
-                COMPLETED -> getString(R.string.completed)
-                ON_HOLD -> getString(R.string.on_hold)
-                DROPPED -> getString(R.string.dropped)
-            }
 
-            val text = getString(R.string.move_anime_to, move.animeRate.anime.titleRu, listTitle)
-
-            context?.let {
-                Snackbar.make(binding.root, text, Snackbar.LENGTH_SHORT)
-                    .setAction(R.string.cancel) {
-                        viewModel.setList(
-                            move.animeRate.id,
-                            move.animeRate,
-                            move.toList,
-                            move.fromList,
-                            cancel = true,
-                        )
-                    }
-                    .addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                        override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-                            viewModel.moveAnime.value = null
-                        }
-                    })
-                    .show()
-            }
-        }
-    }
 
     private fun onListUpdate(list: List<AnimeRate>) {
         with(binding) {
