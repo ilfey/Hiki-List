@@ -1,6 +1,7 @@
 package com.ilfey.shikimori.ui.anime.screenshots
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,8 @@ class ScreenshotsFragment : BaseFragment<FragmentScreenshotsBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Log.d(TAG, "onViewCreated: start $position screenshot")
+        
         with(binding.pager) {
             setCurrentItem(position!!, false)
             offscreenPageLimit = 5
@@ -35,6 +38,7 @@ class ScreenshotsFragment : BaseFragment<FragmentScreenshotsBinding>() {
             if (it.screenshots != null) {
                 setToolbarTitle(position!! + 1, it.screenshots.size)
                 binding.pager.adapter = ViewPagerAdapter(it.screenshots)
+                binding.pager.setCurrentItem(position!!, false)
             }
 //            TODO: handle no screenshots
         }
@@ -46,7 +50,6 @@ class ScreenshotsFragment : BaseFragment<FragmentScreenshotsBinding>() {
 
     private val pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) = setToolbarTitle(position + 1, viewModel.anime.value?.screenshots?.size ?: 1)
-
     }
 
     override fun onInflateView(
@@ -60,6 +63,7 @@ class ScreenshotsFragment : BaseFragment<FragmentScreenshotsBinding>() {
     }
 
     companion object {
+        private const val TAG = "[ScreenshotsFragment]"
         private const val ARG_POSITION = "position"
 
         fun newInstance(
