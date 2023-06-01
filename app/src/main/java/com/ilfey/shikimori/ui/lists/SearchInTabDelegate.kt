@@ -34,7 +34,7 @@ class SearchInTabDelegate(
     private val viewModel: ListsViewModel,
 ) : TabLayout.OnTabSelectedListener, SearchView.TransitionListener, TextWatcher {
 
-    private val adapter = SearchListAdapter(null, settings.fullTitles)
+    private val adapter = SearchListAdapter(null)
 
     private val textViewNotFound = searchView.findViewById<TextView>(R.id.textView_not_found_search)
     private val progressBar =

@@ -3,6 +3,7 @@ package com.ilfey.shikimori.di.network.models
 import android.content.Context
 import com.ilfey.shikimori.R
 import com.ilfey.shikimori.di.network.entities.User
+import com.ilfey.shikimori.di.network.enums.Locale
 import java.text.SimpleDateFormat
 
 data class CurrentUser(
@@ -17,6 +18,7 @@ data class CurrentUser(
     val website: String?,
     val birthOn: String?,
     val age: String?,
+    val locale: Locale,
 ) {
     companion object {
         fun parseFromEntity(ctx: Context, e: User) : CurrentUser {
@@ -36,7 +38,8 @@ data class CurrentUser(
                 sex = e.sex.ifEmpty { null },
                 website = e.website.ifEmpty { null },
                 birthOn = e.birth_on?.let { dateFormat.format(it) },
-                age = parseAge(e.full_years, ctx)
+                age = parseAge(e.full_years, ctx),
+                locale = e.locale,
             )
         }
 

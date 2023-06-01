@@ -14,11 +14,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         supportFragmentManager.commit {
             if (settings.isAuthorized) {
                 add(R.id.container, MainFragment.newInstance())
-                disallowAddToBackStack()
             } else {
                 add(R.id.container, AuthFragment.newInstance())
-                disallowAddToBackStack()
             }
+            disallowAddToBackStack()
         }
     }
 

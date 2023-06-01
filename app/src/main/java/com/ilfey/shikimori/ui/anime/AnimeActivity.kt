@@ -52,6 +52,7 @@ class AnimeActivity : BaseActivity<ActivityAnimeBinding>(), Toolbar.OnMenuItemCl
         if (id != null) {
             this.id = id
             viewModel.getAnime(id)
+            viewModel.getRoles(id)
         } else {
             binding.container.gone()
             binding.loadingError.visible()
@@ -70,7 +71,7 @@ class AnimeActivity : BaseActivity<ActivityAnimeBinding>(), Toolbar.OnMenuItemCl
         }
     }
     private fun onAnimeUpdate(anime: Anime) {
-        binding.toolbar.title = anime.titleRu
+        binding.toolbar.title = if (settings.isEnLocale) anime.titleEn else anime.titleRu
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             replace(R.id.container, AnimeFragment.newInstance(anime.id))

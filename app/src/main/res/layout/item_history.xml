@@ -30,7 +30,7 @@
         tools:text="Description" />
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/primaryTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -43,7 +43,7 @@
         tools:text="Anime title" />
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/secondaryTitle"
         style="?textAppearanceBodySmall"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
         android:textColor="?colorOnSurfaceVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/image"
-        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintTop_toBottomOf="@id/primaryTitle"
         tools:text="Anime name" />
 
     <TextView
@@ -65,7 +65,7 @@
         android:textColor="?colorOnSurfaceVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/image"
-        app:layout_constraintTop_toBottomOf="@id/name"
+        app:layout_constraintTop_toBottomOf="@id/secondaryTitle"
         tools:text="Status" />
 
     <RatingBar

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ilfey.shikimori.di.AppSettings
+import com.ilfey.shikimori.di.network.enums.Locale
 import com.ilfey.shikimori.di.network.models.UserRate
 import com.ilfey.shikimori.di.network.enums.TargetType
 import com.ilfey.shikimori.di.network.models.CurrentUser
@@ -37,6 +38,8 @@ class ProfileViewModel(
 
     private fun onUserSuccess(user: CurrentUser) {
         settings.userId = user.id
+        settings.username = user.username
+        settings.isEnLocale = user.locale == Locale.EN
         this.user.value = user
     }
 

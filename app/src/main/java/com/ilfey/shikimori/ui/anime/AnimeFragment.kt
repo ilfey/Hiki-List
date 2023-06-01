@@ -73,8 +73,13 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
             .into(binding.poster)
 
         with(binding) {
-            title.text = anime.titleRu
-            name.text = anime.titleEn
+            if (settings.isEnLocale) {
+                primaryTitle.text = anime.titleEn
+                secondaryTitle.text = anime.titleRu
+            } else {
+                primaryTitle.text = anime.titleRu
+                secondaryTitle.text = anime.titleEn
+            }
 
             if (anime.kind != null) {
                 type.text = anime.kind
@@ -96,7 +101,6 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
             } else {
                 mpaaRating.gone()
             }
-
 
             status.text = anime.status
 

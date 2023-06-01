@@ -56,13 +56,20 @@ class ListAdapter(
                     .load(item.anime.image)
                     .into(image)
 
-                title.text = item.anime.titleRu
-                if (!settings.fullTitles) {
-                    title.maxLines = 2
-                    title.ellipsize = TextUtils.TruncateAt.END
+                if (settings.isEnLocale) {
+                    primaryTitle.text = item.anime.titleEn
+                    secondaryTitle.text = item.anime.titleRu
+                } else {
+                    primaryTitle.text = item.anime.titleRu
+                    secondaryTitle.text = item.anime.titleEn
                 }
 
-                name.text = item.anime.titleEn
+                if (!settings.fullTitles) {
+                    primaryTitle.maxLines = 2
+                    primaryTitle.ellipsize = TextUtils.TruncateAt.END
+                    secondaryTitle.maxLines = 2
+                    secondaryTitle.ellipsize = TextUtils.TruncateAt.END
+                }
 
                 if (item.score != null) {
                     userScore.text = item.score

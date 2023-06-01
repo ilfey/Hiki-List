@@ -19,7 +19,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>(),
 
     private val viewModel by activityViewModel<HistoryViewModel>()
 
-    private val adapter = ListAdapter(settings.fullTitles)
+    private val adapter = ListAdapter()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding) {

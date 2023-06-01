@@ -13,6 +13,7 @@ import com.ilfey.shikimori.BuildConfig
 import com.ilfey.shikimori.R
 import com.ilfey.shikimori.base.BaseFragment
 import com.ilfey.shikimori.databinding.FragmentAuthBinding
+import com.ilfey.shikimori.di.network.enums.Locale
 import com.ilfey.shikimori.ui.main.MainFragment
 import com.ilfey.shikimori.utils.invisible
 import com.ilfey.shikimori.utils.launchAndCollectIn
@@ -48,6 +49,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(), View.OnClickListener {
         }
         viewModel.user.observe(viewLifecycleOwner) {
             settings.userId = it.id
+            settings.isEnLocale = it.locale == Locale.EN
             settings.username = it.username
 
             parentFragmentManager.commit {

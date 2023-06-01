@@ -11,7 +11,7 @@ data class Role(
 ) {
     data class CharacterOrPerson(
         val id: Long,
-        val name: String,
+        val nameEn: String,
         val nameRu: String,
         val image: String,
     )
@@ -29,7 +29,7 @@ data class Role(
         private fun parseCharacterOrPerson(e: eRole.CharacterOrPerson) : CharacterOrPerson{
             return CharacterOrPerson(
                 id = e.id,
-                name = e.name,
+                nameEn = e.name,
                 nameRu = e.russian,
                 image = makeUrl(e.image.original),
             )

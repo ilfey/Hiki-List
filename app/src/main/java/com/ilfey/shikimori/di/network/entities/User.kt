@@ -1,5 +1,6 @@
 package com.ilfey.shikimori.di.network.entities
 
+import com.ilfey.shikimori.di.network.enums.Locale
 import java.util.Date
 
 data class User(
@@ -14,6 +15,7 @@ data class User(
     val website: String,
     val birth_on: Date?,
     val full_years: Int?,
+    val locale: Locale,
 ) {
     data class Image(
         val x160: String,

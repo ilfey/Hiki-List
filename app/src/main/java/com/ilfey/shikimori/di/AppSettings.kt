@@ -33,6 +33,10 @@ class AppSettings(context: Context) {
         get() = prefs.getString(KEY_USERNAME, null)
         set(value) = prefs.edit { putString(KEY_USERNAME, value) }
 
+    var isEnLocale: Boolean
+        get() = prefs.getBoolean(KEY_LOCALE, false)
+        set(value) = prefs.edit { putBoolean(KEY_LOCALE, value) }
+
     var theme: Int
         get() = prefs.getInt(KEY_THEME, R.style.AppTheme_Light)
         set(value) = prefs.edit { putInt(KEY_THEME, value) }
@@ -60,6 +64,7 @@ class AppSettings(context: Context) {
         private const val KEY_FRAGMENT = "fragment"
         private const val KEY_USER_ID = "user_id"
         private const val KEY_USERNAME = "username"
+        private const val KEY_LOCALE = "locale"
 
         const val KEY_THEME = "theme"
         const val KEY_NSFW = "nsfw"

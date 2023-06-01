@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.ilfey.shikimori.R
+import com.ilfey.shikimori.base.BaseViewHolder
 import com.ilfey.shikimori.databinding.ItemSearchBinding
 import com.ilfey.shikimori.di.network.enums.AnimeStatus.*
 import com.ilfey.shikimori.di.network.models.AnimeItem
@@ -17,7 +17,6 @@ import java.util.*
 
 class ListAdapter(
     private var list: List<AnimeItem>?,
-    private val showFullTitles: Boolean,
 ) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
     @SuppressLint("NotifyDataSetChanged")
@@ -40,23 +39,30 @@ class ListAdapter(
 
     inner class ViewHolder(
         private val binding: ItemSearchBinding,
-    ) : RecyclerView.ViewHolder(binding.root) {
+    ) : BaseViewHolder<AnimeItem>(binding.root) {
 
-        fun bind(item: AnimeItem) {
+        override fun bind(item: AnimeItem) {
             with(binding) {
                 Glide
                     .with(image.context)
                     .load(item.image)
                     .into(image)
 
-
-                if (!showFullTitles) {
-                    title.maxLines = 2
-                    title.ellipsize = TextUtils.TruncateAt.END
+                if (settings.isEnLocale) {
+                    primaryTitle.text = item.titleEn
+                    secondaryTitle.text = item.titleRu
+                } else {
+                    primaryTitle.text = item.titleRu
+                    secondaryTitle.text = item.titleEn
                 }
 
-                title.text = item.titleRu
-                name.text = item.titleEn
+                if (!settings.fullTitles) {
+                    primaryTitle.maxLines = 2
+                    primaryTitle.ellipsize = TextUtils.TruncateAt.END
+                    secondaryTitle.maxLines = 2
+                    secondaryTitle.ellipsize = TextUtils.TruncateAt.END
+                }
+
                 status.text = item.status
 
                 if (item.score != 0f) {

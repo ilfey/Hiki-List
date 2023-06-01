@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.ilfey.shikimori.base.BaseViewHolder
 import com.ilfey.shikimori.databinding.ItemFavoritesBinding
 import com.ilfey.shikimori.di.network.models.Favorites
 
@@ -32,20 +33,27 @@ class ListAdapter(
 
     inner class ViewHolder(
         private val binding: ItemFavoritesBinding,
-    ) : RecyclerView.ViewHolder(binding.root) {
+    ) : BaseViewHolder<Favorites.Entry>(binding.root) {
 
-        fun bind(item: Favorites.Entry) {
+        override fun bind(item: Favorites.Entry) {
 
-            Glide
-                .with(binding.image.context)
-                .load(item.image)
-                .into(binding.image)
+            with(binding) {
+                Glide
+                    .with(image.context)
+                    .load(item.image)
+                    .into(image)
 
-            binding.title.text = item.titleRu
-            binding.name.text = item.titleEn
+                if (settings.isEnLocale) {
+                    primaryTitle.text = item.titleEn
+                    secondaryTitle.text = item.titleRu
+                } else {
+                    primaryTitle.text = item.titleRu
+                    secondaryTitle.text = item.titleEn
+                }
 
-            binding.root.setOnClickListener {
-                onClick.invoke(item)
+                root.setOnClickListener {
+                    onClick.invoke(item)
+                }
             }
         }
     }

@@ -59,7 +59,7 @@ class ScreenshotsFragment : BaseFragment<FragmentScreenshotsBinding>() {
 
     override fun onDetach() {
         super.onDetach()
-        activity?.findViewById<MaterialToolbar>(R.id.toolbar)?.title = viewModel.anime.value!!.titleRu
+        activity?.findViewById<MaterialToolbar>(R.id.toolbar)?.title = if (settings.isEnLocale) viewModel.anime.value!!.titleEn else viewModel.anime.value!!.titleRu
     }
 
     companion object {

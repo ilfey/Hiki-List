@@ -31,7 +31,7 @@
             <!--    Title    -->
 
             <TextView
-                android:id="@+id/name"
+                android:id="@+id/secondaryTitle"
                 style="?attr/textAppearanceBodySmall"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -39,11 +39,11 @@
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/poster"
-                app:layout_constraintTop_toBottomOf="@id/title"
+                app:layout_constraintTop_toBottomOf="@id/primaryTitle"
                 tools:text="Name" />
 
             <TextView
-                android:id="@+id/title"
+                android:id="@+id/primaryTitle"
                 style="?textAppearanceHeadlineSmall"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toEndOf="@id/poster"
-                app:layout_constraintTop_toBottomOf="@id/name"
+                app:layout_constraintTop_toBottomOf="@id/secondaryTitle"
                 tools:rating="4" />
 
             <TextView
@@ -142,7 +142,7 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/title"
+                    app:layout_constraintTop_toBottomOf="@id/primaryTitle"
                     app:singleSelection="true" />
 
             </HorizontalScrollView>
@@ -268,7 +268,7 @@
                 android:id="@+id/screenshots_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:constraint_referenced_ids="screenshots_tv,@+id/screenshots" />
+                app:constraint_referenced_ids="screenshots_tv,screenshots" />
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/videos_group"
