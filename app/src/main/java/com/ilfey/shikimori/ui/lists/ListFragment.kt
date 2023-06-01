@@ -1,6 +1,7 @@
 package com.ilfey.shikimori.ui.lists
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.ilfey.shikimori.R
 import com.ilfey.shikimori.di.network.enums.ListType
@@ -54,9 +55,6 @@ class ListFragment : com.ilfey.shikimori.base.ListFragment() {
         viewModel.loadingFlow.launchAndCollectIn(viewLifecycleOwner) {
             with(binding) {
                 if (it) {
-                    textViewListIsEmpty.isVisible { view ->
-                        view.gone()
-                    }
                     progressBar.show()
                 } else {
                     progressBar.hide()
@@ -68,9 +66,12 @@ class ListFragment : com.ilfey.shikimori.base.ListFragment() {
 
 
     private fun onListUpdate(list: List<AnimeRate>) {
+        Log.d(TAG, "onListUpdate: trigger")
         with(binding) {
             if (list.isEmpty()) {
                 textViewListIsEmpty.visible()
+            } else {
+                textViewListIsEmpty.gone()
             }
             adapter.setList(list)
         }

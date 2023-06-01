@@ -22,7 +22,7 @@ class ListsViewModel(
     private val userRateService: UserRateService,
 ) : ListViewModel() {
 
-    private var lastStatus: ListType = settings.list ?: PLANNED
+    var lastStatus: ListType = settings.list ?: PLANNED
     private var lastIndex = 0
 
     private val loadingMutableStateFlow = MutableStateFlow(false)
@@ -132,7 +132,7 @@ class ListsViewModel(
                         lastIndex = index
                         val mutableList = list.value?.toMutableList()
                         mutableList?.removeAt(index)
-                        list.value = mutableList
+                        mutableList?.let { list.value = it }
                     }
 
                     Log.d(TAG, "setList: update $toList")
@@ -150,7 +150,7 @@ class ListsViewModel(
                     val list = listByType(toList)
                     val mutableList = list.value?.toMutableList()
                     mutableList?.add(lastIndex, rate)
-                    list.value = mutableList
+                    mutableList?.let { list.value = it }
 
                     Log.d(TAG, "setList: update $fromList")
                     userService.animeRates(

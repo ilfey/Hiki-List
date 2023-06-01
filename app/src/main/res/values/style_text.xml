@@ -1,34 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="TextAppearance.Shikimori.LabelLarge" parent="TextAppearance.Material3.LabelLarge">
+        <!-- ts 14 -->
+<!--        <item name="fontFamily">@font/roboto</item>-->
+    </style>
+
+    <style name="TextAppearance.Shikimori.LabelMedium" parent="TextAppearance.Material3.LabelMedium">
+        <!-- ts 12 -->
+<!--        <item name="fontFamily">@font/roboto</item>-->
+    </style>
+
+    <style name="TextAppearance.Shikimori.LabelSmall" parent="TextAppearance.Material3.LabelSmall">
+        <!-- ts 11 -->
+<!--        <item name="fontFamily">@font/roboto</item>-->
+    </style>
+
     <style name="TextAppearance.Shikimori.HeadlineLarge" parent="TextAppearance.Material3.HeadlineLarge">
         <!-- ts 32 -->
-        <item name="fontFamily">@font/roboto</item>
+<!--        <item name="fontFamily">@font/roboto</item>-->
     </style>
 
     <style name="TextAppearance.Shikimori.HeadlineMedium" parent="TextAppearance.Material3.HeadlineMedium">
         <!-- ts 28 -->
-        <item name="fontFamily">@font/roboto</item>
+<!--        <item name="fontFamily">@font/roboto</item>-->
     </style>
 
     <style name="TextAppearance.Shikimori.HeadlineSmall" parent="TextAppearance.Material3.HeadlineSmall">
         <!-- ts 24 -->
-        <item name="fontFamily">@font/roboto</item>
+<!--        <item name="fontFamily">@font/roboto</item>-->
     </style>
 
     <style name="TextAppearance.Shikimori.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
         <!-- ts 16 -->
-        <item name="fontFamily">@font/roboto</item>
+<!--        <item name="fontFamily">@font/roboto</item>-->
     </style>
 
     <style name="TextAppearance.Shikimori.BodyMedium" parent="TextAppearance.Material3.BodyMedium">
         <!-- ts 14 -->
-        <item name="fontFamily">@font/roboto</item>
+<!--        <item name="fontFamily">@font/roboto</item>-->
     </style>
 
     <style name="TextAppearance.Shikimori.BodySmall" parent="TextAppearance.Material3.BodySmall">
         <!-- ts 12 -->
-        <item name="fontFamily">@font/roboto</item>
+<!--        <item name="fontFamily">@font/roboto</item>-->
     </style>
 
     <style name="TextAppearance.Shikimori.Preference.Secondary" parent="TextAppearance.Material3.BodySmall" />

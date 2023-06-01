@@ -114,7 +114,7 @@ class SearchInTabDelegate(
             5 -> DROPPED
             else -> PLANNED
         }
-
+        viewModel.lastStatus = currentList
         searchBar.hint = fragment.getString(R.string.search_in, tab.text)
         searchView.hint = fragment.getString(R.string.search_in, tab.text)
     }

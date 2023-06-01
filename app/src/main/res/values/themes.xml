@@ -30,8 +30,11 @@
         <item name="colorSurfaceInverse">@color/md_theme_light_inverseSurface</item>
         <item name="colorPrimaryInverse">@color/md_theme_light_inversePrimary</item>
 
-        <item name="fontFamily">@font/roboto</item>
+<!--        <item name="fontFamily">@font/roboto</item>-->
 
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.Shikimori.LabelLarge</item>
+        <item name="textAppearanceLabelMedium">@style/TextAppearance.Shikimori.LabelMedium</item>
+        <item name="textAppearanceLabelSmall">@style/TextAppearance.Shikimori.LabelSmall</item>
         <item name="textAppearanceTitleLarge">@style/TextAppearance.Material3.TitleLarge</item>
         <item name="textAppearanceTitleMedium">@style/TextAppearance.Material3.TitleMedium</item>
         <item name="textAppearanceTitleSmall">@style/TextAppearance.Material3.TitleSmall</item>
@@ -54,11 +57,14 @@
         <item name="materialButtonStyle">@style/Widget.Shikimori.Button</item>
         <item name="chipStyle">@style/Widget.Shikimori.Chip</item>
         <item name="toolbarStyle">@style/Widget.Material3.Toolbar</item>
+        <item name="snackbarStyle">@style/Widget.Shikimori.Snackbar</item>
+        <item name="snackbarButtonStyle">@style/Widget.Shikimori.SnackbarButton</item>
         <item name="materialSearchBarStyle">@style/Widget.Shikimori.SearchBar</item>
         <item name="appBarLayoutStyle">@style/Widget.Material3.AppBarLayout</item>
 <!--        <item name="switchPreferenceCompatStyle">@style/Preference.SwitchPreferenceCompat.M3</item>-->
 
         <item name="materialAlertDialogTheme">@style/ThemeOverlay.Shikimori.MaterialAlertDialog</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Shikimori.BottomSheetDialog</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.Shikimori</item>
         <item name="preferenceCategoryStyle">@style/PreferenceThemeOverlay.Shikimori.Category</item>
         <item name="switchPreferenceCompatStyle">@style/PreferenceThemeOverlay.Shikimori.Switch</item>

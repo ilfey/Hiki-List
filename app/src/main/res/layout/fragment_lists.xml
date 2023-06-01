@@ -10,44 +10,22 @@
         android:layout_height="wrap_content"
         android:background="?colorSurface">
 
-<!--        <com.google.android.material.appbar.MaterialToolbar-->
-<!--            android:id="@+id/toolbar"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_scrollFlags="scroll|enterAlways|snap">-->
-<!--            android:background="?backgroundColor"-->
-<!--            app:iconifiedByDefault="false"-->
-<!--            app:title="@string/lists">-->
-<!--            tools:menu="@menu/menu_lists">-->
-
-<!--            <androidx.appcompat.widget.SearchView-->
-<!--                android:id="@+id/searchView"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center_vertical"-->
-<!--                app:iconifiedByDefault="false"-->
-<!--                app:queryBackground="@null"-->
-<!--                app:searchHintIcon="@null"-->
-<!--                app:searchIcon="@null" />-->
-
-<!--        </com.google.android.material.appbar.MaterialToolbar>-->
-
         <com.google.android.material.search.SearchBar
             android:id="@+id/searchBar"
-            android:layout_marginVertical="12dp"
             style="?materialSearchBarStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:hint="Поиск в запланировано"
-            app:layout_scrollFlags="scroll|enterAlways|snap" />
+            android:layout_marginVertical="12dp"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            tools:hint="Поиск в запланировано" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
+            style="@style/ThemeOverlay.Shikimori.TabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabInlineLabel="true"
-            app:tabGravity="fill"
-            app:tabMode="scrollable"/>
+            app:tabMode="scrollable" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

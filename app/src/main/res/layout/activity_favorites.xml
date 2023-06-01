@@ -21,14 +21,13 @@
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
+            style="@style/ThemeOverlay.Shikimori.TabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabInlineLabel="true"
-            app:tabGravity="fill"
-            app:tabMode="scrollable"/>
+            app:tabMode="scrollable" />
 
     </com.google.android.material.appbar.AppBarLayout>
-
 
 
     <androidx.viewpager2.widget.ViewPager2
@@ -41,10 +40,10 @@
         android:id="@+id/loading_error"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/favorites_loading_error"
         android:layout_gravity="center"
+        android:text="@string/favorites_loading_error"
         android:visibility="gone"
-        tools:visibility="visible"/>
+        tools:visibility="visible" />
 
     <androidx.core.widget.ContentLoadingProgressBar
         android:id="@+id/progressBar"
@@ -52,12 +51,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
-
-<!--    <androidx.fragment.app.FragmentContainerView-->
-<!--        android:id="@+id/container"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"-->
-<!--        tools:layout="@layout/fragment_list" />-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

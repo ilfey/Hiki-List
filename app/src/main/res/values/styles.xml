@@ -1,6 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- BottomSheet -->
+
+    <style name="ThemeOverlay.Shikimori.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.Shikimori.ModalBottomSheetDialog</item>
+    </style>
+
+    <style name="Widget.Shikimori.ModalBottomSheetDialog" parent="Widget.Material3.BottomSheet.Modal">
+        <item name="shapeAppearance">@style/ShapeAppearance.Shikimori.LargeComponent</item>
+    </style>
+
+    <style name="ShapeAppearance.Shikimori.LargeComponent" parent="ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerSize">24dp</item>
+    </style>
+
+    <!-- TabLayout -->
+
+    <style name="Widget.Shikimori.TabLayout" parent="Widget.Material3.TabLayout">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.Shikimori.TabLayout</item>
+        <item name="tabTextAppearance">@style/TextAppearance.Shikimori.LabelLarge</item>
+    </style>
+
+    <style name="ThemeOverlay.Shikimori.TabLayout" parent="">
+        <item name="colorPrimary">?colorPrimary</item>
+        <item name="colorSurface">?colorSurface</item>
+        <item name="colorOnSurface">?colorOnSurface</item>
+    </style>
+
+    <!-- Snackbar -->
+
+    <style name="Widget.Shikimori.Snackbar" parent="Widget.Material3.Snackbar">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.Shikimori.Snackbar</item>
+    </style>
+
+    <style name="Widget.Shikimori.SnackbarButton" parent="Widget.Material3.Button.TextButton.Snackbar">
+        <item name="android:textColor">?colorPrimaryInverse</item>
+    </style>
+
+    <style name="ThemeOverlay.Shikimori.Snackbar" parent="">
+        <item name="colorOnSurfaceInverse">?colorOnSurfaceInverse</item>
+        <item name="colorPrimaryInverse">?colorPrimaryInverse</item>
+    </style>
+
     <!-- Buttons -->
 
     <style name="Widget.Shikimori.IconButton" parent="Widget.Material3.Button.IconButton">
