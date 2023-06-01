@@ -10,22 +10,32 @@ import kotlinx.coroutines.flow.asStateFlow
 
 class SearchViewModel(
     private val animeService: AnimeService,
-): ViewModel() {
+) : ViewModel() {
 
     private val loadingMutableStateFlow = MutableStateFlow(false)
+
+    var lastQuery: String? = null
 
     val loadingFlow
         get() = loadingMutableStateFlow.asStateFlow()
 
     val animes = MutableLiveData<List<AnimeItem>>()
 
-    fun search(query: String?) {
+    fun search(query: String) {
         loadingMutableStateFlow.value = true
-        animeService.animes(
-            search = query,
-            onSuccess = this::onSearchSuccess,
-            onFailure = this::onSearchFailure,
-        )
+        if (query != lastQuery) {
+            lastQuery = query
+            Log.d(TAG, "search: with query $query")
+            animeService.animes(
+                search = query,
+                onSuccess = this::onSearchSuccess,
+                onFailure = this::onSearchFailure,
+            )
+            return
+        }
+
+        Log.d(TAG, "search: with cached query $query")
+        loadingMutableStateFlow.value = false
     }
 
     private fun onSearchSuccess(res: List<AnimeItem>) {

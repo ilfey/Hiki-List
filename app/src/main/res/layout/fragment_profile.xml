@@ -89,10 +89,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
-                    android:drawableTop="@drawable/ic_star_outline"
-                    android:text="@string/starred"
+                    android:drawableEnd="@drawable/ic_star_outline"
                     app:layout_constraintEnd_toStartOf="@id/history_btn"
-                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/website" />
 
@@ -102,8 +100,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
-                    android:drawableTop="@drawable/ic_history"
-                    android:text="@string/history"
+                    android:drawableEnd="@drawable/ic_history"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/favorites_btn"
                     app:layout_constraintTop_toBottomOf="@id/website" />

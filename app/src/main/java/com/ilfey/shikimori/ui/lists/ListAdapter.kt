@@ -4,29 +4,34 @@ import android.annotation.SuppressLint
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.annotation.DrawableRes
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ilfey.shikimori.R
+import com.ilfey.shikimori.base.BaseViewHolder
 import com.ilfey.shikimori.databinding.ItemAnimeListBinding
 import com.ilfey.shikimori.di.network.enums.AnimeStatus.*
+import com.ilfey.shikimori.di.network.enums.ListType
+import com.ilfey.shikimori.di.network.enums.ListType.*
 import com.ilfey.shikimori.di.network.models.AnimeRate
 import com.ilfey.shikimori.ui.anime.AnimeActivity
 import com.ilfey.shikimori.utils.gone
 import com.ilfey.shikimori.utils.visible
-import java.text.SimpleDateFormat
 import java.util.*
 
 class ListAdapter(
-    var _list: List<AnimeRate>?,
-    private val showFullTitles: Boolean,
+    private val listType: ListType,
+    private val viewModel: ListsViewModel,
 ) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
+
+    private var list: List<AnimeRate>? = null
 
     @SuppressLint("NotifyDataSetChanged")
     fun setList(l: List<AnimeRate>?) {
-        _list = l
+        list = l
         notifyDataSetChanged()
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -34,22 +39,17 @@ class ListAdapter(
         )
     }
 
-    override fun getItemCount() = _list?.size ?: 0
+    override fun getItemCount() = list?.size ?: 0
 
     override fun onBindViewHolder(holder: ViewHolder, pos: Int) {
-        holder.bind(_list!![pos])
+        holder.bind(list!![pos])
     }
 
     inner class ViewHolder(
         private val binding: ItemAnimeListBinding,
-    ) : RecyclerView.ViewHolder(binding.root) {
-        private val context = binding.root.context
-        private val dateFormat = SimpleDateFormat(
-            "dd MMMM yyyy",
-            context.resources.configuration.locales.get(0),
-        )
+    ) : BaseViewHolder<AnimeRate>(binding.root) {
 
-        fun bind(item: AnimeRate) {
+        override fun bind(item: AnimeRate) {
             with(binding) {
                 Glide
                     .with(image.context)
@@ -57,7 +57,7 @@ class ListAdapter(
                     .into(image)
 
                 title.text = item.anime.titleRu
-                if (!showFullTitles) {
+                if (!settings.fullTitles) {
                     title.maxLines = 2
                     title.ellipsize = TextUtils.TruncateAt.END
                 }
@@ -87,11 +87,63 @@ class ListAdapter(
                     episodes.gone()
                 }
 
+                if (settings.showActions && item.anime.episodes != null) {
+                    with(btnAction) {
+                        when (listType) {
+                            PLANNED -> {
+                                setIcon(R.drawable.ic_play_filled)
+                                setOnClickListener {
+                                    viewModel.setList(item.id, item, PLANNED, WATCHING)
+                                }
+                            }
+                            WATCHING -> {
+                                setIcon(R.drawable.ic_check)
+                                setOnClickListener {
+                                    viewModel.setList(item.id, item, WATCHING, COMPLETED)
+                                }
+                            }
+                            REWATCHING -> {
+                                setIcon(R.drawable.ic_check)
+                                setOnClickListener {
+                                    viewModel.setList(item.id, item, REWATCHING, COMPLETED)
+                                }
+                            }
+                            COMPLETED -> {
+                                setIcon(R.drawable.ic_arrowpath)
+                                setOnClickListener {
+                                    viewModel.setList(item.id, item, COMPLETED, REWATCHING)
+                                }
+                            }
+                            ON_HOLD -> {
+                                setIcon(R.drawable.ic_play_filled)
+                                setOnClickListener {
+                                    viewModel.setList(item.id, item, ON_HOLD, WATCHING)
+                                }
+                            }
+                            DROPPED -> {
+                                setIcon(R.drawable.ic_play_filled)
+                                setOnClickListener {
+                                    viewModel.setList(item.id, item, DROPPED, WATCHING)
+                                }
+                            }
+                        }
+                        btnAction.visible()
+                    }
+                } else {
+                    btnAction.gone()
+                }
+
                 root.setOnClickListener {
                     val intent = AnimeActivity.newIntent(root.context, item.anime.id)
                     root.context.startActivity(intent)
                 }
             }
+        }
+
+        private fun Button.setIcon(@DrawableRes id: Int) {
+            setCompoundDrawablesWithIntrinsicBounds(
+                0, 0, id, 0
+            )
         }
     }
 }

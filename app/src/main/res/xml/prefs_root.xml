@@ -7,12 +7,17 @@
         <SwitchPreferenceCompat
             app:key="full_titles"
             app:summary="@string/titles_will_not_be_truncated_in_lists"
-            app:title="@string/show_full_anime_titles" />
+            app:title="@string/full_anime_titles" />
 
         <SwitchPreferenceCompat
             app:key="show_icons"
             app:summary="Иконки будут отображаться в названиях списков"
-            app:title="Показывать иконки в названиях списков" />
+            app:title="Иконки в названиях списков" />
+
+        <SwitchPreferenceCompat
+            app:key="show_actions"
+            app:summary="Кнопки действий будут отображаться в списках"
+            app:title="Кнопки действий списках" />
 
     </PreferenceCategory>
 

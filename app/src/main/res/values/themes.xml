@@ -46,6 +46,9 @@
 
         <item name="materialButtonOutlinedStyle">@style/Widget.Shikimori.OutlineButton</item>
         <item name="materialIconButtonStyle">@style/Widget.Shikimori.IconButton</item>
+        <item name="materialIconButtonOutlinedStyle">@style/Widget.Shikimori.IconButton.Outlined</item>
+        <item name="materialIconButtonFilledStyle">@style/Widget.Shikimori.IconButton.Filled</item>
+        <item name="materialIconButtonFilledTonalStyle">@style/Widget.Shikimori.IconButton.Filled.Tonal</item>
         <item name="recyclerViewStyle">@style/Widget.Shikimori.RecyclerView</item>
 
         <item name="materialButtonStyle">@style/Widget.Shikimori.Button</item>
@@ -61,16 +64,7 @@
         <item name="switchPreferenceCompatStyle">@style/PreferenceThemeOverlay.Shikimori.Switch</item>
         <item name="preferenceStyle">@style/PreferenceThemeOverlay.Shikimori.Preference</item>
 
-
     </style>
-
-    <!--    <style name="Base.v24" parent="Theme.MaterialComponents.NoActionBar">-->
-
-    <!--    </style>-->
-
-    <!--    <style name="Base.Theme" parent="Base.v24"/>-->
-
-    <!--    <style name="AppTheme.Shikimori" parent="Base.Theme"/>-->
 
     <style name="AppTheme.Launch">
         <item name="android:windowBackground">@drawable/splash_screen</item>

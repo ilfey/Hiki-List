@@ -16,16 +16,16 @@ import com.ilfey.shikimori.utils.isVisible
 import com.ilfey.shikimori.utils.launchAndCollectIn
 import com.ilfey.shikimori.utils.visible
 import com.ilfey.shikimori.utils.widgets.VerticalSpaceItemDecorator
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class SearchFragment : BaseFragment<FragmentSearchBinding>(), SearchView.TransitionListener {
 
-    private val viewModel by viewModel<SearchViewModel>()
+    private val viewModel by activityViewModel<SearchViewModel>()
     private val adapter = ListAdapter(null, settings.fullTitles)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.search(null)
+        viewModel.search("")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

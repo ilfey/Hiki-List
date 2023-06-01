@@ -33,12 +33,12 @@ import com.ilfey.shikimori.ui.history.HistoryActivity
 import com.ilfey.shikimori.ui.settings.SettingsActivity
 import com.ilfey.shikimori.utils.getThemeColor
 import com.ilfey.shikimori.utils.gone
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(), View.OnClickListener,
     SwipeRefreshLayout.OnRefreshListener, Toolbar.OnMenuItemClickListener {
 
-    private val viewModel by viewModel<ProfileViewModel>()
+    private val viewModel by activityViewModel<ProfileViewModel>()
     private val customTabsIntent = CustomTabsIntent.Builder().build()
     private val isRefreshEnabled = true
 

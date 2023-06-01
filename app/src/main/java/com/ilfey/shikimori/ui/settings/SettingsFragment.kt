@@ -13,6 +13,10 @@ class SettingsFragment : BasePreferenceFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.prefs_root, rootKey)
 
+        findPreference<SwitchPreferenceCompat>(AppSettings.KEY_SHOW_ACTIONS).run {
+            this?.isChecked = settings.showActions
+        }
+
         findPreference<Preference>(AppSettings.KEY_APP_VERSION)?.run {
             title = getString(R.string.app_version, BuildConfig.VERSION_NAME)
         }

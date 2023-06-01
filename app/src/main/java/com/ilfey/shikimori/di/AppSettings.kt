@@ -49,6 +49,10 @@ class AppSettings(context: Context) {
         get() = prefs.getBoolean(KEY_SHOW_ICONS, false)
         set(value) = prefs.edit { putBoolean(KEY_SHOW_ICONS, value) }
 
+    var showActions: Boolean
+        get() = prefs.getBoolean(KEY_SHOW_ACTIONS, true)
+        set(value) = prefs.edit { putBoolean(KEY_SHOW_ACTIONS, value) }
+
     companion object {
         private const val KEY_AUTHORIZED = "authorized"
         private const val KEY_VISITED = "visited"
@@ -61,6 +65,7 @@ class AppSettings(context: Context) {
         const val KEY_NSFW = "nsfw"
         const val KEY_FULL_TITLES = "full_titles"
         const val KEY_SHOW_ICONS = "show_icons"
+        const val KEY_SHOW_ACTIONS = "show_actions"
         const val KEY_APP_VERSION = "app_version"
     }
 }

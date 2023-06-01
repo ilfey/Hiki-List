@@ -1,5 +1,6 @@
 package com.ilfey.shikimori.ui.profile
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ilfey.shikimori.di.AppSettings
@@ -19,15 +20,19 @@ class ProfileViewModel(
     val rates = MutableLiveData<List<UserRate>>()
 
     fun onRefresh() {
-        getUser()
-        getUserAnimeRates()
+        getUser(refresh = true)
+        getUserAnimeRates(refresh = true)
     }
 
-    fun getUser() {
-        userService.currentUser(
-            onSuccess = this::onUserSuccess,
-            onFailure = this::onUserFailure,
-        )
+    fun getUser(refresh: Boolean = false) {
+        if (refresh || user.value == null) {
+            Log.d(TAG, "getUser: load current user from network")
+            userService.currentUser(
+                onSuccess = this::onUserSuccess,
+                onFailure = this::onUserFailure,
+            )
+        }
+        Log.d(TAG, "getUser: load user from cache")
     }
 
     private fun onUserSuccess(user: CurrentUser) {
@@ -37,15 +42,24 @@ class ProfileViewModel(
 
     private fun onUserFailure(tr: Throwable) {}
 
-    fun getUserAnimeRates() {
-        userRateService.userRates(
-            userId = settings.userId,
-            targetType = TargetType.ANIME,
-            onSuccess = this::onUserAnimeRatesSuccess,
-        )
+    fun getUserAnimeRates(refresh: Boolean = false) {
+        if (refresh || rates.value == null) {
+            Log.d(TAG, "getUserAnimeRates: load rates from network")
+            userRateService.userRates(
+                userId = settings.userId,
+                targetType = TargetType.ANIME,
+                onSuccess = this::onUserAnimeRatesSuccess,
+            )
+        }
+
+        Log.d(TAG, "getUserAnimeRates: load rates from cache")
     }
 
     private fun onUserAnimeRatesSuccess(list: List<UserRate>) {
         rates.value = list
+    }
+
+    companion object {
+        private const val TAG = "[ProfileViewModel]"
     }
 }

@@ -41,7 +41,7 @@ data class PatchUserRate(
             episodes: Int? = null,
             rewatches: Int? = null,
             score: Int? = null,
-            status: String? = null,
+            statusString: String? = null,
             volumes: Int? = null,
         ) = PatchUserRate(
             UserRate(
@@ -49,7 +49,7 @@ data class PatchUserRate(
                 episodes = episodes,
                 rewatches = rewatches,
                 score = score,
-                status = status,
+                status = statusString,
                 volumes = volumes,
             )
         )

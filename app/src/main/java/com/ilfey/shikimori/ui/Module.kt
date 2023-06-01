@@ -26,7 +26,7 @@ val uiModule
         }
 
         viewModel {
-            ListsViewModel(settings = get(), animeService = get(), userService = get())
+            ListsViewModel(settings = get(), animeService = get(), userService = get(), userRateService = get())
         }
 
         viewModel {

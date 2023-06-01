@@ -118,7 +118,7 @@
     <string name="content">Контент</string>
     <string name="app_version">"Версия: %1$s"</string>
     <string name="titles_will_not_be_truncated_in_lists">Названия не будут обрезаться в списках</string>
-    <string name="show_full_anime_titles">Показывать полные названия аниме</string>
+    <string name="full_anime_titles">Полные названия аниме</string>
     <string name="rx_rated_anime_will_be_displayed">Аниме с рейтингом Rx будет отображаться</string>
     <string name="show_nsfw_anime">Показывать NSFW аниме</string>
     <string name="reference_kitty">Вы нашли отсылку на ковайную кошечку!</string>
@@ -142,5 +142,6 @@
     <string name="no_title">Названия еще нет</string>
     <string name="auth_about">Это приложение является неофициальным клиентом сайта shikimori. В этом приложении вы можете отслеживать свои списки аниме, а также открывать некоторые страницы сайта прямо в приложении. Например: аниме, историю пользователя или его избранное.\nДля начала вам нужно авторизироваться на сайте, что я настоятельно рекомендую сделать прямо сейчас. Некоторые функции доступны без авторизации, но доступа к ним у вас не будет, не благодарите.</string>
     <string name="error_loading_anime">Не удалось загрузить аниме</string>
+    <string name="move_anime_to">%1$s перемещено в %2$s</string>
 
 </resources>

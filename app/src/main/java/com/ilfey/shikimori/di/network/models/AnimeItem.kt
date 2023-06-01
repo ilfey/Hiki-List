@@ -3,7 +3,6 @@ package com.ilfey.shikimori.di.network.models
 import android.content.Context
 import com.ilfey.shikimori.R
 import com.ilfey.shikimori.di.network.enums.Kind
-import java.text.SimpleDateFormat
 import com.ilfey.shikimori.di.network.entities.AnimeItem as eAnimeItem
 
 data class AnimeItem(
@@ -16,6 +15,8 @@ data class AnimeItem(
     val score: Float,
     val status: String,
     val episodes: String?,
+    val userEpisodes: Int,
+    val episodesAired: Int,
 ) {
     companion object {
         fun parseFromEntity(ctx: Context, e: eAnimeItem, userEpisodes: Int = 0): AnimeItem {
@@ -33,7 +34,9 @@ data class AnimeItem(
                     e.episodes,
                     userEpisodes,
                     e.episodes_aired
-                )
+                ),
+                userEpisodes = userEpisodes,
+                episodesAired = e.episodes_aired,
             )
         }
     }
