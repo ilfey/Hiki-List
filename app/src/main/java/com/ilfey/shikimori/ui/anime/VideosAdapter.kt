@@ -9,17 +9,17 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ilfey.shikimori.databinding.ItemVideoBinding
-import com.ilfey.shikimori.di.network.entities.Anime
+import com.ilfey.shikimori.di.network.models.Anime.Video
 
 
 class VideosAdapter(
-    private var list: List<Anime.Video>
+    private var list: List<Video>
 ) : RecyclerView.Adapter<VideosAdapter.ViewHolder>() {
 
     override fun getItemCount() = list.size
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setList(l: List<Anime.Video>) {
+    fun setList(l: List<Video>) {
         list = l
         notifyDataSetChanged()
     }
@@ -35,7 +35,7 @@ class VideosAdapter(
     inner class ViewHolder(
         private val binding: ItemVideoBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Anime.Video) {
+        fun bind(item: Video) {
             binding.root.setOnClickListener {
                 val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(item.url))
                 startActivity(binding.root.context, browserIntent, null)
@@ -43,7 +43,7 @@ class VideosAdapter(
 
             Glide
                 .with(binding.video)
-                .load(item.image_url)
+                .load(item.image)
                 .into(binding.video)
 
             binding.title.text = item.name

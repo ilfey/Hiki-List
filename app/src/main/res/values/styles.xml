@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
+    <!-- Card -->
 
+    <style name="Widget.Shikimori.CardView.Elevated" parent="Widget.Material3.CardView.Elevated">
+        <item name="shapeAppearance">@style/ShapeAppearance.Shikimori.MediumComponent</item>
+    </style>
+
+    <style name="Widget.Shikimori.CardView.Filled" parent="Widget.Material3.CardView.Filled">
+        <item name="shapeAppearance">@style/ShapeAppearance.Shikimori.MediumComponent</item>
+    </style>
+
+    <style name="Widget.Shikimori.CardView.Outlined" parent="Widget.Material3.CardView.Outlined">
+        <item name="shapeAppearance">@style/ShapeAppearance.Shikimori.MediumComponent</item>
+    </style>
+
+    <style name="ShapeAppearance.Shikimori.MediumComponent" parent="ShapeAppearance.Material3.MediumComponent">
+        <item name="cornerSize">8dp</item>
+    </style>
+    
+    
     <!-- BottomSheet -->
 
     <style name="ThemeOverlay.Shikimori.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">

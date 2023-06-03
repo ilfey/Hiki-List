@@ -65,8 +65,8 @@ class SearchListAdapter(
 
                 status.text = item.status
 
-                if (item.score != 0f) {
-                    score.rating = item.score
+                if (item.score != null) {
+                    score.text = item.score
                     score.visible()
                 } else {
                     score.gone()

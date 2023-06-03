@@ -12,7 +12,7 @@ data class AnimeItem(
     val image: String,
     val url: String,
     val kind: Kind?,
-    val score: Float,
+    val score: String?,
     val status: String,
     val episodes: String?,
     val userEpisodes: Int,
@@ -27,7 +27,7 @@ data class AnimeItem(
                 image = makeUrl(e.image.original),
                 url = makeUrl(e.url),
                 kind = e.kind,
-                score = parseScore(e.score),
+                score = ctx.parseScore(e.score),
                 status = ctx.parseStatus(e.status, e.aired_on, e.released_on),
                 episodes = ctx.parseEpisodes(
                     e.status,

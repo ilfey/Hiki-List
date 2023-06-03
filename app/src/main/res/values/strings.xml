@@ -144,5 +144,8 @@
     <string name="error_loading_anime">Не удалось загрузить аниме</string>
     <string name="move_anime_to">%1$s перемещено в %2$s</string>
     <string name="logout">Выйти</string>
+    <string name="scores">Оценка: %1$d (%2$s)</string>
+    <string name="score">Оценка: %1$s</string>
+    <string name="user_score">Ваша оценка: %1$d</string>
 
 </resources>

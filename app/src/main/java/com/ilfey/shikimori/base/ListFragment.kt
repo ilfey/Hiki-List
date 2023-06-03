@@ -8,6 +8,7 @@ import androidx.annotation.CallSuper
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.ilfey.shikimori.databinding.FragmentListBinding
 import com.ilfey.shikimori.utils.getThemeColor
+import com.google.android.material.R as mR
 
 abstract class ListFragment : BaseFragment<FragmentListBinding>(),
     SwipeRefreshLayout.OnRefreshListener {
@@ -19,8 +20,8 @@ abstract class ListFragment : BaseFragment<FragmentListBinding>(),
         super.onViewCreated(view, savedInstanceState)
 
         with(binding.refresh) {
-            setProgressBackgroundColorSchemeColor(context.getThemeColor(com.google.android.material.R.attr.colorPrimary))
-            setColorSchemeColors(context.getThemeColor(com.google.android.material.R.attr.colorOnPrimary))
+            setProgressBackgroundColorSchemeColor(context.getThemeColor(mR.attr.colorPrimary))
+            setColorSchemeColors(context.getThemeColor(mR.attr.colorOnPrimary))
             setOnRefreshListener(this@ListFragment)
             isEnabled = this@ListFragment.isRefreshEnabled
         }

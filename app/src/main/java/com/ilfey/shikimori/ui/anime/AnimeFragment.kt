@@ -1,24 +1,27 @@
 package com.ilfey.shikimori.ui.anime
 
 import android.animation.ObjectAnimator
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.*
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
-import com.google.android.material.R as mR
 import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.ilfey.shikimori.R
 import com.ilfey.shikimori.base.BaseFragment
 import com.ilfey.shikimori.databinding.FragmentAnimeBinding
-import com.ilfey.shikimori.di.network.models.Role
-import com.ilfey.shikimori.di.network.models.UserRate
 import com.ilfey.shikimori.di.network.enums.ListType.*
 import com.ilfey.shikimori.di.network.models.Anime
+import com.ilfey.shikimori.di.network.models.Role
+import com.ilfey.shikimori.di.network.models.UserRate
 import com.ilfey.shikimori.ui.anime.utils.references
-import com.ilfey.shikimori.di.network.entities.Anime as eAnime
 import com.ilfey.shikimori.utils.*
 import com.ilfey.shikimori.utils.widgets.HorizontalSpaceItemDecorator
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
+import com.google.android.material.R as mR
+import com.ilfey.shikimori.di.network.entities.Anime as eAnime
+
 
 class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener,
     SwipeRefreshLayout.OnRefreshListener {
@@ -103,13 +106,7 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
             }
 
             status.text = anime.status
-
-            if (anime.score != 0F) {
-                scoreRatingBar.rating = anime.score
-                scoreRatingBar.visible()
-            } else {
-                scoreRatingBar.gone()
-            }
+            score.text = anime.score
 
             if (anime.description != null) {
                 // TODO: compile bb-code
@@ -150,7 +147,7 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
 
         if (anime.studios != null) {
             anime.studios.map {
-                binding.genresContainer.addView(createChip(it.name))
+                binding.genresContainer.run { addView(createChip(it.name, true)) }
             }
             binding.genresContainer.visible()
         } else {
@@ -159,7 +156,7 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
 
         if (anime.genres != null) {
             anime.genres.map {
-                binding.genresContainer.addView(createChip(it.russian))
+                binding.genresContainer.run { addView(createChip(it.russian)) }
             }
             binding.genresContainer.visible()
         } else {
@@ -209,8 +206,13 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
 //        }
 //    }
 
-    private fun createChip(text: String): Chip {
-        val chip = Chip(requireContext())
+    private fun ChipGroup.createChip(text: String, isPrimary: Boolean = false): Chip {
+        val chip = Chip(context)
+
+        if (isPrimary) {
+            chip.chipBackgroundColor = ColorStateList.valueOf(context.getThemeColor(mR.attr.colorTertiary))
+            chip.setTextColor(context.getThemeColor(mR.attr.colorOnTertiary))
+        }
 
         chip.text = text
         chip.isEnabled = false

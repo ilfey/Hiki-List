@@ -32,7 +32,7 @@
 
             <TextView
                 android:id="@+id/secondaryTitle"
-                style="?attr/textAppearanceBodySmall"
+                style="?attr/textAppearanceBodyMedium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -44,7 +44,7 @@
 
             <TextView
                 android:id="@+id/primaryTitle"
-                style="?textAppearanceHeadlineSmall"
+                style="?textAppearanceBodyLarge"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -55,40 +55,37 @@
 
             <!--    RATING    -->
 
-            <RatingBar
-                android:id="@+id/score_rating_bar"
+            <TextView
+                android:id="@+id/score"
                 style="?ratingBarStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:contentDescription="@string/rating"
-                android:isIndicator="true"
-                android:max="1"
-                android:numStars="5"
-                android:progressBackgroundTint="@color/grey_500"
-                android:stepSize="0.5"
+                app:drawableEndCompat="@drawable/ic_star"
+                app:drawableSize="?android:attr/textSize"
+                app:drawableTint="?colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toEndOf="@id/poster"
                 app:layout_constraintTop_toBottomOf="@id/secondaryTitle"
-                tools:rating="4" />
+                tools:text="Rate: 4 (3.5)" />
 
             <TextView
                 android:id="@+id/type"
-                style="?textAppearanceBodyMedium"
+                style="?textAppearanceBodySmall"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/poster"
-                app:layout_constraintTop_toBottomOf="@id/score_rating_bar"
+                app:layout_constraintTop_toBottomOf="@id/score"
                 tools:text="Тип: TV Сериал" />
 
             <TextView
                 android:id="@+id/episodes"
-                style="?textAppearanceBodyMedium"
+                style="?textAppearanceBodySmall"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -100,7 +97,7 @@
 
             <TextView
                 android:id="@+id/mpaa_rating"
-                style="?textAppearanceBodyMedium"
+                style="?textAppearanceBodySmall"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -112,7 +109,7 @@
 
             <TextView
                 android:id="@+id/status"
-                style="?textAppearanceBodyMedium"
+                style="?textAppearanceBodySmall"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"

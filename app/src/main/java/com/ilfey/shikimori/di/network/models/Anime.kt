@@ -1,6 +1,7 @@
 package com.ilfey.shikimori.di.network.models
 
 import android.content.Context
+import com.ilfey.shikimori.R
 import java.util.Date
 import com.ilfey.shikimori.di.network.entities.Anime as eAnime
 
@@ -10,7 +11,7 @@ data class Anime(
     val titleRu: String,
     val image: String,
     val kind: String?,
-    val score: Float,
+    val score: String?,
     val status: String,
     val episodes: String?,
     val rating: String?,
@@ -36,19 +37,28 @@ data class Anime(
     val licensors: List<String>?,
     val genres: List<eAnime.Genre>?,
     val studios: List<eAnime.Studio>?,
-    val videos: List<eAnime.Video>?,
+    val videos: List<Video>?,
     val screenshots: List<String>?,
     val userRate: UserRate?,
 ) {
+
+    data class Video(
+        val url: String,
+        val image: String,
+        val name: String,
+    )
+
     companion object {
         fun parseFromEntity(ctx: Context, e: eAnime): Anime {
+            val userRate = if (e.user_rate != null) UserRate.parseFromEntity(ctx, e.user_rate) else null
+
             return Anime(
                 id = e.id,
                 titleEn = e.name,
                 titleRu = e.russian,
                 image = makeUrl(e.image.original),
                 kind = ctx.parseKind(e.kind),
-                score = parseScore(e.score),
+                score = ctx.parseScore(e.score, e.user_rate?.score),
                 status = ctx.parseStatus(e.status, e.aired_on, e.released_on),
                 episodes = ctx.parseEpisodes(e.status, e.episodes, e.user_rate?.episodes ?: 0, e.episodes_aired),
                 rating = ctx.parseRating(e.rating),
@@ -72,11 +82,23 @@ data class Anime(
                 licensors = e.licensors.ifEmpty { null },
                 genres = e.genres,
                 studios = e.studios.ifEmpty { null },
-                videos = e.videos.ifEmpty { null },
+                videos = parseVideos(ctx, e.videos),
 
                 screenshots = if (e.screenshots.isEmpty()) null else e.screenshots.map { makeUrl(it.original) },
-                userRate = if (e.user_rate != null) UserRate.parseFromEntity(ctx, e.user_rate) else null
+                userRate = userRate,
             )
+        }
+
+        private fun parseVideos(ctx: Context, l: List<eAnime.Video>): List<Video>? {
+            l.ifEmpty { return null }
+
+            return l.map {
+                Video(
+                    url = it.url,
+                    image = it.image_url,
+                    name = if (it.name.isNullOrEmpty()) ctx.getString(R.string.no_title) else it.name
+                )
+            }
         }
 
         private fun parseAltTitles(l: List<String?>): List<String>? {

@@ -1,6 +1,7 @@
 package com.ilfey.shikimori.di.network.models
 
 import android.content.Context
+import android.util.Log
 import com.ilfey.shikimori.BuildConfig
 import com.ilfey.shikimori.R
 import com.ilfey.shikimori.di.network.enums.AnimeStatus
@@ -10,7 +11,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 fun makeUrl(path: String) = BuildConfig.APP_URL + path
-fun parseScore(s: String) = s.toFloat() / 2
 
 fun Context.df() = SimpleDateFormat(
     "dd MMMM yyyy",
@@ -127,3 +127,24 @@ fun Context.parseKind(kind: Kind?) = when (kind) {
     Kind.TV_48 -> getString(R.string.type_tv)
     else -> null
 }
+
+fun Context.parseScore(score: String? = null, userScore: Int? = null): String? {
+    if (score == null && userScore == null) {
+        Log.e("[Parser]", "parseScore: score and userScore is null")
+        return null
+    }
+
+    if (score != null && userScore !in listOf(0, null)) {
+        return getString(R.string.scores, userScore, score)
+    }
+
+    if (score != null) {
+        if (score.toFloat() == 0F) {
+            return null
+        }
+        return getString(R.string.score, score)
+    }
+
+    return getString(R.string.user_score, userScore)
+}
+

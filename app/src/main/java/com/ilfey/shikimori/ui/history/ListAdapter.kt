@@ -76,8 +76,8 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
                         secondaryTitle.ellipsize = TextUtils.TruncateAt.END
                     }
 
-                    if (item.target.score != 0f) {
-                        score.rating = item.target.score
+                    if (item.target.score != null) {
+                        score.text = item.target.score
                         score.visible()
                     } else {
                         score.gone()

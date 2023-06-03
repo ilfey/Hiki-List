@@ -20,7 +20,7 @@ data class HistoryItem(
         val url: String,
         val kind: Kind?,
         val kindString: String?,
-        val score: Float,
+        val score: String?,
         val status: String,
         val episodes: String?,
     )
@@ -56,7 +56,7 @@ data class HistoryItem(
                 url = makeUrl(target.url),
                 kind = target.kind,
                 kindString = ctx.parseKind(target.kind),
-                score = target.score.toFloat() / 2,
+                score = ctx.parseScore(target.score),
                 status = ctx.parseStatus(
                     target.status,
                     target.aired_on,

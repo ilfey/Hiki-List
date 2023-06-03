@@ -1,7 +1,6 @@
 package com.ilfey.shikimori.di.network.models
 
 import android.content.Context
-import com.ilfey.shikimori.R
 import com.ilfey.shikimori.di.network.entities.AnimeRate as eAnimeRate
 
 data class AnimeRate(
@@ -23,7 +22,7 @@ data class AnimeRate(
         fun parseFromEntity(ctx: Context, e: eAnimeRate): AnimeRate {
             return AnimeRate(
                 id = e.id,
-                score = if (e.score != 0) ctx.getString(R.string.your_score_with_score, e.score) else null,
+                score = ctx.parseScore(e.anime.score, e.score),
                 scoreInt = e.score,
                 episodes = e.episodes,
                 rewatchers = e.rewatchers,

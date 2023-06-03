@@ -85,7 +85,7 @@ data class Anime(
         val url: String,
         val image_url: String,
         val player_url: String,
-        val name: String,
+        val name: String?,
         val kind: String, // Op
         val hosting: String,
     )

@@ -121,14 +121,13 @@
             android:layout_marginTop="16dp"
             android:text="@string/fandubbers" />
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.google.android.material.chip.ChipGroup
             android:id="@+id/fandubbers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:overScrollMode="never"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:itemCount="5" />
+            app:chipSpacingVertical="-8dp"
+            tools:layout_height="32dp" />
 
         <TextView
             android:id="@+id/textView_fansubbers"
@@ -138,14 +137,13 @@
             android:layout_marginTop="16dp"
             android:text="@string/fansubbers" />
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.google.android.material.chip.ChipGroup
             android:id="@+id/fansubbers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:overScrollMode="never"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:itemCount="5" />
+            app:chipSpacingVertical="-8dp"
+            tools:layout_height="32dp" />
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

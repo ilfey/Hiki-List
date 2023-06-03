@@ -72,20 +72,13 @@ class ListAdapter(
                 }
 
                 if (item.score != null) {
-                    userScore.text = item.score
-                    userScore.visible()
-                } else {
-                    userScore.gone()
-                }
-
-                status.text = item.anime.status
-
-                if (item.anime.score != 0f) {
-                    score.rating = item.anime.score
+                    score.text = item.score
                     score.visible()
                 } else {
                     score.gone()
                 }
+
+                status.text = item.anime.status
 
                 if (item.anime.episodes != null) {
                     episodes.text = item.anime.episodes
