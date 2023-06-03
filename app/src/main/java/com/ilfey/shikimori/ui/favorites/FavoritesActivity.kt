@@ -17,18 +17,20 @@ class FavoritesActivity : BaseActivity<ActivityFavoritesBinding>() {
 
     private val viewModel by viewModel<FavoritesViewModel>()
 
-    private var username: String? = settings.username
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val username: String?
 
         val url = intent.data
         if (url != null) {
             Log.d(TAG, "onCreate: start with url: $url")
             username = url.pathSegments[url.pathSegments.size -2]
         } else {
+            username = settings.username
             Log.d(TAG, "onCreate: start with username: $username")
         }
+
 
         binding.toolbar.run {
             addBackButton { onBackPressedDispatcher.onBackPressed() }
@@ -38,7 +40,8 @@ class FavoritesActivity : BaseActivity<ActivityFavoritesBinding>() {
         FavoritesTabDelegate(this, binding.tabLayout, binding.pager)
 
         if (username != null) {
-            viewModel.getFavorites(username!!)
+            viewModel.lastUsername = username
+            viewModel.getFavorites(username)
         } else {
             binding.pager.gone()
             binding.loadingError.visible()

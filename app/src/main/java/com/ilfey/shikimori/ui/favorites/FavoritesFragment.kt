@@ -2,13 +2,13 @@ package com.ilfey.shikimori.ui.favorites
 
 import android.os.Bundle
 import android.view.View
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ilfey.shikimori.base.ListFragment
 import com.ilfey.shikimori.di.network.models.Favorites
 import com.ilfey.shikimori.ui.anime.AnimeActivity
 import com.ilfey.shikimori.ui.favorites.FavoritesFragment.Companion.FavoriteTypes.*
 import com.ilfey.shikimori.utils.*
-import com.ilfey.shikimori.utils.widgets.GridSpaceItemDecorator
+import com.ilfey.shikimori.utils.widgets.VerticalSpaceItemDecorator
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class FavoritesFragment : ListFragment() {
@@ -34,10 +34,14 @@ class FavoritesFragment : ListFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding.recycler) {
-            layoutManager = GridLayoutManager(context, 2)
+//            layoutManager = GridLayoutManager(context, 2)
+            layoutManager = LinearLayoutManager(context)
             adapter = listAdapter
+//            addItemDecoration(
+//                GridSpaceItemDecorator(2, context.dp(16))
+//            )
             addItemDecoration(
-                GridSpaceItemDecorator(2, context.dp(16))
+                VerticalSpaceItemDecorator(context.dp(16))
             )
         }
     }

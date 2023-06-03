@@ -13,7 +13,7 @@ class FavoritesViewModel(
     private val userService: UserService,
 ) : ListViewModel() {
 
-    private var lastUsername: String? = null
+    var lastUsername: String? = null
     private val loadingMutableStateFlow = MutableStateFlow(false)
 
     val loadingFlow
@@ -31,7 +31,9 @@ class FavoritesViewModel(
     val producers = MutableLiveData<List<Favorites.Entry>?>()
 
     override fun onRefresh() {
-        lastUsername?.let { getFavorites(it, true) }.also {
+        if (lastUsername != null) {
+            getFavorites(lastUsername!!, true)
+        } else {
             Log.e(TAG, "onRefresh: lastUsername can not be null")
         }
     }

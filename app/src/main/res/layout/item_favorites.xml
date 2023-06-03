@@ -1,38 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/item_background"
-    android:orientation="vertical"
     android:gravity="center_horizontal|top"
-    android:padding="@dimen/item_padding">
+    android:orientation="vertical">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/image"
         android:layout_width="100dp"
         android:layout_height="150dp"
         android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/ShapeAppearance.Shikimori.Cover.Small" />
 
     <TextView
         android:id="@+id/primaryTitle"
         style="?textAppearanceBodyLarge"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:textAlignment="center"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="@dimen/item_padding"
+        android:layout_marginEnd="@dimen/item_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@+id/image"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="Anime title" />
 
     <TextView
         android:id="@+id/secondaryTitle"
         style="?textAppearanceBodySmall"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColor="?colorOnSurfaceVariant"
+        android:layout_marginEnd="@dimen/item_padding"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="8dp"
-        android:textAlignment="center"
+        android:textColor="?colorOnSurfaceVariant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toEndOf="@+id/image"
+        app:layout_constraintTop_toBottomOf="@+id/primaryTitle"
         tools:text="Anime subtitle" />
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.constraintlayout.widget.ConstraintLayout>

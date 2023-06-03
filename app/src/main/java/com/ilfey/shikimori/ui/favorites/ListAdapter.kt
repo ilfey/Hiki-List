@@ -1,6 +1,7 @@
 package com.ilfey.shikimori.ui.favorites
 
 import android.annotation.SuppressLint
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -49,6 +50,13 @@ class ListAdapter(
                 } else {
                     primaryTitle.text = item.titleRu
                     secondaryTitle.text = item.titleEn
+                }
+
+                if (!settings.fullTitles) {
+                    primaryTitle.maxLines = 2
+                    primaryTitle.ellipsize = TextUtils.TruncateAt.END
+                    secondaryTitle.maxLines = 2
+                    secondaryTitle.ellipsize = TextUtils.TruncateAt.END
                 }
 
                 root.setOnClickListener {
