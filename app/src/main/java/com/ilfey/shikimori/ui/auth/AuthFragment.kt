@@ -20,11 +20,11 @@ import com.ilfey.shikimori.utils.launchAndCollectIn
 import com.ilfey.shikimori.utils.visible
 import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationResponse
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class AuthFragment : BaseFragment<FragmentAuthBinding>(), View.OnClickListener {
 
-    private val viewModel by viewModel<AuthViewModel>()
+    private val viewModel by activityViewModel<AuthViewModel>()
     private val customTabsIntent = CustomTabsIntent.Builder().build()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

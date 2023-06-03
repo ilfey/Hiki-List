@@ -13,5 +13,8 @@ abstract class BasePreferenceFragment : PreferenceFragmentCompat() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         listView.clipToPadding = false
+        bindViewModel()
     }
+
+    protected open fun bindViewModel() {}
 }

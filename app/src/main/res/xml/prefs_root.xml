@@ -36,7 +36,13 @@
             android:enabled="false"
             android:key="app_version"
             android:persistent="false"
-            tools:title="Версия: 1.0-dev" />
+            tools:title="Версия: 0.1-Dev" />
+
+        <Preference
+            android:enabled="true"
+            android:key="logout"
+            android:persistent="false"
+            android:title="@string/logout" />
 
     </PreferenceCategory>
 

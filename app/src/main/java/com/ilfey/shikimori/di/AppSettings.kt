@@ -9,10 +9,6 @@ import com.ilfey.shikimori.di.network.enums.ListType
 class AppSettings(context: Context) {
     private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
-    var isVisited: Boolean
-        get() = prefs.getBoolean(KEY_VISITED, false)
-        set(value) = prefs.edit { putBoolean(KEY_VISITED, value) }
-
     var isAuthorized: Boolean
         get() = prefs.getBoolean(KEY_AUTHORIZED, false)
         set(value) = prefs.edit { putBoolean(KEY_AUTHORIZED, value) }
@@ -57,9 +53,10 @@ class AppSettings(context: Context) {
         get() = prefs.getBoolean(KEY_SHOW_ACTIONS, true)
         set(value) = prefs.edit { putBoolean(KEY_SHOW_ACTIONS, value) }
 
+    fun clear() = prefs.edit { clear() }
+
     companion object {
         private const val KEY_AUTHORIZED = "authorized"
-        private const val KEY_VISITED = "visited"
         private const val KEY_LIST = "list"
         private const val KEY_FRAGMENT = "fragment"
         private const val KEY_USER_ID = "user_id"

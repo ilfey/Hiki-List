@@ -110,8 +110,8 @@ class AuthViewModel(
         Log.d("Oauth", "2. Open auth page: ${authRequest.toUri()}")
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        service.dispose()
-    }
+//    override fun onCleared() {
+//        super.onCleared()
+//        service.dispose()
+//    }
 }

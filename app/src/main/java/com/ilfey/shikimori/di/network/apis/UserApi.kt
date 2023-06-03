@@ -53,19 +53,15 @@ interface UserApi {
      * Sign out the user
      * See: https://shikimori.one/api/doc/1.0/users/sign_out
      * */
-//    @GET("/api/users/{id}/sing_out")
-//    fun sign_out(
-//        @Path("id") id: Long,
-//    ): Call<*>
+    @GET("/api/users/sign_out")
+    fun signOut(): Call<Unit>
 
     /**
      * Sign out the user
      * See: https://shikimori.one/api/doc/1.0/users/sign_out
      * */
-//    @GET("/api/users/{id}/sing_out")
-//    fun sign_out(
-//        @Path("id") id: String,
-//    ): Call<*>
+//    @GET("/api/users/sign_out")
+//    fun sign_out(): Call<Unit>
 
     /**
      * Show user's friends

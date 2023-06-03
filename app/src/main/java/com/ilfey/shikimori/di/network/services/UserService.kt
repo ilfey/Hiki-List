@@ -21,7 +21,7 @@ class UserService(
         onSuccess: (CurrentUser) -> Unit = {},
         onFailure: (Throwable) -> Unit = {},
     ) {
-        userApi.whoami().enqueue{
+        userApi.whoami().enqueue {
             when (it) {
                 is Success -> {
                     val body = it.response.body()
@@ -29,6 +29,22 @@ class UserService(
                         onSuccess(
                             CurrentUser.parseFromEntity(context, body)
                         )
+                    }
+                }
+                is Failure -> onFailure(it.error)
+            }
+        }
+    }
+
+    fun logout(
+        onSuccess: () -> Unit = {},
+        onFailure: (Throwable) -> Unit = {},
+    ) {
+        userApi.signOut().enqueue {
+            when (it) {
+                is Success -> {
+                    if (it.response.isSuccessful) {
+                        onSuccess()
                     }
                 }
                 is Failure -> onFailure(it.error)
@@ -75,7 +91,6 @@ class UserService(
             }
         }
     }
-
 
     fun history(
         user: String,
