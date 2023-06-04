@@ -7,16 +7,35 @@ import com.ilfey.shikimori.di.network.enums.ListType
 import com.ilfey.shikimori.utils.RetrofitEnqueue.Companion.enqueue
 import com.ilfey.shikimori.utils.RetrofitEnqueue.Companion.Result.*
 import com.ilfey.shikimori.di.network.enums.TargetType
-import com.ilfey.shikimori.di.network.models.AnimeRate
-import com.ilfey.shikimori.di.network.models.CurrentUser
-import com.ilfey.shikimori.di.network.models.Favorites
-import com.ilfey.shikimori.di.network.models.HistoryItem
+import com.ilfey.shikimori.di.network.models.*
 
 class UserService(
     private val userApi: UserApi,
     private val settings: AppSettings,
     private val context: Context,
 ) {
+    fun user(
+        id: String,
+        onSuccess: (User) -> Unit = {},
+        onFailure: (Throwable) -> Unit = {},
+    ) {
+        userApi.user(
+            id = id,
+        ).enqueue {
+            when (it) {
+                is Success -> {
+                    val body = it.response.body()
+                    if (it.response.isSuccessful && body != null) {
+                        onSuccess(
+                            User.parseFromEntity(context, body)
+                        )
+                    }
+                }
+                is Failure -> onFailure(it.error)
+            }
+        }
+    }
+
     fun currentUser(
         onSuccess: (CurrentUser) -> Unit = {},
         onFailure: (Throwable) -> Unit = {},
@@ -45,6 +64,28 @@ class UserService(
                 is Success -> {
                     if (it.response.isSuccessful) {
                         onSuccess()
+                    }
+                }
+                is Failure -> onFailure(it.error)
+            }
+        }
+    }
+
+    fun friends(
+        user: String,
+        onSuccess: (List<Friend>) -> Unit = {},
+        onFailure: (Throwable) -> Unit = {},
+    ) {
+        userApi.friends(
+            id = user,
+        ).enqueue {
+            when (it) {
+                is Success -> {
+                    val body = it.response.body()
+                    if (it.response.isSuccessful && body != null) {
+                        onSuccess(body.map { item ->
+                            Friend.parseFromEntity(context, item)
+                        })
                     }
                 }
                 is Failure -> onFailure(it.error)

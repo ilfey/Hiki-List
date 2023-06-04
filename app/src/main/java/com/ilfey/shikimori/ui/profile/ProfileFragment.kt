@@ -8,6 +8,7 @@ import android.text.Spanned
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -15,7 +16,6 @@ import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.appcompat.widget.Toolbar
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.fragment.app.commit
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.github.mikephil.charting.components.Legend
@@ -25,29 +25,32 @@ import com.github.mikephil.charting.data.PieEntry
 import com.ilfey.shikimori.R
 import com.ilfey.shikimori.base.BaseFragment
 import com.ilfey.shikimori.databinding.FragmentProfileBinding
-import com.ilfey.shikimori.di.network.enums.ListType
-import com.ilfey.shikimori.di.network.models.UserRate
-import com.ilfey.shikimori.di.network.models.CurrentUser
+import com.ilfey.shikimori.di.network.enums.ListType.*
+import com.ilfey.shikimori.di.network.models.User
 import com.ilfey.shikimori.ui.favorites.FavoritesActivity
 import com.ilfey.shikimori.ui.history.HistoryActivity
+import com.ilfey.shikimori.ui.profile.friends.FriendsBottomSheet
 import com.ilfey.shikimori.ui.settings.SettingsActivity
-import com.ilfey.shikimori.utils.getThemeColor
-import com.ilfey.shikimori.utils.gone
-import com.ilfey.shikimori.utils.toast
+import com.ilfey.shikimori.utils.*
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(), View.OnClickListener,
     SwipeRefreshLayout.OnRefreshListener, Toolbar.OnMenuItemClickListener {
 
+    private val username by stringArgument(ARG_USERNAME)
     private val viewModel by activityViewModel<ProfileViewModel>()
+
     private val customTabsIntent = CustomTabsIntent.Builder().build()
     private val isRefreshEnabled = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.getUser()
-        viewModel.getUserAnimeRates()
+        if (username != null) {
+            viewModel.getUser(username!!)
+        } else {
+            Log.e(TAG, "onCreate: username cannot be null")
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -89,19 +92,20 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), View.OnClickList
             isEnabled = this@ProfileFragment.isRefreshEnabled
         }
 
-        binding.historyBtn.setOnClickListener(this)
         binding.favoritesBtn.setOnClickListener(this)
+        binding.clubsBtn.setOnClickListener(this)
+        binding.friendsBtn.setOnClickListener(this)
+        binding.historyBtn.setOnClickListener(this)
     }
 
     override fun bindViewModel() {
         viewModel.user.observe(viewLifecycleOwner, this::onUserUpdate)
-        viewModel.rates.observe(viewLifecycleOwner, this::onRatesUpdate)
     }
 
-    private fun onUserUpdate(user: CurrentUser) {
+    private fun onUserUpdate(user: User) {
         Glide
             .with(this)
-            .load(user.image)
+            .load(user.avatar)
             .circleCrop()
             .into(binding.avatar)
 
@@ -133,30 +137,32 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), View.OnClickList
             )
             binding.website.text = spannableString
             binding.website.movementMethod = LinkMovementMethod.getInstance()
-        } else  {
+        } else {
             binding.website.gone()
-
         }
+
+        setData(user.stats.statuses.anime)
     }
 
-    private fun onRatesUpdate(rates: List<UserRate>) {
-        setData(rates)
-    }
+    private fun setData(rates: List<User.Stats.Statuses.Status>) {
+        val statuses = rates.map {
+            it.size
+        }
 
-    private fun setData(rates: List<UserRate>) {
-        val statuses = arrayListOf(
-            rates.count { it.list == ListType.PLANNED },
-            rates.count { it.list == ListType.WATCHING },
-            rates.count { it.list == ListType.REWATCHING },
-            rates.count { it.list == ListType.COMPLETED },
-            rates.count { it.list == ListType.ON_HOLD },
-            rates.count { it.list == ListType.DROPPED },
-        )
-
-        val statuses_titles = resources.getStringArray(R.array.statuses_with_count)
+//        val statuses_titles = resources.getStringArray(R.array.statuses_with_count)
+        val titles = rates.map {
+            when (it.list) {
+                PLANNED -> getString(R.string.planned_with_count, it.size)
+                WATCHING -> getString(R.string.watching_with_count, it.size)
+                REWATCHING -> getString(R.string.rewatching_with_count, it.size)
+                COMPLETED -> getString(R.string.completed_with_count, it.size)
+                ON_HOLD -> getString(R.string.on_hold_with_count, it.size)
+                DROPPED -> getString(R.string.dropped_with_count, it.size)
+            }
+        }
 
         val entries = statuses.mapIndexed { i, e ->
-            PieEntry(e.toFloat(), String.format(statuses_titles[i], e))
+            PieEntry(e.toFloat(), String.format(titles[i], e))
         }
 
         val dataSet = PieDataSet(entries, "")
@@ -171,12 +177,12 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), View.OnClickList
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.favorites_btn -> parentFragmentManager.commit {
+            R.id.favorites_btn -> {
                 val intent = FavoritesActivity.newIntent(v.context)
                 startActivity(intent)
             }
             R.id.clubs_btn -> v.context.toast()
-            R.id.friends_btn -> v.context.toast()
+            R.id.friends_btn -> FriendsBottomSheet.show(parentFragmentManager, username!!)
             R.id.history_btn -> {
                 val intent = HistoryActivity.newIntent(v.context)
                 startActivity(intent)
@@ -211,6 +217,12 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), View.OnClickList
     companion object {
         private const val TAG = "[ProfileFragment]"
 
-        fun newInstance() = ProfileFragment()
+        private const val ARG_USERNAME = "username"
+
+        fun newInstance(
+            username: String
+        ) = ProfileFragment().withArgs(1) {
+            putString(ARG_USERNAME, username)
+        }
     }
 }

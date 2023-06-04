@@ -1,34 +1,42 @@
 package com.ilfey.shikimori.ui.profile
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ilfey.shikimori.di.AppSettings
-import com.ilfey.shikimori.di.network.enums.Locale
-import com.ilfey.shikimori.di.network.models.UserRate
-import com.ilfey.shikimori.di.network.enums.TargetType
-import com.ilfey.shikimori.di.network.models.CurrentUser
-import com.ilfey.shikimori.di.network.services.UserRateService
+import com.ilfey.shikimori.di.network.models.Friend
+import com.ilfey.shikimori.di.network.models.User
 import com.ilfey.shikimori.di.network.services.UserService
 
 class ProfileViewModel(
-    private val settings: AppSettings,
-    private val userRateService: UserRateService,
     private val userService: UserService,
 ) : ViewModel() {
 
-    val user = MutableLiveData<CurrentUser>()
-    val rates = MutableLiveData<List<UserRate>>()
+    private var lastUsername: String? = null
+
+    private val mutableUser = MutableLiveData<User>()
+    private val mutableFriends = MutableLiveData<List<Friend>>()
+
+    val user: LiveData<User>
+        get() = mutableUser
+
+    val friends: LiveData<List<Friend>>
+        get() = mutableFriends
 
     fun onRefresh() {
-        getUser(refresh = true)
-        getUserAnimeRates(refresh = true)
+        if (lastUsername != null) {
+            getUser(lastUsername!!, refresh = true)
+        } else {
+            Log.e(TAG, "onRefresh: lastUsername cannot be null")
+        }
     }
 
-    fun getUser(refresh: Boolean = false) {
-        if (refresh || user.value == null) {
-            Log.d(TAG, "getUser: load current user from network")
-            userService.currentUser(
+    fun getUser(username: String, refresh: Boolean = false) {
+        if (refresh || mutableUser.value == null || lastUsername != username) {
+            lastUsername = username
+            Log.d(TAG, "getUser: load user from network")
+            userService.user(
+                id = username,
                 onSuccess = this::onUserSuccess,
                 onFailure = this::onUserFailure,
             )
@@ -36,31 +44,29 @@ class ProfileViewModel(
         Log.d(TAG, "getUser: load user from cache")
     }
 
-    private fun onUserSuccess(user: CurrentUser) {
-        settings.userId = user.id
-        settings.username = user.username
-        settings.isEnLocale = user.locale == Locale.EN
-        this.user.value = user
+    fun getFriends(username: String, refresh: Boolean = false) {
+        if (refresh || mutableFriends.value == null || lastUsername != username) {
+            lastUsername = username
+            Log.d(TAG, "getFriends: load friends from network")
+            userService.friends(
+                user = username,
+                onSuccess = this::onFriendsSuccess,
+                onFailure = this::onFriendsFailure,
+            )
+        }
+        Log.d(TAG, "getFriends: load friends from cache")
+    }
+
+    private fun onUserSuccess(user: User) {
+        mutableUser.value = user
+    }
+
+    private fun onFriendsSuccess(l: List<Friend>) {
+        mutableFriends.value = l
     }
 
     private fun onUserFailure(tr: Throwable) {}
-
-    fun getUserAnimeRates(refresh: Boolean = false) {
-        if (refresh || rates.value == null) {
-            Log.d(TAG, "getUserAnimeRates: load rates from network")
-            userRateService.userRates(
-                userId = settings.userId,
-                targetType = TargetType.ANIME,
-                onSuccess = this::onUserAnimeRatesSuccess,
-            )
-        }
-
-        Log.d(TAG, "getUserAnimeRates: load rates from cache")
-    }
-
-    private fun onUserAnimeRatesSuccess(list: List<UserRate>) {
-        rates.value = list
-    }
+    private fun onFriendsFailure(tr: Throwable) {}
 
     companion object {
         private const val TAG = "[ProfileViewModel]"

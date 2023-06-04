@@ -42,7 +42,7 @@ class NavigationDelegate(
             when (itemId) {
                 R.id.nav_lists -> ListsFragment.newInstance()
                 R.id.nav_search -> SearchFragment.newInstance()
-                R.id.nav_profile -> ProfileFragment.newInstance()
+                R.id.nav_profile -> ProfileFragment.newInstance(settings.username!!)
                 else -> return false
             },
         )

@@ -148,3 +148,13 @@ fun Context.parseScore(score: String? = null, userScore: Int? = null): String? {
     return getString(R.string.user_score, userScore)
 }
 
+fun Context.parseAge(age: Int?) =
+    if (age == null) {
+        null
+    } else if (age in 12..13) {
+        getString(R.string.age_3, age)
+    } else if (age % 10 == 1) {
+        getString(R.string.age_1, age)
+    } else if (age % 10 in 2..4) {
+        getString(R.string.age_2, age)
+    } else getString(R.string.age_3, age)

@@ -2,19 +2,19 @@ package com.ilfey.shikimori.di.network.enums
 
 import com.google.gson.annotations.SerializedName
 
-enum class Rating {
+enum class Rating(val value: String) {
     @SerializedName("none")
-    NONE,
-    @SerializedName("g")
-    G,
-    @SerializedName("pg")
-    PG,
-    @SerializedName("pg_13")
-    PG_13,
-    @SerializedName("r")
-    R,
-    @SerializedName("r_plus")
-    R_PLUS,
-    @SerializedName("rx")
-    RX,
+    NONE("None"),
+    @SerializedName("g", alternate = ["G"])
+    G("G"),
+    @SerializedName("pg", alternate = ["PG"])
+    PG("PG"),
+    @SerializedName("pg_13", alternate = ["PG-13"])
+    PG_13("PG-13"),
+    @SerializedName("r", alternate = ["R"])
+    R("R"),
+    @SerializedName("r_plus", alternate = ["R+"])
+    R_PLUS("R+"),
+    @SerializedName("rx", alternate = ["Rx"])
+    RX("Rx"),
 }

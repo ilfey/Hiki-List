@@ -34,7 +34,7 @@ val uiModule
         }
 
         viewModel {
-            ProfileViewModel(settings = get(), userRateService = get(), userService = get())
+            ProfileViewModel(userService = get())
         }
 
         viewModel {

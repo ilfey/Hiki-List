@@ -1,9 +1,6 @@
 package com.ilfey.shikimori.di.network.apis
 
-import com.ilfey.shikimori.di.network.entities.AnimeRate
-import com.ilfey.shikimori.di.network.entities.Favorites
-import com.ilfey.shikimori.di.network.entities.HistoryItem
-import com.ilfey.shikimori.di.network.entities.User
+import com.ilfey.shikimori.di.network.entities.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -19,19 +16,19 @@ interface UserApi {
      * Show an user
      * See: https://shikimori.one/api/doc/1.0/users/show
      * */
-//    @GET("/api/users/{id}")
-//    fun user(
-//        @Path("id") id: Long,
-//    ): Call<*>
+    @GET("/api/users/{id}")
+    fun user(
+        @Path("id") id: Long
+    ): Call<User>
 
     /**
      * Show an user
      * See: https://shikimori.one/api/doc/1.0/users/show
      * */
-//    @GET("/api/users/{id}")
-//    fun user(
-//        @Path("id") id: String,
-//    ): Call<*>
+    @GET("/api/users/{id}")
+    fun user(
+        @Path("id") id: String,
+    ): Call<User>
 
     /**
      * Show user's brief info
@@ -47,7 +44,7 @@ interface UserApi {
      * See: https://shikimori.me/api/doc/1.0/users/whoami
      * */
     @GET("/api/users/whoami")
-    fun whoami(): Call<User>
+    fun whoami(): Call<CurrentUser>
 
     /**
      * Sign out the user
@@ -76,10 +73,10 @@ interface UserApi {
      * Show user's friends
      * See: https://shikimori.one/api/doc/1.0/users/friends
      * */
-//    @GET("/api/users/{id}/friends")
-//    fun friends(
-//        @Path("id") id: String,
-//    ): Call<*>
+    @GET("/api/users/{id}/friends")
+    fun friends(
+        @Path("id") id: String,
+    ): Call<List<Friend>>
 
     /**
      * Show user's clubs
