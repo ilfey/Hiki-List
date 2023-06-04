@@ -48,8 +48,7 @@ class SearchInTabDelegate(
         }
 
     init {
-//            pager.offscreenPageLimit = 7
-
+        pager.offscreenPageLimit = 6
         pager.adapter = PagerAdapter(fragment)
         pager.setCurrentItem(
             when (currentList) {

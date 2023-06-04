@@ -147,5 +147,7 @@
     <string name="scores">Оценка: %1$d (%2$s)</string>
     <string name="score">Оценка: %1$s</string>
     <string name="user_score">Ваша оценка: %1$d</string>
+    <string name="clubs">Клубы</string>
+    <string name="friends">Друзья</string>
 
 </resources>

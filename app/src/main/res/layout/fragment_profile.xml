@@ -83,27 +83,75 @@
                     app:layout_constraintTop_toBottomOf="@id/age"
                     tools:text="Site" />
 
-                <Button
-                    android:id="@+id/favorites_btn"
-                    style="@style/Widget.Shikimori.IconButton"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/info_layout"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="32dp"
-                    android:drawableEnd="@drawable/ic_star_outline"
-                    app:layout_constraintEnd_toStartOf="@id/history_btn"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/website" />
-
-                <Button
-                    android:id="@+id/history_btn"
-                    style="@style/Widget.Shikimori.IconButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:drawableEnd="@drawable/ic_history"
+                    android:baselineAligned="false"
+                    android:divider="?colorOutline"
+                    android:dividerPadding="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/container_padding"
+                    android:showDividers="middle"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/favorites_btn"
-                    app:layout_constraintTop_toBottomOf="@id/website" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/website">
+
+                    <Button
+                        android:id="@+id/favorites_btn"
+                        style="@style/Widget.Shikimori.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="4dp"
+                        android:text="@string/starred"
+                        android:textAlignment="center"
+                        android:drawablePadding="4dp"
+                        app:drawableTint="?colorPrimary"
+                        app:drawableTopCompat="@drawable/ic_star_outline" />
+
+                    <Button
+                        android:id="@+id/clubs_btn"
+                        style="@style/Widget.Shikimori.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="4dp"
+                        android:text="@string/clubs"
+                        android:textAlignment="center"
+                        android:drawablePadding="4dp"
+                        app:drawableTint="?colorPrimary"
+                        app:drawableTopCompat="@drawable/ic_puzzle" />
+
+                    <Button
+                        android:id="@+id/friends_btn"
+                        style="@style/Widget.Shikimori.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="4dp"
+                        android:text="@string/friends"
+                        android:textAlignment="center"
+                        android:drawablePadding="4dp"
+                        app:drawableTint="?colorPrimary"
+                        app:drawableTopCompat="@drawable/ic_persons" />
+
+                    <Button
+                        android:id="@+id/history_btn"
+                        style="@style/Widget.Shikimori.TextButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="4dp"
+                        android:text="@string/history"
+                        android:textAlignment="center"
+                        android:drawablePadding="4dp"
+                        app:drawableTint="?colorPrimary"
+                        app:drawableTopCompat="@drawable/ic_clock" />
+
+                </LinearLayout>
 
                 <com.github.mikephil.charting.charts.PieChart
                     android:id="@+id/chart"
@@ -112,7 +160,7 @@
                     android:layout_marginTop="32dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/history_btn" />
+                    app:layout_constraintTop_toBottomOf="@id/info_layout" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

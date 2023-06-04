@@ -33,6 +33,7 @@ import com.ilfey.shikimori.ui.history.HistoryActivity
 import com.ilfey.shikimori.ui.settings.SettingsActivity
 import com.ilfey.shikimori.utils.getThemeColor
 import com.ilfey.shikimori.utils.gone
+import com.ilfey.shikimori.utils.toast
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(), View.OnClickListener,
@@ -170,12 +171,14 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(), View.OnClickList
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.history_btn -> {
-                val intent = HistoryActivity.newIntent(v.context)
-                startActivity(intent)
-            }
             R.id.favorites_btn -> parentFragmentManager.commit {
                 val intent = FavoritesActivity.newIntent(v.context)
+                startActivity(intent)
+            }
+            R.id.clubs_btn -> v.context.toast()
+            R.id.friends_btn -> v.context.toast()
+            R.id.history_btn -> {
+                val intent = HistoryActivity.newIntent(v.context)
                 startActivity(intent)
             }
         }

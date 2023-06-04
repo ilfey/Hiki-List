@@ -55,7 +55,7 @@ data class Anime(
             return Anime(
                 id = e.id,
                 titleEn = e.name,
-                titleRu = e.russian,
+                titleRu = e.russian.ifEmpty { ctx.getString(R.string.no_title) },
                 image = makeUrl(e.image.original),
                 kind = ctx.parseKind(e.kind),
                 score = ctx.parseScore(e.score, e.user_rate?.score),

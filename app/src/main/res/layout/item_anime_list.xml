@@ -95,15 +95,18 @@
             app:drawableSize="?android:attr/textSize"
             app:drawableTint="?colorPrimary"
             app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintVertical_bias="0"
+            android:layout_marginBottom="@dimen/item_padding"
             app:layout_constraintStart_toEndOf="@id/image"
             app:layout_constraintTop_toBottomOf="@id/episodes"
             tools:text="Rate: 4 (3.5)" />
 
         <Button
             android:id="@+id/btnAction"
-            style="?materialIconButtonFilledTonalStyle"
+            style="?materialIconButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/item_padding"

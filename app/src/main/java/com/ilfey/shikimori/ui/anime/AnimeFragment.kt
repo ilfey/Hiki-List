@@ -98,23 +98,26 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
                 episodes.gone()
             }
 
-            if (anime.rating != null) {
-                mpaaRating.text = anime.rating
-                mpaaRating.visible()
-            } else {
-                mpaaRating.gone()
-            }
-
             status.text = anime.status
-            score.text = anime.score
+
+            if (anime.score != null) {
+                score.text = anime.score
+                score.visible()
+            } else {
+                score.gone()
+            }
 
             if (anime.description != null) {
                 // TODO: compile bb-code
                 description.text = anime.description
-                expandDescriptionBtn.visible()
             } else {
                 description.text = getString(R.string.no_description)
+            }
+
+            if (description.lineCount < collapsedMaxLines) {
                 expandDescriptionBtn.gone()
+            } else {
+                expandDescriptionBtn.visible()
             }
 
             if (anime.screenshots != null) {
@@ -143,24 +146,26 @@ class AnimeFragment : BaseFragment<FragmentAnimeBinding>(), View.OnClickListener
             } else {
                 videosGroup.gone()
             }
-        }
 
-        if (anime.studios != null) {
-            anime.studios.map {
-                binding.genresContainer.run { addView(createChip(it.name, true)) }
-            }
-            binding.genresContainer.visible()
-        } else {
-            binding.genresContainer.gone()
-        }
+            genresContainer.removeAllViews()
 
-        if (anime.genres != null) {
-            anime.genres.map {
-                binding.genresContainer.run { addView(createChip(it.russian)) }
+            if (anime.studios != null) {
+                anime.studios.map {
+                    genresContainer.run { addView(createChip(it.name, true)) }
+                }
+                genresContainer.visible()
+            } else {
+                genresContainer.gone()
             }
-            binding.genresContainer.visible()
-        } else {
-            binding.genresContainer.gone()
+
+            if (anime.genres != null) {
+                anime.genres.map {
+                    genresContainer.run { addView(createChip(it.russian)) }
+                }
+                genresContainer.visible()
+            } else {
+                genresContainer.gone()
+            }
         }
     }
 
